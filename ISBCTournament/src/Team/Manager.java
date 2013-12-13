@@ -1,5 +1,6 @@
 package Team;
 
+import Ejemplo.GoToBall;
 import teams.ucmTeam.*;
 //import teams.ucmTeam.Message.Type;
 
@@ -13,11 +14,13 @@ public class Manager extends TeamManager{
 	}
 	
 	public Behaviour getDefaultBehaviour(int id) {
-		return null;
+		if (id == 0)
+			return getBehaviour(0);
+		return getBehaviour(1);
 	}
 	
 	public Behaviour[] createBehaviours() {
-		return null;
+		return new Behaviour[] {new GoalKeeper(),new GoToBall() };
 	}
 	
 }
