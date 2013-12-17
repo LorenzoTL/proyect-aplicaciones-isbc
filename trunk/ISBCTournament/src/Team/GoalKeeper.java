@@ -10,9 +10,8 @@ public class GoalKeeper extends Behaviour{
 	}
 	
 	public int takeStep() {
-		
-		Vec2 pos = myRobotAPI.getPosition();
 		Vec2 v = myRobotAPI.getBall();
+		Vec2 pos = myRobotAPI.getPosition();
 		v.add(pos);
 		double[] area = null;
 		if (myRobotAPI.getFieldSide() == -1)
