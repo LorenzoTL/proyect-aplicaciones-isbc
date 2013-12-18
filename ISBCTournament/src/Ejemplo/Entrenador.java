@@ -25,9 +25,9 @@ public class Entrenador extends TeamManager{
 	}
 	
 	public Behaviour getDefaultBehaviour(int id) {
-		if (id==0)
+		/*if (id==0)
 			return getBehaviour(2);
-		else
+		else*/
 			return getBehaviour(0);
 	}
 	
