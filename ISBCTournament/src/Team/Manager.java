@@ -16,7 +16,7 @@ public class Manager extends TeamManager{
 	public Behaviour getDefaultBehaviour(int id) {
 		if (id == 0)
 			return getBehaviour(0);
-		else if (id == 2)
+		else if (id == 2 || id == 4)
 			return getBehaviour(2);
 		return getBehaviour(1);
 	}
