@@ -21,7 +21,11 @@ public class Lateral extends Behaviour {
 	}
 	
 	public int takeStep() {
-		if(myRobotAPI.closestToBall()){
+		double y = 0.55;
+		if(myRobotAPI.getID() == 2) y = -0.55;
+		me = new Vec2(-1.0,y);
+		int q = myRobotAPI.getPosition().quadrant();
+		if(q == 0 || q == 3){
 			this.setState(new Ofensive());
 		}else {
 			this.setState(new Defensive());
@@ -42,47 +46,55 @@ public class Lateral extends Behaviour {
 		// No hacemos nada
 	}
 	
-	//PATRÓN STATE
+	public void volverAPosicionInicial(){
+		myRobotAPI.setSteerHeading(me.t);
+		myRobotAPI.surroundPoint(myRobotAPI.getPosition(), myRobotAPI.toEgocentricalCoordinates(me));
+	}
+	
+//PATRÓN STATE ------------------------------------------------------------------------------------------------------------------
+	//Interfaz para implementar
 	private interface LateralState{
 		void action();
 	}
 	
+	//Sub clases que implementan la interfaz
 	private class Defensive implements LateralState{
 		public void action(){
-			double y = 0.55;
-			if(myRobotAPI.getID() == 4) y = -0.55;
-			me = new Vec2(-1.0,y);
 			Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
-			Vec2 i = myRobotAPI.getPosition();
 			int q = ball.quadrant();
-			int qi = i.quadrant();
-			if (q == qi){
-				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-				if (myRobotAPI.canKick()){
-					myRobotAPI.kick();
-				}else{
-					Vec2 f = myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate());
-					myRobotAPI.passBall(f);
+			myRobotAPI.setSpeed(0.0);
+			if(myRobotAPI.closestToBall() || q == 1 || q == 2){
+				myRobotAPI.setSpeed(3.0);
+				myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
+				myRobotAPI.surroundPoint(myRobotAPI.getPosition(), myRobotAPI.getBall());
+				if(myRobotAPI.canKick()){
+					myRobotAPI.passBall(myRobotAPI.getClosestMate());
 				}
 			}else{
-				if (me.distance(i)>0.35){
-					myRobotAPI.setSpeed(3);
-					myRobotAPI.setBehindBall(me);
-					Vec2 aux = myRobotAPI.toEgocentricalCoordinates(me);
-					myRobotAPI.surroundPoint(aux, new Vec2(0,0));
-				}
-				if (me.distance(i)<=0.35) myRobotAPI.setSpeed(0);
+				myRobotAPI.setSpeed(0);
 			}
 		}
 	}
 	
 	private class Ofensive implements LateralState{
 		public void action(){
-			myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-			if (myRobotAPI.canKick()){
-				myRobotAPI.kick();
+			myRobotAPI.setSpeed(3.0);
+			if (myRobotAPI.closestToBall()){
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+				if (myRobotAPI.canKick()){
+					myRobotAPI.kick();
+				}
+			}else{
+				myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
+				Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
+				if (ball.quadrant() == 1 || ball.quadrant() == 2){
+					myRobotAPI.surroundPoint(myRobotAPI.getPosition(), myRobotAPI.getBall());
+				}else{
+					volverAPosicionInicial();
+				}
 			}
-		}
+		}	
 	}
+	
 	
 }
