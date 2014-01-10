@@ -23,7 +23,7 @@ public class Lateral extends Behaviour {
 	public int takeStep() {
 		double y = 0.55;
 		if(myRobotAPI.getID() == 2) y = -0.55;
-		me = new Vec2(-1.0,y);
+		me = myRobotAPI.toEgocentricalCoordinates(new Vec2(-1.0,y));
 		int q = myRobotAPI.getPosition().quadrant();
 		if(q == 0 || q == 3){
 			this.setState(new Ofensive());

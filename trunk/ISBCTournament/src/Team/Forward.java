@@ -82,6 +82,7 @@ public class Forward extends Behaviour {
 			myRobotAPI.setSpeed(3.0);
 			myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 			if (myRobotAPI.canKick()){
+				myRobotAPI.setSteerHeading(myRobotAPI.getOpponentsGoal().t);
 				myRobotAPI.kick();
 			}
 			// Si tengo un mate cerca de porteria rival, se la paso 
