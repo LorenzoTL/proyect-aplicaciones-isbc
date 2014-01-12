@@ -16,8 +16,10 @@ public class Manager extends TeamManager{
 	public Behaviour getDefaultBehaviour(int id) {
 		if (id == 0)
 			return getBehaviour(0);
-		else if (id == 2 || id == 4)
+		else if (id == 2)
 			return getBehaviour(2);
+		else if (id == 4)
+			return getBehaviour(5);
 		else if (id==3)
 			return getBehaviour(3);
 		else if (id==1)
@@ -26,7 +28,7 @@ public class Manager extends TeamManager{
 	}
 	
 	public Behaviour[] createBehaviours() {
-		return new Behaviour[] {new GoalKeeper(),new GoToBall(),new Lateral(),new Forward(), new Defensa() };
+		return new Behaviour[] {new GoalKeeper(),new GoToBall(),new LateralX(2),new Forward(), new Defensa(),new LateralX(4) };
 	}
 	
 }
