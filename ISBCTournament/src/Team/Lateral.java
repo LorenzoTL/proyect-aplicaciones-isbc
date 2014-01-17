@@ -81,51 +81,61 @@ public class Lateral extends Behaviour {
 	
 	//Sub clases que implementan la interfaz
 	private class Defensive implements LateralState{
+		
 		public void action(){
-			if(myRobotAPI.blocked()) myRobotAPI.avoidCollisions();
-			Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
-			int q = F.quadrant(ball);
-			myRobotAPI.setSpeed(0.0);
-			if(q == posD){
+			if(myRobotAPI.blocked()){
 				myRobotAPI.setSpeed(3.0);
-				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-				if (myRobotAPI.canKick()){
-					myRobotAPI.kick();
-				}
+				myRobotAPI.avoidCollisions();
 			}else{
-				volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(x,y)));
-			}
-		}
-	}
-	
-	private class Ofensive implements LateralState{
-		public void action(){
-			myRobotAPI.setSpeed(3.0);
-			if(myRobotAPI.blocked()) myRobotAPI.avoidCollisions();
-			if (myRobotAPI.closestToBall()){
-				if(F.quadrant(myRobotAPI.getPosition()) == posA){
+				Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
+				int q = F.quadrant(ball);
+				myRobotAPI.setSpeed(0.0);
+				if(q == posD){
+					myRobotAPI.setSpeed(3.0);
 					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 					if (myRobotAPI.canKick()){
 						myRobotAPI.kick();
-					}
-				}else {
-					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(x,y)));
-				}
-			}else{
-				myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
-				Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
-				int q = F.quadrant(ball);
-				if (q == posD){
-					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-					if (myRobotAPI.canKick()){
-						myRobotAPI.passBall(myRobotAPI.getClosestMate());
 					}
 				}else{
 					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(x,y)));
 				}
 			}
-		}	
+		}
+		
 	}
 	
-	
+	private class Ofensive implements LateralState{
+		
+		public void action(){
+			myRobotAPI.setSpeed(3.0);
+			if(myRobotAPI.blocked()) {
+				myRobotAPI.avoidCollisions();
+			}else{
+				Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
+				Vec2 me = myRobotAPI.getPosition();
+				if (myRobotAPI.closestToBall() || F.estoyCerca(me,myRobotAPI.toFieldCoordinates(ball))){
+					if(F.quadrant(me) == posA){
+						myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+						if (myRobotAPI.canKick()){
+							myRobotAPI.kick();
+						}
+					}else {
+						volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(x,y)));
+					}
+				}else{
+					myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
+					int q = F.quadrant(ball);
+					if (q == posD){
+						myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+						if (myRobotAPI.canKick()){
+							myRobotAPI.passBall(myRobotAPI.getClosestMate());
+						}
+					}else{
+						volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(x,y)));
+					}
+				}
+			}
+		}
+		
+	}	
 }
