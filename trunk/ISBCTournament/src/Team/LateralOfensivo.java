@@ -11,19 +11,64 @@ public class LateralOfensivo extends Behaviour {
 	double x;
 	double y;
 	double a;
+	int id;
+	int l;
 	
 	public LateralOfensivo(int id){
-		this.a = 1.145;
-		this.x = 0.65;
-		if (id == 2){
-			this.posD = 1;
-			this.posA = 0;
-			this.y = 0.40;
-		}else{
-			this.posD = 2;
-			this.posA = 3;
-			this.y = -0.40;
-		}
+		this.id = id;
+	}
+	
+	//region Gets and Sets
+	public double getA() {
+		return a;
+	}
+	
+	public void setA(double a) {
+		this.a = a;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public int getL() {
+		return l;
+	}
+	
+	public void setL(int l) {
+		this.l = l;
+	}
+	
+	public int getPosA() {
+		return posA;
+	}
+	
+	public void setPosA(int posA) {
+		this.posA = posA;
+	}
+	
+	public int getPosD() {
+		return posD;
+	}
+	
+	public void setPosD(int posD) {
+		this.posD = posD;
+	}
+	
+	public double getX() {
+		return x;
+	}
+	
+	public void setX(double x) {
+		this.x = x;
+	}
+	
+	public double getY() {
+		return y;
+	}
+	
+	public void setY(double y) {
+		this.y = y;
 	}
 	
 	public State getState(){
@@ -33,18 +78,26 @@ public class LateralOfensivo extends Behaviour {
 	public void setState(State s){
 		this.state = s;
 	}
+	//endregion
 	
-	public void configure() {
-		// No hacemos nada
-	}
+	//region Methods from Behaviour
+	public void configure() {}
 	
 	public int takeStep() {
 		Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
 		int q = F.quadrant(ball);
-		if(q == 0 || q == 3){
-			this.setState(new OfensivaTotal());
-		}else {
-			this.setState(new MantenerPosicion());
+		if (this.getL() == -1){
+			if(q == 0 || q == 3){
+				this.setState(new OfensivaTotal());
+			}else {
+				this.setState(new MantenerPosicion());
+			}
+		}else{
+			if(q == 1 || q == 2){
+				this.setState(new OfensivaTotal());
+			}else {
+				this.setState(new MantenerPosicion());
+			}
 		}
 		this.state.action();
 		return myRobotAPI.ROBOT_OK;
@@ -52,20 +105,19 @@ public class LateralOfensivo extends Behaviour {
 	
 	public void onInit(RobotAPI r) {
 		r.setDisplayString("lateralOfensivoBehaviour");
+		initialization(myRobotAPI.getFieldSide());
 	}
 	
-	public void end() {
-		// No hacemos nada
-	}
+	public void end() {}
 	
-	public void onRelease(RobotAPI r) {
-		// No hacemos nada
-	}
+	public void onRelease(RobotAPI r) {}
+	//endregion
 	
+	//region Private Methods
 	public void volverAPosicionInicial(Vec2 me,boolean ataque){
 		Vec2 pos = myRobotAPI.getPosition();
-		int p = posD;
-		if(ataque) p = posA;
+		int p = getPosD();
+		if(ataque) p = getPosA();
 		if(F.quadrant(pos) == p) {
 			myRobotAPI.setSpeed(0.0);
 			return;
@@ -73,13 +125,18 @@ public class LateralOfensivo extends Behaviour {
 		double i = 0;
 		double j = 0;
 		if (ataque){
-			i = 0.55;
-			j = 0.70;
+			if(getL() == -1){
+				i = 0.55;
+				j = 0.70;
+			}else{
+				i = -0.70;
+				j = -0.55;
+			}
 		}else{
 			i = -0.4;
 			j = 0.4;
 		}
-		if (pos.x <= j && pos.x >=i){
+		if (i <= pos.x && pos.x <= j){
 			myRobotAPI.setSpeed(0.0);
 			myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
 		}else{
@@ -89,8 +146,42 @@ public class LateralOfensivo extends Behaviour {
 		}
 	}
 	
-//PATRÓN STATE ------------------------------------------------------------------------------------------------------------------
-	//Interfaz para implementar
+	private void initialization(int fieldSide) {
+		this.setL(fieldSide);
+		this.setA(-1.145*fieldSide);
+		switch(this.getId()){
+			case 2:
+				if(this.getL() == -1){
+					this.setPosD(1);
+					this.setPosA(0);
+					this.setX(0.65);
+					this.setY(0.40);
+				}else{
+					this.setPosD(0);
+					this.setPosA(1);
+					this.setX(-0.65);
+					this.setY(0.40);
+				}
+				break;
+			case 4:
+				if(this.getL() == -1){
+					this.setPosD(2);
+					this.setPosA(3);
+					this.setX(0.65);
+					this.setY(-0.40);
+				}else{
+					this.setPosD(3);
+					this.setPosA(2);
+					this.setX(-0.65);
+					this.setY(-0.40);
+				}
+				break;
+			default: break;
+		}
+	}
+	//endregion
+	
+	//region Patron State
 	private interface State{
 		void action();
 	}
@@ -106,7 +197,7 @@ public class LateralOfensivo extends Behaviour {
 					myRobotAPI.setSpeed(3.0);
 					myRobotAPI.blockForward();
 				}else{
-					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(0,y)), false);
+					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(0,getY())), false);
 				}
 			}
 		}
@@ -124,7 +215,7 @@ public class LateralOfensivo extends Behaviour {
 				Vec2 me = myRobotAPI.getPosition();
 				int b = F.quadrant(myRobotAPI.toFieldCoordinates(ball));
 				myRobotAPI.setSpeed(3.0);
-				if (b == posA){
+				if (b == getPosA()){
 					if(myRobotAPI.closestToBall() || F.estoyCerca(me,myRobotAPI.toFieldCoordinates(ball))){
 						myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 						if(myRobotAPI.alignedToBallandGoal()) myRobotAPI.kick();
@@ -132,22 +223,23 @@ public class LateralOfensivo extends Behaviour {
 							Vec2 f = null;
 							if(myRobotAPI.toFieldCoordinates(myRobotAPI.getClosestMate()).x > me.x)
 								f = myRobotAPI.getClosestMate();
-							else f = myRobotAPI.toEgocentricalCoordinates(new Vec2(a,0));							
+							else f = myRobotAPI.toEgocentricalCoordinates(new Vec2(getA(),0));							
 							myRobotAPI.setSteerHeading(f.t);
 							if (myRobotAPI.canKick()){
 								myRobotAPI.passBall(f);
 							}
 						}
 					}else{
-						if(F.quadrant(me) != posA) 
-							volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(x,y)), true);
+						if(F.quadrant(me) != getPosA()) 
+							volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())), true);
 						else myRobotAPI.setSpeed(0.0);
 					}
 				}else{
-					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(x,y)),true);	
+					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())),true);	
 				}
 			}
 		}
 		
 	}
+	//endregion
 }
