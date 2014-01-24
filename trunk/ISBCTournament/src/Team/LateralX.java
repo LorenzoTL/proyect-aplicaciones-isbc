@@ -108,6 +108,12 @@ public class LateralX extends Behaviour{
 	//endregion
 
 	//region Private Methods
+	private boolean detrasDelBalon(Vec2 me,Vec2 ball){
+		Vec2 b = myRobotAPI.toEgocentricalCoordinates(ball);
+		if (getL() == -1) return b.x >= me.x;
+		return b.x < me.x;
+	}
+	
 	private void volverAPosicionInicial(Vec2 me,boolean ataque){
 		Vec2 pos = myRobotAPI.getPosition();
 		int p = getPosD();
@@ -197,7 +203,7 @@ public class LateralX extends Behaviour{
 				Vec2 ball = myRobotAPI.getBall();
 				int b = F.quadrant(myRobotAPI.toFieldCoordinates(ball));
 				if (b == getPosD()){
-					if (myRobotAPI.toFieldCoordinates(ball).x >= me.x){
+					if (detrasDelBalon(me,ball)){
 						if(myRobotAPI.behindEverybody()) myRobotAPI.blockForward();
 						else{
 							myRobotAPI.setSteerHeading(ball.t);

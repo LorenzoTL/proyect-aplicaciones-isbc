@@ -8,6 +8,8 @@ public class Forward extends Behaviour {
 	
 	Vec2 me;
 	ForwardState state;
+	int lado;
+	double centro;
 	
 	public ForwardState getState(){
 		return state;
@@ -22,14 +24,22 @@ public class Forward extends Behaviour {
 	}
 	
 	public int takeStep() {
-		me = myRobotAPI.toEgocentricalCoordinates(new Vec2(0.25,0));
+		me = myRobotAPI.toEgocentricalCoordinates(new Vec2(centro,0));
 		Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
 		int q = ball.quadrant();
 		//int q = myRobotAPI.getPosition().quadrant();
-		if(q == 0 || q==3){
-			this.setState(new Ofensive());
-		}else {
-			this.setState(new Defensive());
+		if (lado == -1){
+			if(q == 0 || q==3){
+				this.setState(new Ofensive());
+			}else {
+				this.setState(new Defensive());
+			}
+		}else{
+			if(q == 1 || q==2){
+				this.setState(new Ofensive());
+			}else {
+				this.setState(new Defensive());
+			}
 		}
 		this.state.action();
 		return myRobotAPI.ROBOT_OK;
@@ -37,6 +47,9 @@ public class Forward extends Behaviour {
 	
 	public void onInit(RobotAPI r) {
 		r.setDisplayString("forwardBehaviour");
+		lado = myRobotAPI.getFieldSide();
+		if (lado == -1) centro = 0.25;
+		else centro = -0.25;
 	}
 	
 	public void end() {
@@ -63,7 +76,8 @@ public class Forward extends Behaviour {
 		public void action(){
 			
 			Vec2 pos=myRobotAPI.getPosition();
-			if (pos.x >= 0.24 && pos.x <=0.26)
+			if ((lado == -1 && (pos.x >= 0.24 && pos.x <=0.26)) ||
+				(lado == 1 && (pos.x <= -0.24 && pos.x >= -0.26)))
 			{
 				myRobotAPI.setSpeed(0.0);
 				myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
