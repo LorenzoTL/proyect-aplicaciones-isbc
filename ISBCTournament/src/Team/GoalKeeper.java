@@ -5,6 +5,7 @@ import teams.ucmTeam.*;
 public class GoalKeeper extends Behaviour{
 
 	KeeperState state;
+	int lado;
 	
 	public KeeperState getState(){
 		return state;
@@ -19,13 +20,24 @@ public class GoalKeeper extends Behaviour{
 	}
 	
 	public int takeStep() {
-		if (myRobotAPI.getBall().x < 0.35 && myRobotAPI.getBall().y < 0.4 && 
-			 myRobotAPI.getPosition().x < -1.15 && (myRobotAPI.getPosition().y < 0.35 && myRobotAPI.getPosition().y > -0.35)) {
-			this.setState(new Salida());
-		} else if (Math.abs(myRobotAPI.getOurGoal().x) > 0.1 || Math.abs(myRobotAPI.getOurGoal().y) > 0.01) {
-			this.setState(new IrPorteria());
-		} else {
-			this.setState(new Parado());
+		if (lado == -1){
+			if (myRobotAPI.getBall().x < 0.35 && myRobotAPI.getBall().y < 0.4 && 
+				 myRobotAPI.getPosition().x < -1.15 && (myRobotAPI.getPosition().y < 0.35 && myRobotAPI.getPosition().y > -0.35)) {
+				this.setState(new Salida());
+			} else if (Math.abs(myRobotAPI.getOurGoal().x) > 0.1 || Math.abs(myRobotAPI.getOurGoal().y) > 0.01) {
+				this.setState(new IrPorteria());
+			} else {
+				this.setState(new Parado());
+			}
+		}else{
+			if (myRobotAPI.getBall().x > -0.35 && myRobotAPI.getBall().y < 0.4 && 
+					 myRobotAPI.getPosition().x > 1.15 && (myRobotAPI.getPosition().y < 0.35 && myRobotAPI.getPosition().y > -0.35)) {
+					this.setState(new Salida());
+				} else if (Math.abs(myRobotAPI.getOurGoal().x) > 0.1 || Math.abs(myRobotAPI.getOurGoal().y) > 0.01) {
+					this.setState(new IrPorteria());
+				} else {
+					this.setState(new Parado());
+				}
 		}
 		this.state.action();
 		return myRobotAPI.ROBOT_OK;
@@ -33,6 +45,7 @@ public class GoalKeeper extends Behaviour{
 	
 	public void onInit(RobotAPI r) {
 		r.setDisplayString("goalKeeperBehaviour");
+		lado = myRobotAPI.getFieldSide();
 	}
 	
 	public void end() {

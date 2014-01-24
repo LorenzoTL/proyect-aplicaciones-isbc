@@ -7,6 +7,7 @@ public class Defensa extends Behaviour {
 	
 	Vec2 me;
 	DefensaState state;
+	int lado;
 	
 	public DefensaState getState(){
 		return state;
@@ -25,10 +26,18 @@ public class Defensa extends Behaviour {
 		me = myRobotAPI.toEgocentricalCoordinates(new Vec2(-1.145,0));
 		Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
 		int q = ball.quadrant();
-		if(q == 0 || q == 3){
-			this.setState(new Ofensive());
-		}else {
-			this.setState(new Defensive());
+		if (lado == -1){
+			if(q == 0 || q == 3){
+				this.setState(new Ofensive());
+			}else {
+				this.setState(new Defensive());
+			}
+		}else{
+			if(q == 1 || q == 2){
+				this.setState(new Ofensive());
+			}else {
+				this.setState(new Defensive());
+			}
 		}
 		this.state.action();
 		return myRobotAPI.ROBOT_OK;
@@ -36,6 +45,7 @@ public class Defensa extends Behaviour {
 	
 	public void onInit(RobotAPI r) {
 		r.setDisplayString("defensaBehaviour");
+		lado = myRobotAPI.getFieldSide();
 	}
 	
 	public void end() {
@@ -63,9 +73,10 @@ public class Defensa extends Behaviour {
 			Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
 			myRobotAPI.setSpeed(3.0);
 			myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
-			myRobotAPI.surroundPoint(myRobotAPI.getPosition(), myRobotAPI.getBall());
+			//myRobotAPI.surroundPoint(myRobotAPI.getPosition(), myRobotAPI.getBall());
+			myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 			if(myRobotAPI.canKick()){
-				myRobotAPI.setSteerHeading(myRobotAPI.getOpponentsGoal().t);
+				//myRobotAPI.setSteerHeading(myRobotAPI.getOpponentsGoal().t);
 				myRobotAPI.kick();
 				
 			}
@@ -75,15 +86,14 @@ public class Defensa extends Behaviour {
 	private class Ofensive implements DefensaState{
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
-			Vec2 centro = myRobotAPI.toEgocentricalCoordinates(new Vec2(-0.45,0));
+			Vec2 centro = myRobotAPI.toEgocentricalCoordinates(new Vec2(0.45*lado,0));
 			Vec2 pos=myRobotAPI.getPosition();
-			if (pos.x <= -0.44 && pos.x >=-0.46)
-			{
-				myRobotAPI.setSpeed(0.0);
-				myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
+			if ((lado==-1 && (pos.x <= -0.44 && pos.x >=-0.46)) ||
+				(lado == 1 && (pos.x >= 0.44 && pos.x >= 0.46))){
+					myRobotAPI.setSpeed(0.0);
+					myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
 			}
-			else{
-					
+			else{	
 				myRobotAPI.setSpeed(3.0);
 				volverAPosicionInicial(centro);
 			}			
