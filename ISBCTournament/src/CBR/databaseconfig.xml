@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DataBaseConfiguration>
+	<HibernateConfigFile>hibernate.cfg.xml</HibernateConfigFile>
+	<DescriptionMappingFile>TeamDescription.hbm.xml</DescriptionMappingFile>
+	<DescriptionClassName>TeamDescription</DescriptionClassName>
+	<SolutionMappingFile>TeamlSolution.hbm.xml</SolutionMappingFile>
+	<SolutionClassName>TeamSolution</SolutionClassName>	
+</DataBaseConfiguration>

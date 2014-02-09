@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+<class name="TeamDescription" table="teamdescription">
+	<id name="id" column="id">
+	</id>
+	<property name="goalKeeper" column="goalKeeper"/>
+	<property name="defensa" column="defensa"/>	
+	<property name="lateral2" column="lateral2"/>
+	<property name="lateral4;" column="lateral4;"/>	
+	<property name="forward" column="forward"/>
+	<property name="gf" column="gf"/>
+	<property name="gc" column="gc"/>
+</class>
+</hibernate-mapping>
