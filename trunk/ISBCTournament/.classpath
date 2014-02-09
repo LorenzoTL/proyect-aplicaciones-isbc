@@ -12,6 +12,6 @@
 	<classpathentry kind="lib" path="lib/soccerbots.jar"/>
 	<classpathentry kind="lib" path="lib/subsuncion.jar"/>
 	<classpathentry kind="lib" path="lib/ucmteam.jar"/>
-	<classpathentry kind="lib" path="C:/Users/j/Documents/jcolibri.jar"/>
+	<classpathentry kind="lib" path="/jCOLIBRI2/lib/jcolibri2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
