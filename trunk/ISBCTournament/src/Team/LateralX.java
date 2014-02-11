@@ -3,7 +3,7 @@ package Team;
 import EDU.gatech.cc.is.util.Vec2;
 import teams.ucmTeam.*;
 
-public class LateralX extends Behaviour{
+public class LateralX extends Behaviour implements Lateral{
 
 	State state;
 	int posD; //defensive quadrant
@@ -17,10 +17,16 @@ public class LateralX extends Behaviour{
 		this.id = id;
 	}
 	
+	public LateralX(){}
+	
 	//region gets and sets
 
 	public int getId() {
 		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public int getPosA() {
@@ -114,7 +120,7 @@ public class LateralX extends Behaviour{
 		return b.x < me.x;
 	}
 	
-	private void volverAPosicionInicial(Vec2 me,boolean ataque){
+	public void volverAPosicionInicial(Vec2 me,boolean ataque){
 		Vec2 pos = myRobotAPI.getPosition();
 		int p = getPosD();
 		if(ataque) p = getPosA();
@@ -151,7 +157,7 @@ public class LateralX extends Behaviour{
 		}
 	}
 	
-	private void initialization(int fieldSide) {
+	public void initialization(int fieldSide) {
 		this.setL(fieldSide);
 		switch(this.getId()){
 			case 2:

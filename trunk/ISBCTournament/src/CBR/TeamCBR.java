@@ -1,19 +1,28 @@
 package CBR;
 
+import java.util.Collection;
+
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
+import jcolibri.cbrcore.Attribute;
+import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
+import jcolibri.cbrcore.CaseComponent;
 import jcolibri.cbrcore.Connector;
 import jcolibri.connector.DataBaseConnector;
 import jcolibri.exception.ExecutionException;
+import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
+import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
+import jcolibri.method.retrieve.selection.SelectCases;
 
 public class TeamCBR implements StandardCBRApplication{
 
 	Connector _connector;
 	CBRCaseBase _casebase;
+	CaseComponent result;
 	
 	private static TeamCBR _instance = null;
 	
@@ -33,9 +42,19 @@ public class TeamCBR implements StandardCBRApplication{
 		}
 	}
 
-	public void cycle(CBRQuery arg0) throws ExecutionException {
+	public void cycle(CBRQuery query) throws ExecutionException {
+		//RECUPERACION
 		NNConfig simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new Average());
+		simConfig.addMapping(new Attribute("gf",TeamDescription.class),new MajorGF());
+		simConfig.addMapping(new Attribute("gc",TeamDescription.class), new MinorGC());
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_casebase.getCases(), query, simConfig);
+		Collection<CBRCase> myCases = SelectCases.selectTopK(eval, 1);
+		//REUSE
+		//REVISE
+		//RETAIN
+		_casebase.learnCases(myCases);
+		result = ((CBRCase)myCases.toArray()[0]).getSolution();
 	}
 
 	public void postCycle() throws ExecutionException {
@@ -45,6 +64,10 @@ public class TeamCBR implements StandardCBRApplication{
 	public CBRCaseBase preCycle() throws ExecutionException {
 		_casebase.init(_connector);
 		return _casebase;
+	}
+	
+	public CaseComponent getResult() {
+		return result;
 	}
 
 }
