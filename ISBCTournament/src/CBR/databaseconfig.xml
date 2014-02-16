@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DataBaseConfiguration>
-	<HibernateConfigFile>hibernate.cfg.xml</HibernateConfigFile>
-	<DescriptionMappingFile>TeamDescription.hbm.xml</DescriptionMappingFile>
-	<DescriptionClassName>TeamDescription</DescriptionClassName>
-	<SolutionMappingFile>TeamlSolution.hbm.xml</SolutionMappingFile>
-	<SolutionClassName>TeamSolution</SolutionClassName>	
+	<HibernateConfigFile>CBR/hibernate.cfg.xml</HibernateConfigFile>
+	<DescriptionMappingFile>CBR/TeamDescription.hbm.xml</DescriptionMappingFile>
+	<DescriptionClassName>CBR.TeamDescription</DescriptionClassName>
+	<SolutionMappingFile>CBR/TeamSolution.hbm.xml</SolutionMappingFile>
+	<SolutionClassName>CBR.TeamSolution</SolutionClassName>	
 </DataBaseConfiguration>
