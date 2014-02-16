@@ -50,7 +50,10 @@ public class ManagerCBR extends TeamManager{
 
 	protected void onTakeStep() {
 		RobotAPI robot = _players[0].getRobotAPI();
-		if (robot.getTimeStamp() == robot.getMatchTotalTime()/2){
+		long halftime = robot.getMatchTotalTime()/2;
+		long step = robot.getTimestep();
+		long actualtime = robot.getTimeStamp();
+		if (halftime <= actualtime && actualtime < (halftime+step)){
 			//CICLO CBR
 			TeamCBR cbr = new TeamCBR();
 			try {

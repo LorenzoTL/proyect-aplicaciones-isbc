@@ -35,7 +35,7 @@ public class TeamCBR implements StandardCBRApplication{
 	public void configure() throws ExecutionException {
 		try{
 			_connector = new DataBaseConnector();
-			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("databaseconfig.xml"));
+			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("CBR/databaseconfig.xml"));
 			_casebase = new LinealCaseBase();
 		}catch (Exception e){
 			throw new ExecutionException(e);
@@ -53,8 +53,10 @@ public class TeamCBR implements StandardCBRApplication{
 		//REUSE
 		//REVISE
 		//RETAIN
-		_casebase.learnCases(myCases);
-		result = ((CBRCase)myCases.toArray()[0]).getSolution();
+		if (myCases != null && myCases.toArray().length > 0){
+			_casebase.learnCases(myCases);
+			result = ((CBRCase)myCases.toArray()[0]).getSolution();
+		}
 	}
 
 	public void postCycle() throws ExecutionException {
