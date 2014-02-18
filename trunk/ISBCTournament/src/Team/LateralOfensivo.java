@@ -221,11 +221,7 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 					}
 				}else{
 					myRobotAPI.setSpeed(3.0);
-					if(b != getPosA()) 
-						volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())), true);
-					else{
-						myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-					}
+					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				}
 			}else{
 				volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())), true);
