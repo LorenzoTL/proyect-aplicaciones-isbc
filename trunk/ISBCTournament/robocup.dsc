@@ -86,6 +86,7 @@ object EDU.gatech.cc.is.simulation.ObstacleInvisibleSim -2.047 -1.4396 0 1.0
 // from getting jumpy on slow machines, or when/if your process gets 
 // swapped out. 
 
+=======
 maxtimestep 11 
 
 //====== 
@@ -175,14 +176,34 @@ robot EDU.gatech.cc.is.abstractrobot.SocSmallSim Team.TeamX
 
 //======EAST TEAM====== 
 eastname EastTeam 
+<<<<<<< .mine
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim teamsSoccerbots.BrianTeam 
+=======
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
+>>>>>>> .r25
 1.2 0 0 xff3333 xffff66 2 
+<<<<<<< .mine
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim teamsSoccerbots.BrianTeam 
+=======
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
+>>>>>>> .r25
 .5 0 0 xff3333 xffff66 2 
+<<<<<<< .mine
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim teamsSoccerbots.BrianTeam 
+=======
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
+>>>>>>> .r25
 .15 .5 0 xff3333 xffff66 2 
+<<<<<<< .mine
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim teamsSoccerbots.BrianTeam 
+=======
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
+>>>>>>> .r25
 .15 0 0 xff3333 xffff66 2 
+<<<<<<< .mine
+robot EDU.gatech.cc.is.abstractrobot.SocSmallSim teamsSoccerbots.BrianTeam 
+=======
 robot EDU.gatech.cc.is.abstractrobot.SocSmallSim t070802.TiquiTaca 
+>>>>>>> .r25
 .15 -.5 0 xff3333 xffff66 2 
 
