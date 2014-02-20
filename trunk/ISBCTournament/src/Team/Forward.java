@@ -97,6 +97,7 @@ public class Forward extends Behaviour {
 			myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 			if (myRobotAPI.canKick()){
 				myRobotAPI.setSteerHeading(myRobotAPI.getOpponentsGoal().t);
+				myRobotAPI.alignedToBallandGoal();
 				myRobotAPI.kick();
 			}
 			// Si tengo un mate cerca de porteria rival, se la paso 

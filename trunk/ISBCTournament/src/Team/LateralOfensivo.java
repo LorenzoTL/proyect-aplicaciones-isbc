@@ -202,7 +202,7 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 						}
 					}
 				}else{ 
-					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getL()*0.15,getY())), false);
+					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())), false);
 				}
 			}
 			
@@ -221,12 +221,9 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 			if (b == getPosA()){
 				if(myRobotAPI.closestToBall() || F.estoyCerca(me,myRobotAPI.toFieldCoordinates(ball))){
 					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-					//myRobotAPI.setSteerHeading(ball.t);
 					if(myRobotAPI.canKick()) {
-						myRobotAPI.kick();
-					}else{
-						myRobotAPI.alignedToBallandGoal();
 						myRobotAPI.setSteerHeading(ball.t);
+						myRobotAPI.kick();
 					}
 				}else{
 					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())), true);

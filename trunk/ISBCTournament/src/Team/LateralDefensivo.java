@@ -115,11 +115,11 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 		Vec2 pos = myRobotAPI.getPosition();
 		double i,j = 0;
 		if(this.getL() == -1){
-			i = -0.12;
-			j = -0.09;
+			i = -0.75;
+			j = -0.60;
 		}else{
-			i = 0.09;
-			j = 0.12;
+			i = 0.60;
+			j = 0.75;
 		}
 		if (i <= pos.x && pos.x <= j){
 			myRobotAPI.setSpeed(0.0);
@@ -138,12 +138,12 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 				if(this.getL() == -1){
 					this.setPosD(1);
 					this.setPosA(0);
-					this.setX(-0.10);
+					this.setX(-0.70);
 					this.setY(0.55);
 				}else{
 					this.setPosD(0);
 					this.setPosA(1);
-					this.setX(0.10);
+					this.setX(0.70);
 					this.setY(0.55);
 				}
 				break;
@@ -151,12 +151,12 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 				if(this.getL() == -1){
 					this.setPosD(2);
 					this.setPosA(3);
-					this.setX(-0.10);
+					this.setX(-0.70);
 					this.setY(-0.55);
 				}else{
 					this.setPosD(3);
 					this.setPosA(2);
-					this.setX(0.10);
+					this.setX(0.70);
 					this.setY(-0.55);
 				}
 				break;

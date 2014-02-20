@@ -70,22 +70,23 @@ public class Defensa extends Behaviour {
 	//Sub clases que implementan la interfaz
 	private class Defensive implements DefensaState{
 		public void action(){
-			Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
-			myRobotAPI.setSpeed(3.0);
-			myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
-			//myRobotAPI.surroundPoint(myRobotAPI.getPosition(), myRobotAPI.getBall());
-			myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-			if(myRobotAPI.canKick()){
-				//myRobotAPI.setSteerHeading(myRobotAPI.getOpponentsGoal().t);
-				myRobotAPI.kick();
-				
-			}
+			 Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
+             myRobotAPI.setSpeed(3.0);
+             myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
+             //myRobotAPI.surroundPoint(myRobotAPI.getPosition(), myRobotAPI.getBall());
+             myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+             if(myRobotAPI.canKick()){
+                     //myRobotAPI.setSteerHeading(myRobotAPI.getOpponentsGoal().t);
+                     myRobotAPI.kick();
+                     
+             }
 		}
 	}
 	
 	private class Ofensive implements DefensaState{
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
+			if(myRobotAPI.teammateBlocking()) myRobotAPI.avoidCollisions();
 			Vec2 centro = myRobotAPI.toEgocentricalCoordinates(new Vec2(0.45*lado,0));
 			Vec2 pos=myRobotAPI.getPosition();
 			if ((lado==-1 && (pos.x <= -0.44 && pos.x >=-0.46)) ||

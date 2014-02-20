@@ -52,7 +52,7 @@ public class Manager extends TeamManager{
 		else if (id==3)
 			return getBehaviour(3);
 		else if (id==1)
-			return getBehaviour(4);
+			return getBehaviour(7);
 		return getBehaviour(1);
 	}
 	
@@ -63,7 +63,8 @@ public class Manager extends TeamManager{
 								new Forward(), 
 								new Defensa(),
 								new LateralOfensivo(),
-								new LateralDefensivo() };
+								new LateralDefensivo(),
+								new Cierre()};
 	}
 	
 	private void estrategiaOfensiva(){
