@@ -165,12 +165,12 @@ public class LateralX extends Behaviour implements Lateral{
 					this.setPosD(1);
 					this.setPosA(0);
 					this.setX(-0.15);
-					this.setY(0.55);
+					this.setY(0.45);
 				}else{
 					this.setPosD(0);
 					this.setPosA(1);
 					this.setX(0.15);
-					this.setY(0.55);
+					this.setY(0.45);
 				}
 				break;
 			case 4:
@@ -178,12 +178,12 @@ public class LateralX extends Behaviour implements Lateral{
 					this.setPosD(2);
 					this.setPosA(3);
 					this.setX(-0.15);
-					this.setY(-0.55);
+					this.setY(-0.45);
 				}else{
 					this.setPosD(3);
 					this.setPosA(2);
 					this.setX(0.15);
-					this.setY(-0.55);
+					this.setY(-0.45);
 				}
 				break;
 			default: break;
@@ -224,7 +224,7 @@ public class LateralX extends Behaviour implements Lateral{
 					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				}
 			}else{
-				volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())),false);
+				volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(2.2*getX(),getY())),false);
 			}
 		}
 		
