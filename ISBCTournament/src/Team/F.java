@@ -14,7 +14,7 @@ public class F {
 	}
 	
 	public static boolean estoyCerca(Vec2 origen,Vec2 destino){
-		return origen.distance(destino) <= 0.65;
+		return origen.distance(destino) <= 0.72;
 	}
 	
 }

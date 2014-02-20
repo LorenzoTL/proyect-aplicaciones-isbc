@@ -101,7 +101,7 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 	}
 	
 	public void onInit(RobotAPI r) {
-		r.setDisplayString("lateralBehaviour");
+		r.setDisplayString("LD_" + getId());
 		initialization(myRobotAPI.getFieldSide());
 	}
 	
@@ -173,6 +173,8 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 	private class Defensive implements LateralState{
 		
 		public void action(){
+			myRobotAPI.setSpeed(3.0);
+			if (myRobotAPI.teammateBlocking()) myRobotAPI.avoidCollisions();
 			Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
 			int q = F.quadrant(ball);
 			if(q == getPosD()){
@@ -181,9 +183,12 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 				if (myRobotAPI.canKick()){
 					myRobotAPI.kick();
 				}
+			}else if(F.estoyCerca(myRobotAPI.getPosition(),myRobotAPI.toFieldCoordinates(ball))){
+				myRobotAPI.setSpeed(3.0);
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 			}else{
 				volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(x,y)),false);
-			}	
+			}
 		}
 		
 	}
@@ -192,6 +197,7 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 		
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
+			if (myRobotAPI.teammateBlocking()) myRobotAPI.avoidCollisions();
 			Vec2 ball = myRobotAPI.getBall();
 			int b = F.quadrant(myRobotAPI.toFieldCoordinates(ball));
 			Vec2 me = myRobotAPI.getPosition();

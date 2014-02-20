@@ -101,7 +101,7 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 	}
 	
 	public void onInit(RobotAPI r) {
-		r.setDisplayString("lateralOfensivoBehaviour");
+		r.setDisplayString("LO_" + getId());
 		initialization(myRobotAPI.getFieldSide());
 	}
 	
@@ -125,8 +125,13 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 				j = -0.63;
 			}
 		}else{
-			i = -0.18;
-			j = 0.18;
+			if(getL() == -1){
+				i = -0.20;
+				j = -0.10;
+			}else{
+				i = 0.10;
+				j = 0.20;
+			}
 		}
 		
 		if (i <= pos.x && pos.x <= j){
@@ -181,6 +186,8 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 	private class MantenerPosicion implements State{
 		
 		public void action(){
+			myRobotAPI.setSpeed(3.0);
+			if (myRobotAPI.teammateBlocking()) myRobotAPI.avoidCollisions();
 			if (myRobotAPI.behindEverybody()){
 				myRobotAPI.setSpeed(3.0);
 				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
@@ -195,7 +202,7 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 						}
 					}
 				}else{ 
-					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(0,getY())), false);
+					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getL()*0.15,getY())), false);
 				}
 			}
 			
@@ -206,10 +213,11 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 	private class OfensivaTotal implements State{
 		
 		public void action(){
+			myRobotAPI.setSpeed(3.0);
+			if (myRobotAPI.teammateBlocking()) myRobotAPI.avoidCollisions();
 			Vec2 ball = myRobotAPI.getBall();
 			Vec2 me = myRobotAPI.getPosition();
 			int b = F.quadrant(myRobotAPI.toFieldCoordinates(ball));
-			myRobotAPI.setSpeed(3.0);
 			if (b == getPosA()){
 				if(myRobotAPI.closestToBall() || F.estoyCerca(me,myRobotAPI.toFieldCoordinates(ball))){
 					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
@@ -217,15 +225,19 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 					if(myRobotAPI.canKick()) {
 						myRobotAPI.kick();
 					}else{
+						myRobotAPI.alignedToBallandGoal();
 						myRobotAPI.setSteerHeading(ball.t);
 					}
 				}else{
-					myRobotAPI.setSpeed(3.0);
-					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
+					volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())), true);
 				}
 			}else{
-				volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())), true);
+				myRobotAPI.setSpeed(3.0);
+				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 			}
+			/*}else{
+				volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())), true);
+			}*/
 		}
 		
 	}
