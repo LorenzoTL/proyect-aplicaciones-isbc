@@ -81,7 +81,7 @@ public class Cierre extends Behaviour{
 			Vec2 fieldBall = myRobotAPI.toFieldCoordinates(ball);
 			myRobotAPI.setSpeed(3.0);
 			if ((lado == -1 && fieldBall.x < me.x) || (lado == 1 && fieldBall.x > me.x) || 
-					me.distance(fieldBall) <= 0.30){
+					me.distance(fieldBall) <= 0.40){
 				myRobotAPI.setSteerHeading(ball.t);
 				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				if (myRobotAPI.canKick()) myRobotAPI.kick();
