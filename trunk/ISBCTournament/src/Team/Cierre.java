@@ -44,6 +44,12 @@ public class Cierre extends Behaviour{
 		return new Vec2(0.75*lado,0.0);
 	}
 	
+	public boolean blokingOurGoalKeeper(){
+		Vec2 goalKeeper = myRobotAPI.getGoalkeeper();
+		return myRobotAPI.isBlocking(myRobotAPI.getPosition(), goalKeeper) || myRobotAPI.teammateBlocking();
+	}
+	
+	
 	public void configure() {
 	}
 
@@ -60,7 +66,9 @@ public class Cierre extends Behaviour{
 
 	public int takeStep() {
 		Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
-		if (getLado()*ball.x > 0){
+		if (blokingOurGoalKeeper()){
+			setState(new Blocking());
+		}else if (getLado()*ball.x > 0){
 			setState(new Defensa());
 		}else{
 			setState(new Cerrar());
@@ -75,13 +83,13 @@ public class Cierre extends Behaviour{
 	
 	class Defensa implements CierreState{
 		public void action() {
-			if (myRobotAPI.blocked()) myRobotAPI.avoidCollisions();
+			myRobotAPI.setDisplayString("Defendiendo");
 			Vec2 me = myRobotAPI.getPosition();
 			Vec2 ball = myRobotAPI.getBall();
 			Vec2 fieldBall = myRobotAPI.toFieldCoordinates(ball);
 			myRobotAPI.setSpeed(3.0);
-			if ((lado == -1 && fieldBall.x < me.x) || (lado == 1 && fieldBall.x > me.x) || 
-					me.distance(fieldBall) <= 0.40){
+			if ((lado == -1 && fieldBall.x < (me.x + 0.25)) || (lado == 1 && fieldBall.x > (me.x + 0.25)) || 
+					me.distance(fieldBall) <= 0.50){
 				myRobotAPI.setSteerHeading(ball.t);
 				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				if (myRobotAPI.canKick()) myRobotAPI.kick();
@@ -94,9 +102,16 @@ public class Cierre extends Behaviour{
 	
 	class Cerrar implements CierreState{
 		public void action(){
-			//Vec2 pos = closestToOurGoal();
-			if (myRobotAPI.blocked()) myRobotAPI.avoidCollisions();
+			myRobotAPI.setDisplayString("volverPosicion");
 			volverAPosicionInicial( myRobotAPI.getPosition(),new Vec2(0.75*lado,0.0));
+		}
+	}
+
+	class Blocking implements CierreState{
+		public void action(){
+			myRobotAPI.setSpeed(3.0);
+			myRobotAPI.setDisplayString("Bloqueado");
+			myRobotAPI.avoidCollisions();
 		}
 	}
 }
