@@ -45,7 +45,7 @@ public class Manager extends TeamManager{
 			return (Behaviour)l;
 		}
 		else if (id == 4){
-			Lateral l = (Lateral)getBehaviour(2);
+			Lateral l = (Lateral)getBehaviour(6);
 			l.setId(id);
 			return (Behaviour)l;
 		}
@@ -101,7 +101,7 @@ public class Manager extends TeamManager{
 		Lateral l2 = (Lateral)getBehaviour(2);
 		l2.setId(2); 
 		_players[2].setBehaviour((Behaviour)l2);
-		Lateral l4 = (Lateral)getBehaviour(2);
+		Lateral l4 = (Lateral)getBehaviour(6);
 		l4.setId(4); 
 		_players[4].setBehaviour((Behaviour)l4);
 	}

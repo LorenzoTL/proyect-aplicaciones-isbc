@@ -12,7 +12,7 @@ public class ManagerCBR extends TeamManager{
 	int[] b;
 	
 	public Behaviour[] createBehaviours() {
-		return new Behaviour[] {new GoalKeeper(),new GoToBall(),new LateralX(),new Forward(), new Defensa(),new LateralOfensivo(),new LateralDefensivo() };
+		return new Behaviour[] {new GoalKeeper(),new GoToBall(),new LateralX(),new Forward(), new Defensa(),new LateralOfensivo(),new LateralDefensivo(),new Cierre() };
 	}
 
 	public Behaviour getDefaultBehaviour(int id) {
@@ -29,7 +29,7 @@ public class ManagerCBR extends TeamManager{
 		}
 		else if (id == 4){
 			b[id] = 2;
-			Lateral l = (Lateral)getBehaviour(2);
+			Lateral l = (Lateral)getBehaviour(6);
 			l.setId(id);
 			return (Behaviour)l;
 		}
@@ -39,7 +39,7 @@ public class ManagerCBR extends TeamManager{
 		}
 		else if (id==1){
 			b[id] = 4;
-			return getBehaviour(4);
+			return getBehaviour(7);
 		}
 		return getBehaviour(1);
 	}

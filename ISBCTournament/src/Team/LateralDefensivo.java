@@ -177,15 +177,12 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 			if (myRobotAPI.teammateBlocking()) myRobotAPI.avoidCollisions();
 			Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
 			int q = F.quadrant(ball);
-			if(q == getPosD()){
+			if(q == getPosD() || myRobotAPI.getPosition().distance(ball) <= 0.15){
 				myRobotAPI.setSpeed(3.0);
 				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				if (myRobotAPI.canKick()){
 					myRobotAPI.kick();
 				}
-			}else if(F.estoyCerca(myRobotAPI.getPosition(),myRobotAPI.toFieldCoordinates(ball))){
-				myRobotAPI.setSpeed(3.0);
-				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 			}else{
 				volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(x,y)),false);
 			}
@@ -202,7 +199,7 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 			int b = F.quadrant(myRobotAPI.toFieldCoordinates(ball));
 			Vec2 me = myRobotAPI.getPosition();
 			if (b == getPosA()){
-				if(myRobotAPI.closestToBall() || F.estoyCerca(me,myRobotAPI.toFieldCoordinates(ball))){
+				if(myRobotAPI.closestToBall()){
 					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 					if (myRobotAPI.canKick()){
 						myRobotAPI.kick();

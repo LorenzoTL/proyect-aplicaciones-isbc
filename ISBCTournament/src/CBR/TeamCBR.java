@@ -34,6 +34,7 @@ public class TeamCBR implements StandardCBRApplication{
 	
 	public void configure() throws ExecutionException {
 		try{
+			TeamDB.init();//HSQLDB
 			_connector = new DataBaseConnector();
 			_connector.initFromXMLfile(jcolibri.util.FileIO.findFile("CBR/databaseconfig.xml"));
 			_casebase = new LinealCaseBase();
@@ -61,6 +62,7 @@ public class TeamCBR implements StandardCBRApplication{
 
 	public void postCycle() throws ExecutionException {
 		_casebase.close();
+		TeamDB.shutDown(); //HSQLDB
 	}
 
 	public CBRCaseBase preCycle() throws ExecutionException {

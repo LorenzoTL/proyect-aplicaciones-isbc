@@ -187,7 +187,6 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 		
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
-			if (myRobotAPI.teammateBlocking()) myRobotAPI.avoidCollisions();
 			if (myRobotAPI.behindEverybody()){
 				myRobotAPI.setSpeed(3.0);
 				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
@@ -214,7 +213,6 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 		
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
-			if (myRobotAPI.teammateBlocking()) myRobotAPI.avoidCollisions();
 			Vec2 ball = myRobotAPI.getBall();
 			Vec2 me = myRobotAPI.getPosition();
 			int b = F.quadrant(myRobotAPI.toFieldCoordinates(ball));
@@ -232,9 +230,6 @@ public class LateralOfensivo extends Behaviour implements Lateral {
 				myRobotAPI.setSpeed(3.0);
 				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 			}
-			/*}else{
-				volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(getX(),getY())), true);
-			}*/
 		}
 		
 	}
