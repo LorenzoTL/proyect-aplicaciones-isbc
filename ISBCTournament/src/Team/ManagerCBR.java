@@ -59,7 +59,7 @@ public class ManagerCBR extends TeamManager{
 			try {
 				cbr.configure();
 				cbr.preCycle();
-				TeamDescription td = mappingDescription(robot.getMyScore(),robot.getOpponentScore()); 
+				TeamDescription td = mappingDescription(robot.getMyScore()-robot.getOpponentScore()); 
 				CBRQuery query = new CBRQuery();
 				query.setDescription(td);
 				cbr.cycle(query);
@@ -74,7 +74,7 @@ public class ManagerCBR extends TeamManager{
 		}
 	}
 	
-	private TeamDescription mappingDescription(int gf,int gc){
+	private TeamDescription mappingDescription(int df){
 		if(b==null)return null;
 		TeamDescription td = new TeamDescription();
 		td.setDefensa(b[1]);
@@ -82,8 +82,7 @@ public class ManagerCBR extends TeamManager{
 		td.setLateral2(b[2]);
 		td.setLateral4(b[4]);
 		td.setGoalKeeper(b[0]);
-		td.setGf(gf);
-		td.setGc(gc);
+		td.setDf(df);
 		return td;
 	}
 	
@@ -94,13 +93,17 @@ public class ManagerCBR extends TeamManager{
 		_players[1].setBehaviour(getBehaviour(ts.getDefensa()));
 		b[1] = ts.getDefensa();
 		
-		_players[2].setBehaviour(getBehaviour(ts.getLateral2()));
+		Lateral l = (Lateral)getBehaviour(ts.getLateral2());
+		l.setId(2);
+		_players[2].setBehaviour((Behaviour)l);
 		b[2] = ts.getLateral2();
 		
 		_players[3].setBehaviour(getBehaviour(ts.getForward()));
 		b[3] = ts.getForward();
 		
-		_players[4].setBehaviour(getBehaviour(ts.getLateral4()));
+		Lateral l4 = (Lateral)getBehaviour(ts.getLateral2());
+		l4.setId(4);
+		_players[4].setBehaviour((Behaviour)l4);
 		b[4] = ts.getLateral4();
 	}
 
