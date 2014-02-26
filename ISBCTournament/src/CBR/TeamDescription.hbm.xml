@@ -11,5 +11,6 @@
 	<property name="lateral4" column="lateral4"/>	
 	<property name="forward" column="forward"/>
 	<property name="df" column="df"/>
+	<property name="time" column="remainingTime"/>
 </class>
 </hibernate-mapping>

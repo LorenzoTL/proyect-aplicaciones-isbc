@@ -83,6 +83,7 @@ public class ManagerCBR extends TeamManager{
 		td.setLateral4(b[4]);
 		td.setGoalKeeper(b[0]);
 		td.setDf(df);
+		td.setTime(_players[0].getRobotAPI().getMatchRemainingTime());
 		return td;
 	}
 	
