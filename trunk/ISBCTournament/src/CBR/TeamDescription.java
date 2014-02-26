@@ -12,6 +12,7 @@ public class TeamDescription implements CaseComponent {
 	int lateral4;
 	int forward;
 	int df;
+	double time;
 	
 	public Attribute getIdAttribute() {
 		return new Attribute("id",TeamDescription.class);
@@ -73,7 +74,11 @@ public class TeamDescription implements CaseComponent {
 		this.df = df;
 	}
 
+	public double getTime(){
+		return time;
+	}
 	
-	
-
+	public void setTime(double time){
+		this.time = time;
+	}
 }
