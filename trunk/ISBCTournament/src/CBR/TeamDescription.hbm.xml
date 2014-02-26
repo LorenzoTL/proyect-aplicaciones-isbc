@@ -10,7 +10,6 @@
 	<property name="lateral2" column="lateral2"/>
 	<property name="lateral4" column="lateral4"/>	
 	<property name="forward" column="forward"/>
-	<property name="gf" column="gf"/>
-	<property name="gc" column="gc"/>
+	<property name="df" column="df"/>
 </class>
 </hibernate-mapping>

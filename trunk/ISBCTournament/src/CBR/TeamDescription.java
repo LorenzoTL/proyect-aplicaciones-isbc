@@ -11,8 +11,7 @@ public class TeamDescription implements CaseComponent {
 	int lateral2;
 	int lateral4;
 	int forward;
-	int gf;
-	int gc;
+	int df;
 	
 	public Attribute getIdAttribute() {
 		return new Attribute("id",TeamDescription.class);
@@ -66,20 +65,12 @@ public class TeamDescription implements CaseComponent {
 		this.forward = forward;
 	}
 
-	public int getGf() {
-		return gf;
+	public int getDf() {
+		return df;
 	}
 
-	public void setGf(int gf) {
-		this.gf = gf;
-	}
-
-	public int getGc() {
-		return gc;
-	}
-
-	public void setGc(int gc) {
-		this.gc = gc;
+	public void setDf(int df) {
+		this.df = df;
 	}
 
 	
