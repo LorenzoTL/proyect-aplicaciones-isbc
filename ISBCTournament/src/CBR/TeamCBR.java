@@ -48,7 +48,7 @@ public class TeamCBR implements StandardCBRApplication{
 		NNConfig simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new Average());
 		simConfig.addMapping(new Attribute("df",TeamDescription.class),new MajorGF());
-		simConfig.addMapping(new Attribute("time",TeamDescription.class),new MinorGC(15));
+		simConfig.addMapping(new Attribute("time",TeamDescription.class),new MinorGC(20));
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_casebase.getCases(), query, simConfig);
 		Collection<CBRCase> myCases = SelectCases.selectTopK(eval, 1);
 		//REUSE
