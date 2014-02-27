@@ -10,6 +10,7 @@ import teams.ucmTeam.*;
 public class ManagerCBR extends TeamManager{
 
 	int[] b;
+	int actualDF;
 	
 	public Behaviour[] createBehaviours() {
 		return new Behaviour[] {new GoalKeeper(),new GoToBall(),new LateralX(),new Forward(), new Defensa(),new LateralOfensivo(),new LateralDefensivo(),new Cierre() };
@@ -50,10 +51,15 @@ public class ManagerCBR extends TeamManager{
 
 	protected void onTakeStep() {
 		RobotAPI robot = _players[0].getRobotAPI();
-		long halftime = robot.getMatchTotalTime()/2;
-		long step = robot.getTimestep();
+		int df = Math.abs(robot.getMyScore() + robot.getOpponentScore());
+		int k = 6;
 		long actualtime = robot.getTimeStamp();
-		if (halftime <= actualtime && actualtime < (halftime+step)){
+		long interval = robot.getMatchTotalTime()/k;
+		long step = robot.getTimestep();
+		int i = (int)actualtime / (int)interval + 1;
+		
+		if ((i == k && df != this.actualDF) ||  
+			(interval*i-step <actualtime && actualtime < interval*i + step)){
 			//CICLO CBR
 			TeamCBR cbr = new TeamCBR();
 			try {
@@ -72,6 +78,7 @@ public class ManagerCBR extends TeamManager{
 				changeBehaviour(ts);
 			}
 		}
+		this.actualDF = df;
 	}
 	
 	private TeamDescription mappingDescription(int df){
