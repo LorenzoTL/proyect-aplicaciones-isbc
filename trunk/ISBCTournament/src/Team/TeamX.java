@@ -4,6 +4,6 @@ import teams.ucmTeam.*;
 
 public class TeamX extends UCMPlayer{
 	protected TeamManager createTeamManager() {
-		return new ManagerCBR();
+		return new Manager();
 	}
 }
