@@ -64,7 +64,8 @@ public class Manager extends TeamManager{
 								new Defensa(),
 								new LateralOfensivo(),
 								new LateralDefensivo(),
-								new Cierre()};
+								new Cierre(),
+								new ForwardAgresivo()};
 	}
 	
 	private void estrategiaOfensiva(){
@@ -74,12 +75,14 @@ public class Manager extends TeamManager{
 		Lateral l4 = (Lateral)getBehaviour(5);
 		l4.setId(4); 
 		_players[4].setBehaviour((Behaviour)l4);
+		_players[3].setBehaviour(getBehaviour(8));
 	}
 	
 	private void estrategiaOfensivaEquilibrada(){
 		Lateral l2 = (Lateral)getBehaviour(5);
 		l2.setId(2); 
 		_players[2].setBehaviour((Behaviour)l2);
+		_players[3].setBehaviour(getBehaviour(8));
 	}
 	
 	private void estrategiaDefensiva(){
@@ -89,12 +92,14 @@ public class Manager extends TeamManager{
 		Lateral l4 = (Lateral)getBehaviour(6);
 		l4.setId(4); 
 		_players[4].setBehaviour((Behaviour)l4);
+		_players[3].setBehaviour(getBehaviour(3));
 	}
 	
 	private void estrategiaDefensivaEquilibrada(){
 		Lateral l2 = (Lateral)getBehaviour(6);
 		l2.setId(2); 
 		_players[2].setBehaviour((Behaviour)l2);
+		_players[3].setBehaviour(getBehaviour(3));
 	}
 	
 	private void estrategiaEquilibrada(){
@@ -104,6 +109,7 @@ public class Manager extends TeamManager{
 		Lateral l4 = (Lateral)getBehaviour(6);
 		l4.setId(4); 
 		_players[4].setBehaviour((Behaviour)l4);
+		_players[3].setBehaviour(getBehaviour(3));
 	}
 	
 }
