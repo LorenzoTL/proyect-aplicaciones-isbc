@@ -114,11 +114,11 @@ public class LateralX extends Behaviour implements Lateral{
 	//endregion
 
 	//region Private Methods
-	private boolean detrasDelBalon(Vec2 me,Vec2 ball){
-		Vec2 b = myRobotAPI.toFieldCoordinates(ball);
-		if (getL() == -1) return b.x >= me.x;
-		return b.x < me.x;
-	}
+//	private boolean detrasDelBalon(Vec2 me,Vec2 ball){
+//		Vec2 b = myRobotAPI.toFieldCoordinates(ball);
+//		if (getL() == -1) return b.x >= me.x;
+//		return b.x < me.x;
+//	}
 	
 	public void volverAPosicionInicial(Vec2 me,boolean ataque){
 		Vec2 pos = myRobotAPI.getPosition();
@@ -192,10 +192,6 @@ public class LateralX extends Behaviour implements Lateral{
 	//endregion
 	
 	//region Patron State
-	private interface State{
-		void action();
-	}
-	
 	private class Defensive implements State{
 		
 		public void action(){
@@ -207,7 +203,7 @@ public class LateralX extends Behaviour implements Lateral{
 			int b = F.quadrant(myRobotAPI.toFieldCoordinates(ball));
 			
 			if (b == getPosD()){
-				if (detrasDelBalon(me,ball)){
+				if (F.estaDetrasBalon(myRobotAPI)){
 					myRobotAPI.setSteerHeading(ball.t);
 					if (myRobotAPI.closestToBall() || F.estoyCerca(me,myRobotAPI.toFieldCoordinates(ball))){
 						myRobotAPI.surroundPoint(myRobotAPI.getPosition(), myRobotAPI.getOpponentsGoal());
@@ -242,7 +238,7 @@ public class LateralX extends Behaviour implements Lateral{
 			Vec2 ball = myRobotAPI.getBall();
 			int b = F.quadrant(myRobotAPI.toFieldCoordinates(ball));
 			if (b == getPosA()){
-				if (detrasDelBalon(me, ball)){
+				if (F.estaDetrasBalon(myRobotAPI)){
 					myRobotAPI.setSteerHeading(ball.t);
 					if (myRobotAPI.closestToBall() || F.estoyCerca(me,myRobotAPI.toFieldCoordinates(ball))){
 						if (myRobotAPI.alignedToBallandGoal()){
@@ -255,7 +251,6 @@ public class LateralX extends Behaviour implements Lateral{
 						myRobotAPI.setSpeed(0.0);
 					}
 				}else{
-					//volverAPosicionInicial(myRobotAPI.toEgocentricalCoordinates(new Vec2(-1*getX(),getY())),true);
 					myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				}
 			}else{

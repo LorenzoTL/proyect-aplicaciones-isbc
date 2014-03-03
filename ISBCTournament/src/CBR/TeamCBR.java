@@ -16,6 +16,7 @@ import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.selection.SelectCases;
 
 public class TeamCBR implements StandardCBRApplication{
@@ -48,14 +49,14 @@ public class TeamCBR implements StandardCBRApplication{
 		NNConfig simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new Average());
 		simConfig.addMapping(new Attribute("df",TeamDescription.class),new MajorGF());
-		simConfig.addMapping(new Attribute("time",TeamDescription.class),new MinorGC(20));
+		simConfig.addMapping(new Attribute("time",TeamDescription.class),new Interval(120000));
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_casebase.getCases(), query, simConfig);
 		Collection<CBRCase> myCases = SelectCases.selectTopK(eval, 1);
 		//REUSE
 		//REVISE
 		//RETAIN
 		if (myCases != null && myCases.toArray().length > 0){
-			_casebase.learnCases(myCases);
+			//_casebase.learnCases(myCases);
 			result = ((CBRCase)myCases.toArray()[0]).getSolution();
 		}
 	}

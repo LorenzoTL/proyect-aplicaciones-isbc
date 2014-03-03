@@ -1,5 +1,20 @@
 drop table if exists teamdescription;
 create table teamdescription(id INTEGER, goalKeeper INTEGER, defensa INTEGER, lateral2 INTEGER, lateral4 INTEGER, forward INTEGER, df INTEGER, remainingTime DOUBLE);
-insert into teamdescription values(1,0,4,2,2,3,0,55000);
-insert into teamdescription values(2,0,4,6,6,3,2,25000);
-insert into teamdescription values(3,0,4,5,5,3,-1,15000);
+
+insert into teamdescription values(1,0,4,5,9,8,-2,115000);
+insert into teamdescription values(2,0,4,5,9,8,-3,101000);
+insert into teamdescription values(3,0,7,2,2,3,-1,21000);
+insert into teamdescription values(4,0,7,2,2,3,-2,42000);
+insert into teamdescription values(5,0,7,2,2,3,-1,61000);
+insert into teamdescription values(6,0,7,2,2,3,-1,81000);
+insert into teamdescription values(7,0,7,6,6,3,1,113000);
+insert into teamdescription values(8,0,7,6,6,3,2,102050);
+insert into teamdescription values(9,0,7,2,6,3,1,21000);
+insert into teamdescription values(10,0,7,2,6,3,2,42000);
+insert into teamdescription values(11,0,7,2,6,3,3,60500);
+insert into teamdescription values(12,0,7,2,6,3,1,80005);
+insert into teamdescription values(13,0,7,2,6,3,0,22000);
+insert into teamdescription values(14,0,7,2,6,3,0,40070);
+insert into teamdescription values(15,0,7,2,6,3,0,61500);
+insert into teamdescription values(16,0,7,2,6,3,0,80520);
+insert into teamdescription values(17,0,7,2,6,3,0,100520);

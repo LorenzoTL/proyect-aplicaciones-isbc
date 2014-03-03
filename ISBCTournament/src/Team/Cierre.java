@@ -6,7 +6,7 @@ import teams.ucmTeam.*;
 public class Cierre extends Behaviour{
 
 	private int lado;
-	private CierreState s;
+	private State s;
 	
 	public int getLado() {
 		return lado;
@@ -16,11 +16,11 @@ public class Cierre extends Behaviour{
 		this.lado = lado;
 	}
 	
-	public CierreState getState() {
+	public State getState() {
 		return s;
 	}
 	
-	public void setState(CierreState s) {
+	public void setState(State s) {
 		this.s = s;
 	}
 	
@@ -35,20 +35,6 @@ public class Cierre extends Behaviour{
 			myRobotAPI.surroundPoint(me,egoC);
 		}
 	}
-	
-	public Vec2 closestToOurGoal(){
-		Vec2 pos =  myRobotAPI.closestTo(myRobotAPI.getOpponents(), myRobotAPI.getOurGoal());
-		pos = myRobotAPI.toFieldCoordinates(pos);
-		if (myRobotAPI.toFieldCoordinates(myRobotAPI.getOurGoal()).distance(pos) <= 0.75)
-				return pos;
-		return new Vec2(0.75*lado,0.0);
-	}
-	
-	public boolean blokingOurGoalKeeper(){
-		Vec2 goalKeeper = myRobotAPI.getGoalkeeper();
-		return myRobotAPI.isBlocking(myRobotAPI.getPosition(), goalKeeper) || myRobotAPI.teammateBlocking();
-	}
-	
 	
 	public void configure() {
 	}
@@ -66,7 +52,7 @@ public class Cierre extends Behaviour{
 
 	public int takeStep() {
 		Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
-		if (blokingOurGoalKeeper()){
+		if (F.blokingOurGoalKeeper(myRobotAPI)){
 			setState(new Blocking());
 		}else if (getLado()*ball.x > 0){
 			setState(new Defensa());
@@ -77,37 +63,33 @@ public class Cierre extends Behaviour{
 		return myRobotAPI.ROBOT_OK;
 	}
 	
-	interface CierreState{
-		void action();
-	}
-	
-	class Defensa implements CierreState{
+	class Defensa implements State{
 		public void action() {
 			myRobotAPI.setDisplayString("Defendiendo");
 			Vec2 me = myRobotAPI.getPosition();
 			Vec2 ball = myRobotAPI.getBall();
 			Vec2 fieldBall = myRobotAPI.toFieldCoordinates(ball);
 			myRobotAPI.setSpeed(3.0);
-			if ((lado == -1 && fieldBall.x < (me.x + 0.25)) || (lado == 1 && fieldBall.x > (me.x + 0.25)) || 
-					me.distance(fieldBall) <= 0.50){
+			if ( (lado == -1 && fieldBall.x < (me.x + 0.25)) || (lado == 1 && fieldBall.x > (me.x + 0.25)) || 
+					(me.distance(fieldBall) <= 0.50 && !F.estanDefendiendo(myRobotAPI))){
 				myRobotAPI.setSteerHeading(ball.t);
 				myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 				if (myRobotAPI.canKick()) myRobotAPI.kick();
 			}else{
-				Vec2 pos = closestToOurGoal();
-				volverAPosicionInicial( me,pos);
+				Vec2 pos = F.closestToOurGoal(myRobotAPI);
+				F.volverAPosicionInicial(myRobotAPI,pos);
 			}
 		}
 	}
 	
-	class Cerrar implements CierreState{
+	class Cerrar implements State{
 		public void action(){
 			myRobotAPI.setDisplayString("volverPosicion");
-			volverAPosicionInicial( myRobotAPI.getPosition(),new Vec2(0.75*lado,0.0));
+			F.volverAPosicionInicial( myRobotAPI,new Vec2(0.75*lado,0.0));
 		}
 	}
 
-	class Blocking implements CierreState{
+	class Blocking implements State{
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
 			myRobotAPI.setDisplayString("Bloqueado");
