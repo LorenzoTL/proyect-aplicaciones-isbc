@@ -115,7 +115,7 @@ public class ForwardAgresivo extends Behaviour {
 		            if (myRobotAPI.getBall().r < 0.1){
 		           
 		                myRobotAPI.setSpeed(1.5);
-		                if (!F.estaDetrasBall(myRobotAPI)){
+		                if (!F.estaDetrasBalon(myRobotAPI)){
 		                    myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 		    			}
 		                myRobotAPI.setSteerHeading(myRobotAPI.getOpponentsGoal().t);

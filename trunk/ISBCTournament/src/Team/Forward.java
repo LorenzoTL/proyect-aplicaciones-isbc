@@ -99,7 +99,7 @@ public class Forward extends Behaviour {
             myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
             if (myRobotAPI.getBall().r < 0.1){ 
                 myRobotAPI.setSpeed(1.5);
-                if (!F.estaDetrasBall(myRobotAPI)){
+                if (!F.estaDetrasBalon(myRobotAPI)){
                     myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
                  
     			}

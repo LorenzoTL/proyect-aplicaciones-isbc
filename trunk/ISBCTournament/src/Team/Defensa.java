@@ -6,14 +6,14 @@ import teams.ucmTeam.*;
 public class Defensa extends Behaviour {
 	
 	Vec2 me;
-	DefensaState state;
+	State state;
 	int lado;
 	
-	public DefensaState getState(){
+	public State getState(){
 		return state;
 	}
 	
-	public void setState(DefensaState s){
+	public void setState(State s){
 		this.state = s;
 	}
 	
@@ -62,13 +62,8 @@ public class Defensa extends Behaviour {
 	}
 	
 //PATRÓN STATE ------------------------------------------------------------------------------------------------------------------
-	//Interfaz para implementar
-	private interface DefensaState{
-		void action();
-	}
-	
 	//Sub clases que implementan la interfaz
-	private class Defensive implements DefensaState{
+	private class Defensive implements State{
 		public void action(){
 			 Vec2 ball = myRobotAPI.toFieldCoordinates(myRobotAPI.getBall());
              myRobotAPI.setSpeed(3.0);
@@ -83,7 +78,7 @@ public class Defensa extends Behaviour {
 		}
 	}
 	
-	private class Ofensive implements DefensaState{
+	private class Ofensive implements State{
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
 			if(myRobotAPI.teammateBlocking()) myRobotAPI.avoidCollisions();

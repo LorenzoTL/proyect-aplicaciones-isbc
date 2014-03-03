@@ -5,7 +5,7 @@ import teams.ucmTeam.*;
 
 public class LateralDefensivo extends Behaviour implements Lateral {
 	
-	LateralState state;
+	State state;
 	int posD;
 	int posA;
 	double x;
@@ -68,11 +68,11 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 		this.y = y;
 	}
 	
-	public LateralState getState(){
+	public State getState(){
 		return state;
 	}
 	
-	public void setState(LateralState s){
+	public void setState(State s){
 		this.state = s;
 	}
 	//endregion
@@ -139,12 +139,12 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 					this.setPosD(1);
 					this.setPosA(0);
 					this.setX(-0.70);
-					this.setY(0.55);
+					this.setY(0.525);
 				}else{
 					this.setPosD(0);
 					this.setPosA(1);
 					this.setX(0.70);
-					this.setY(0.55);
+					this.setY(0.525);
 				}
 				break;
 			case 4:
@@ -152,12 +152,12 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 					this.setPosD(2);
 					this.setPosA(3);
 					this.setX(-0.70);
-					this.setY(-0.55);
+					this.setY(-0.525);
 				}else{
 					this.setPosD(3);
 					this.setPosA(2);
 					this.setX(0.70);
-					this.setY(-0.55);
+					this.setY(-0.525);
 				}
 				break;
 			default: break;
@@ -166,11 +166,7 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 	//endregion
 	
 	//region Patron State
-	private interface LateralState{
-		void action();
-	}
-	
-	private class Defensive implements LateralState{
+	private class Defensive implements State{
 		
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
@@ -190,7 +186,7 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 		
 	}
 	
-	private class Ofensive implements LateralState{
+	private class Ofensive implements State{
 		
 		public void action(){
 			myRobotAPI.setSpeed(3.0);

@@ -13,7 +13,16 @@ public class ManagerCBR extends TeamManager{
 	int actualDF;
 	
 	public Behaviour[] createBehaviours() {
-		return new Behaviour[] {new GoalKeeper(),new GoToBall(),new LateralX(),new Forward(), new Defensa(),new LateralOfensivo(),new LateralDefensivo(),new Cierre() };
+		return new Behaviour[] {new GoalKeeper(),
+								new GoToBall(),
+								new LateralX(),
+								new Forward(), 
+								new Defensa(),
+								new LateralOfensivo(),
+								new LateralDefensivo(),
+								new Cierre(),
+								new ForwardAgresivo(),
+								new MedioCentro()};
 	}
 
 	public Behaviour getDefaultBehaviour(int id) {
@@ -65,7 +74,7 @@ public class ManagerCBR extends TeamManager{
 			try {
 				cbr.configure();
 				cbr.preCycle();
-				TeamDescription td = mappingDescription(robot.getMyScore()-robot.getOpponentScore()); 
+				TeamDescription td = mappingDescription(robot.getMyScore()-robot.getOpponentScore(),robot.getMatchTotalTime()); 
 				CBRQuery query = new CBRQuery();
 				query.setDescription(td);
 				cbr.cycle(query);
@@ -81,7 +90,7 @@ public class ManagerCBR extends TeamManager{
 		this.actualDF = df;
 	}
 	
-	private TeamDescription mappingDescription(int df){
+	private TeamDescription mappingDescription(int df,long time){
 		if(b==null)return null;
 		TeamDescription td = new TeamDescription();
 		td.setDefensa(b[1]);
@@ -90,7 +99,7 @@ public class ManagerCBR extends TeamManager{
 		td.setLateral4(b[4]);
 		td.setGoalKeeper(b[0]);
 		td.setDf(df);
-		td.setTime(_players[0].getRobotAPI().getMatchRemainingTime());
+		td.setTime(time);
 		return td;
 	}
 	
@@ -109,9 +118,13 @@ public class ManagerCBR extends TeamManager{
 		_players[3].setBehaviour(getBehaviour(ts.getForward()));
 		b[3] = ts.getForward();
 		
-		Lateral l4 = (Lateral)getBehaviour(ts.getLateral2());
-		l4.setId(4);
-		_players[4].setBehaviour((Behaviour)l4);
+		if (ts.getLateral4() == 9){
+			_players[4].setBehaviour(getBehaviour(ts.getLateral4()));
+		}else{
+			Lateral l4 = (Lateral)getBehaviour(ts.getLateral4());
+			l4.setId(4);
+			_players[4].setBehaviour((Behaviour)l4);
+		}
 		b[4] = ts.getLateral4();
 	}
 
