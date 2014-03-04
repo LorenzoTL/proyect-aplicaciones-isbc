@@ -38,6 +38,7 @@ public class MedioCentro extends Behaviour{
 	
 	class Esperar implements State{
 		public void action(){
+			if (myRobotAPI.blocked()) myRobotAPI.avoidCollisions();
 			F.volverAPosicionInicial(myRobotAPI, new Vec2(0,0));
 		}
 	}
@@ -45,6 +46,7 @@ public class MedioCentro extends Behaviour{
 	class Presionar implements State{
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
+			if (myRobotAPI.blocked()) myRobotAPI.avoidCollisions();
 			if (F.estaDetrasBalon(myRobotAPI)){
 				myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
 				if (myRobotAPI.alignedToBallandGoal()){

@@ -7,16 +7,16 @@ import teams.ucmTeam.*;
 public class ForwardAgresivo extends Behaviour {
 	
 	Vec2 me;
-	ForwardState state;
+	State state;
 	int lado;
 	int cont=0;
 	double centro;
 
-	public ForwardState getState(){
+	public State getState(){
 		return state;
 	}
 	
-	public void setState(ForwardState s){
+	public void setState(State s){
 		this.state = s;
 	}
 	
@@ -76,13 +76,9 @@ public class ForwardAgresivo extends Behaviour {
 	 }
 	
 //PATRÓN STATE ------------------------------------------------------------------------------------------------------------------
-	//Interfaz para implementar
-	private interface ForwardState{
-		void action();
-	}
 	
 	//Sub clases que implementan la interfaz
-	private class Defensive implements ForwardState{
+	private class Defensive implements State{
 		public void action(){
 			
 			Vec2 pos=myRobotAPI.getPosition();
@@ -102,7 +98,7 @@ public class ForwardAgresivo extends Behaviour {
 		}
 	}
 	
-	private class Ofensive implements ForwardState{
+	private class Ofensive implements State{
 		public void action(){
 			myRobotAPI.setSpeed(3.0);
 			if (myRobotAPI.blocked())
