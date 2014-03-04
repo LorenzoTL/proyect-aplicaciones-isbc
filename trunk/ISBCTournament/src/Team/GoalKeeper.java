@@ -4,14 +4,14 @@ import teams.ucmTeam.*;
 
 public class GoalKeeper extends Behaviour{
 
-	KeeperState state;
+	State state;
 	int lado;
 	
-	public KeeperState getState(){
+	public State getState(){
 		return state;
 	}
 	
-	public void setState(KeeperState s){
+	public void setState(State s){
 		this.state = s;
 	}
 	
@@ -48,13 +48,10 @@ public class GoalKeeper extends Behaviour{
 	}
 	
 	//PATRÓN STATE ------------------------------------------------------------------------------------------------------------------
-		//Interfaz para implementar
-		private interface KeeperState{
-			void action();
-		}
+		
 		
 		//Sub clases que implementan la interfaz
-		private class Salida implements KeeperState{
+		private class Salida implements State{
 			public void action(){
 				myRobotAPI.setSpeed(1.5);
 				myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);
@@ -67,7 +64,7 @@ public class GoalKeeper extends Behaviour{
 			}
 		}
 		
-		private class IrPorteria implements KeeperState{
+		private class IrPorteria implements State{
 			public void action(){
 				myRobotAPI.setSpeed(3.0);
 				myRobotAPI.setSteerHeading(myRobotAPI.getOurGoal().t);
@@ -75,7 +72,7 @@ public class GoalKeeper extends Behaviour{
 			}
 		}
 		
-		private class Parado implements KeeperState{
+		private class Parado implements State{
 			public void action(){
 				myRobotAPI.setSpeed(0.0);
 				myRobotAPI.setSteerHeading(myRobotAPI.getBall().t);

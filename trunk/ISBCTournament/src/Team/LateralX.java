@@ -201,7 +201,7 @@ public class LateralX extends Behaviour implements Lateral{
 			int q = F.quadrant(me);
 			Vec2 ball = myRobotAPI.getBall();
 			int b = F.quadrant(myRobotAPI.toFieldCoordinates(ball));
-			
+			if (myRobotAPI.blocked()) myRobotAPI.avoidCollisions();
 			if (b == getPosD()){
 				if (F.estaDetrasBalon(myRobotAPI)){
 					myRobotAPI.setSteerHeading(ball.t);

@@ -14,6 +14,7 @@ public class Manager extends TeamManager{
 		RobotAPI robot = _players[0].getRobotAPI();
 		int k = 6;
 		long time = robot.getTimeStamp();
+		long mt = robot.getMatchRemainingTime();
 		long quartertime = robot.getMatchTotalTime()/k;
 		long step = robot.getTimestep();
 		int gf = robot.getMyScore();
@@ -24,10 +25,12 @@ public class Manager extends TeamManager{
 		if (this.actualDF != _df || 
 			(quartertime*i-step <time && time < quartertime*i + step)){
 			if (gf < gc){ 
-				if (i == k) estrategiaOfensiva();
+				if (mt <= quartertime + step) 
+					estrategiaOfensiva();
 				else estrategiaOfensivaEquilibrada();	
 			}else if (gf > gc){
-				if (i == k) estrategiaDefensiva();
+				if (mt <= quartertime + step) 
+					estrategiaDefensiva();
 				else estrategiaDefensivaEquilibrada();
 			}else	
 				estrategiaEquilibrada();
