@@ -1,4 +1,4 @@
-package Team;
+package t1314grupo03;
 
 import EDU.gatech.cc.is.util.Vec2;
 import teams.ucmTeam.*;
@@ -114,11 +114,6 @@ public class LateralX extends Behaviour implements Lateral{
 	//endregion
 
 	//region Private Methods
-//	private boolean detrasDelBalon(Vec2 me,Vec2 ball){
-//		Vec2 b = myRobotAPI.toFieldCoordinates(ball);
-//		if (getL() == -1) return b.x >= me.x;
-//		return b.x < me.x;
-//	}
 	
 	public void volverAPosicionInicial(Vec2 me,boolean ataque){
 		Vec2 pos = myRobotAPI.getPosition();
@@ -206,9 +201,9 @@ public class LateralX extends Behaviour implements Lateral{
 				if (F.estaDetrasBalon(myRobotAPI)){
 					myRobotAPI.setSteerHeading(ball.t);
 					if (myRobotAPI.closestToBall() || F.estoyCerca(me,myRobotAPI.toFieldCoordinates(ball))){
-						myRobotAPI.surroundPoint(myRobotAPI.getPosition(), myRobotAPI.getOpponentsGoal());
+						myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
 						if (myRobotAPI.canKick()){
-							if(myRobotAPI.getObstacles().length == 0) myRobotAPI.kick();
+							if(myRobotAPI.alignedToBallandGoal()) myRobotAPI.kick();
 							else myRobotAPI.passBall(myRobotAPI.getClosestMate());
 						}else{
 							myRobotAPI.alignedToBallandGoal();

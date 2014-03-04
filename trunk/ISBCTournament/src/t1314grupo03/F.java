@@ -1,4 +1,4 @@
-package Team;
+package t1314grupo03;
 
 import teams.ucmTeam.RobotAPI;
 import EDU.gatech.cc.is.util.Vec2;
@@ -24,12 +24,9 @@ public class F {
                 ang += Math.PI*2;
         }
         double aux = Math.PI/9;
-        if ((r.getFieldSide() == -1 && (ang < aux || ang > 2*Math.PI-aux)))// ||
-                return true;
-        if ((r.getFieldSide() == 1 && (ang > Math.PI-aux && ang < Math.PI-aux)))
-                return true;
-        else
-                return false;
+        if ((r.getFieldSide() == -1 && (ang < aux || ang > 2*Math.PI-aux))) return true;
+        if ((r.getFieldSide() == 1 && (ang > Math.PI-aux && ang < Math.PI-aux))) return true;
+        return false;
 	}
 	
 	public static boolean estanDefendiendo(RobotAPI r){

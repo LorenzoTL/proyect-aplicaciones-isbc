@@ -1,4 +1,4 @@
-package Team;
+package t1314grupo03;
 
 import teams.ucmTeam.*;
 
@@ -35,7 +35,7 @@ public class GoalKeeper extends Behaviour{
 	}
 	
 	public void onInit(RobotAPI r) {
-		r.setDisplayString("goalKeeperBehaviour");
+		r.setDisplayString("goalKeeper");
 		lado = myRobotAPI.getFieldSide();
 	}
 	

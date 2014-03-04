@@ -1,4 +1,4 @@
-package Team;
+package t1314grupo03;
 
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.exception.ExecutionException;

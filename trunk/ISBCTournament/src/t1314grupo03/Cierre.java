@@ -1,4 +1,4 @@
-package Team;
+package t1314grupo03;
 
 import EDU.gatech.cc.is.util.Vec2;
 import teams.ucmTeam.*;
@@ -91,8 +91,6 @@ public class Cierre extends Behaviour{
 
 	class Blocking implements State{
 		public void action(){
-			myRobotAPI.setSpeed(3.0);
-			myRobotAPI.setDisplayString("Bloqueado");
 			myRobotAPI.avoidCollisions();
 		}
 	}
