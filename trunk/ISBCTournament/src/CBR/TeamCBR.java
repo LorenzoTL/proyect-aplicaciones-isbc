@@ -51,13 +51,18 @@ public class TeamCBR implements StandardCBRApplication{
 		simConfig.addMapping(new Attribute("df",TeamDescription.class),new MajorGF());
 		simConfig.addMapping(new Attribute("time",TeamDescription.class),new Interval(120000));
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_casebase.getCases(), query, simConfig);
-		Collection<CBRCase> myCases = SelectCases.selectTopK(eval, 1);
-		//REUSE
-		//REVISE
-		//RETAIN
-		if (myCases != null && myCases.toArray().length > 0){
-			//_casebase.learnCases(myCases);
-			result = ((CBRCase)myCases.toArray()[0]).getSolution();
+		Collection<CBRCase> myCases = SelectCases.selectTopK(eval, 1);	
+		if (myCases != null && myCases.toArray().length > 0){	
+			CBRCase _case = (CBRCase)myCases.toArray()[0];
+			RetrievalResult val = (RetrievalResult)eval.toArray()[0];
+			if (val.getEval() <= 0.5){ //no hay muchos casos parecidos alamcenados en la bbdd
+				//REUSE
+				AdaptationAverage.adaptationAverage(new Attribute("time",TeamDescription.class), query,myCases);
+				//REVISE
+				//RETAIN
+				_casebase.learnCases(myCases);
+			}
+			result = _case.getSolution();
 		}
 	}
 

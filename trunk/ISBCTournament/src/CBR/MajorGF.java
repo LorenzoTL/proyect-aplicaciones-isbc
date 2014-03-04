@@ -21,9 +21,12 @@ public class MajorGF implements LocalSimilarityFunction{
 		double v2 = i2.doubleValue();
 		
 		if (v1 == v2) return 1.0;
-		v1 = Math.abs(v1 + v2);
-		if (v1 >= 5) return 1.0;
-		return v1/5;
+		if (v1*v2 > 0){
+			v1 = Math.abs(v1 +v2);
+			if (v1 >= 5) return 1.0;
+			return v1/5;
+		}
+		return 0.0;
 		
 	}
 

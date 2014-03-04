@@ -1,10 +1,11 @@
-package t1314grupo03;
+package CBR;
 
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.exception.ExecutionException;
 import CBR.TeamCBR;
 import CBR.TeamDescription;
 import CBR.TeamSolution;
+import t1314grupo03.*;
 import teams.ucmTeam.*;
 
 public class ManagerCBR extends TeamManager{
@@ -67,14 +68,14 @@ public class ManagerCBR extends TeamManager{
 		long step = robot.getTimestep();
 		int i = (int)actualtime / (int)interval + 1;
 		
-		if ((i == k && df != this.actualDF) ||  
+		if ((df != this.actualDF) ||  
 			(interval*i-step <actualtime && actualtime < interval*i + step)){
 			//CICLO CBR
-			TeamCBR cbr = new TeamCBR();
+			TeamCBR cbr = TeamCBR.getInstance();
 			try {
 				cbr.configure();
 				cbr.preCycle();
-				TeamDescription td = mappingDescription(robot.getMyScore()-robot.getOpponentScore(),robot.getMatchTotalTime()); 
+				TeamDescription td = mappingDescription(robot.getMyScore()-robot.getOpponentScore(),robot.getTimeStamp()); 
 				CBRQuery query = new CBRQuery();
 				query.setDescription(td);
 				cbr.cycle(query);
