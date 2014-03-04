@@ -1,4 +1,4 @@
-package Team;
+package t1314grupo03;
 
 import EDU.gatech.cc.is.util.Vec2;
 import teams.ucmTeam.*;
@@ -144,7 +144,7 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 					this.setPosD(0);
 					this.setPosA(1);
 					this.setX(0.70);
-					this.setY(0.525);
+					this.setY(0.48);
 				}
 				break;
 			case 4:
@@ -157,7 +157,7 @@ public class LateralDefensivo extends Behaviour implements Lateral {
 					this.setPosD(3);
 					this.setPosA(2);
 					this.setX(0.70);
-					this.setY(-0.525);
+					this.setY(-0.48);
 				}
 				break;
 			default: break;

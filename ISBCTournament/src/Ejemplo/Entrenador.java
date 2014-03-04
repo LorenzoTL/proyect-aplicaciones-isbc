@@ -1,16 +1,16 @@
 package Ejemplo;
 
-import Team.Cierre;
-import Team.Defensa;
-import Team.Forward;
-import Team.ForwardAgresivo;
-import Team.GoToBall;
-import Team.GoalKeeper;
-import Team.Lateral;
-import Team.LateralDefensivo;
-import Team.LateralOfensivo;
-import Team.LateralX;
-import Team.MedioCentro;
+import t1314grupo03.Cierre;
+import t1314grupo03.Defensa;
+import t1314grupo03.Forward;
+import t1314grupo03.ForwardAgresivo;
+import t1314grupo03.GoToBall;
+import t1314grupo03.GoalKeeper;
+import t1314grupo03.Lateral;
+import t1314grupo03.LateralDefensivo;
+import t1314grupo03.LateralOfensivo;
+import t1314grupo03.LateralX;
+import t1314grupo03.MedioCentro;
 import teams.ucmTeam.*;
 import teams.ucmTeam.Message.Type;
 
