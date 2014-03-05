@@ -92,13 +92,12 @@ public class Forward extends Behaviour {
 			if (myRobotAPI.blocked())
                 myRobotAPI.avoidCollisions();	
             myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-            if (myRobotAPI.getBall().r < 0.1){ 
+            if (myRobotAPI.getBall().r < (myRobotAPI.getPlayerRadius() + 0.1)){ 
                 myRobotAPI.setSpeed(1.5);
                 if (!F.estaDetrasBalon(myRobotAPI)){
                     myRobotAPI.setBehindBall(myRobotAPI.getOpponentsGoal());
-                 
-    			}
-                myRobotAPI.setSteerHeading(myRobotAPI.getOpponentsGoal().t);
+    			}else
+    				myRobotAPI.setSteerHeading(myRobotAPI.getOpponentsGoal().t);
             }
             if (myRobotAPI.canKick() && myRobotAPI.getOpponentsGoal().r < 0.8)
                 myRobotAPI.kick();
