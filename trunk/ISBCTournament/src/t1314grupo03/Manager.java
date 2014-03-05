@@ -16,7 +16,7 @@ public class Manager extends TeamManager{
 		long time = robot.getTimeStamp();
 		long mt = robot.getMatchRemainingTime();
 		long quartertime = robot.getMatchTotalTime()/k;
-		long step = robot.getTimestep();
+		long step = 20;
 		int gf = robot.getMyScore();
 		int gc = robot.getOpponentScore();
 		int i = (int)time / (int)quartertime + 1;

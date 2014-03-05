@@ -64,18 +64,22 @@ public class ManagerCBR extends TeamManager{
 		int df = Math.abs(robot.getMyScore() + robot.getOpponentScore());
 		int k = 6;
 		long actualtime = robot.getTimeStamp();
-		long interval = robot.getMatchTotalTime()/k;
-		long step = robot.getTimestep();
+		long totaltime = robot.getMatchTotalTime();
+		boolean fin = robot.getMatchRemainingTime() < 2000;
+		long interval = totaltime/k;
+		long step = 20;
 		int i = (int)actualtime / (int)interval + 1;
 		
 		if ((df != this.actualDF) ||  
-			(interval*i-step <actualtime && actualtime < interval*i + step)){
+			(!fin && ((interval*i-step) < actualtime && actualtime < (interval*i + step)))){
+			long time = actualtime +step;
+			if (time >totaltime) time = totaltime;
 			//CICLO CBR
 			TeamCBR cbr = TeamCBR.getInstance();
 			try {
 				cbr.configure();
-				cbr.preCycle();
-				TeamDescription td = mappingDescription(robot.getMyScore()-robot.getOpponentScore(),robot.getTimeStamp()); 
+				cbr.preCycle(); 
+				TeamDescription td = mappingDescription(robot.getMyScore()-robot.getOpponentScore(),time); 
 				CBRQuery query = new CBRQuery();
 				query.setDescription(td);
 				cbr.cycle(query);

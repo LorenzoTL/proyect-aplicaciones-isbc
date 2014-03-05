@@ -26,8 +26,10 @@ public class AdaptationAverage {
 				Number q = (Number)queryValue;
 				Number c = (Number)caseValue;
 				
+				
 				double average = (q.doubleValue() + c.doubleValue())/2;
-				querySource.setValue(cc, average);
+				
+				querySource.setValue(cc, (int)average);
 				
 			} catch (AttributeAccessException e) {
 				e.printStackTrace();
