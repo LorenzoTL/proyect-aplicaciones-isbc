@@ -6,9 +6,11 @@ import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
 public class MinorGC implements LocalSimilarityFunction{
 	
 	double interval;
+	int step;
 	
-	public MinorGC(double interval){
+	public MinorGC(double interval,int step){
 		this.interval = interval;
+		this.step = step;
 	}
 	
 	public double compute(Object o1, Object o2) throws NoApplicableSimilarityFunctionException {
@@ -25,10 +27,11 @@ public class MinorGC implements LocalSimilarityFunction{
 		double v1 = i1.doubleValue();
 		double v2 = i2.doubleValue();
 		
-		v1 = Math.abs(v1-v2);
+		int _v1 = (int)(v1/step) + 1;
+		int _v2 = (int)(v2/step) + 1;
 		
-		if(v1 <= interval) return 1.0;
-		return  interval/v1;
+		if ((_v1 < 6 && _v2 < 6) || (_v1 == 6 && _v2 == 6)) return 1 - ((double) Math.abs(v1 - v2) / interval);
+		return 0.0;
 	}
 
 	public boolean isApplicable(Object o1, Object o2) {

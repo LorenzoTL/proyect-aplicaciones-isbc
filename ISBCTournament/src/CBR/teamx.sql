@@ -17,4 +17,4 @@ insert into teamdescription values(13,0,7,2,6,3,0,22000);
 insert into teamdescription values(14,0,7,2,6,3,0,40070);
 insert into teamdescription values(15,0,7,2,6,3,0,61500);
 insert into teamdescription values(16,0,7,2,6,3,0,80520);
-insert into teamdescription values(17,0,7,2,6,3,0,100520);
+insert into teamdescription values(17,0,7,2,6,3,0,105520);

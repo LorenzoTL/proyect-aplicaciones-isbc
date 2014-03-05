@@ -18,6 +18,7 @@ import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Interval;
 import jcolibri.method.retrieve.selection.SelectCases;
+import jcolibri.method.reuse.DirectAttributeCopyMethod;
 
 public class TeamCBR implements StandardCBRApplication{
 
@@ -49,15 +50,16 @@ public class TeamCBR implements StandardCBRApplication{
 		NNConfig simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new Average());
 		simConfig.addMapping(new Attribute("df",TeamDescription.class),new MajorGF());
-		simConfig.addMapping(new Attribute("time",TeamDescription.class),new Interval(120000));
+		simConfig.addMapping(new Attribute("time",TeamDescription.class),new MinorGC(120000,20000));
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_casebase.getCases(), query, simConfig);
 		Collection<CBRCase> myCases = SelectCases.selectTopK(eval, 1);	
 		if (myCases != null && myCases.toArray().length > 0){	
 			CBRCase _case = (CBRCase)myCases.toArray()[0];
 			RetrievalResult val = (RetrievalResult)eval.toArray()[0];
-			if (val.getEval() <= 0.5){ //no hay muchos casos parecidos alamcenados en la bbdd
+			if (val.getEval() <= 0.70){ //no hay muchos casos parecidos alamcenados en la bbdd
 				//REUSE
-				AdaptationAverage.adaptationAverage(new Attribute("time",TeamDescription.class), query,myCases);
+				DirectAttributeCopyMethod.copyAttribute(new Attribute("time",TeamDescription.class), new Attribute("time",TeamDescription.class), query, myCases);
+				AdaptationAverage.adaptationAverage(new Attribute("df",TeamDescription.class), query,myCases);
 				//REVISE
 				//RETAIN
 				_casebase.learnCases(myCases);
