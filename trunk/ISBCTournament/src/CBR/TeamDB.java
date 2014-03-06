@@ -5,8 +5,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.HashMap;
 
-import jcolibri.test.database.HSQLDBserver;
-import jcolibri.test.database.SqlFile;
 import jcolibri.util.FileIO;
 
 import org.hsqldb.Server;
@@ -35,7 +33,7 @@ public class TeamDB {
     		SqlFile file = new SqlFile(new File(FileIO.findFile("src/CBR/teamx.sql").getFile()),false,new HashMap());
     		file.execute(conn, true);
     	}catch(Exception e){
-    		org.apache.commons.logging.LogFactory.getLog(HSQLDBserver.class).error(e);
+    		org.apache.commons.logging.LogFactory.getLog(TeamDB.class).error(e);
     	}
     }
     
