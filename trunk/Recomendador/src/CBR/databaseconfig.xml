@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<DataBaseConfiguration>
-	<HibernateConfigFile>CBR/hibernate.cfg.xml</HibernateConfigFile>
-	<DescriptionMappingFile>CBR/RecomendadorDescription.hbm.xml</DescriptionMappingFile>
-	<DescriptionClassName>CBR.RecomendadorDescription</DescriptionClassName>
-	<SolutionMappingFile>CBR/RecomendadorSolution.hbm.xml</SolutionMappingFile>
-	<SolutionClassName>CBR.RecomendadorSolution</SolutionClassName>	
-</DataBaseConfiguration>
