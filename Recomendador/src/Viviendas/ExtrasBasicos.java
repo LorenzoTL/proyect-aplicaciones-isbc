@@ -25,7 +25,10 @@ public class ExtrasBasicos implements CaseComponent{
 	boolean aireAcondicionado;
 	boolean nevera;
 	
-
+	public ExtrasBasicos(){
+		
+	}
+	
 	public ExtrasBasicos(int id){
 		super();
 		this.id = id;

@@ -1,17 +1,32 @@
 package CBR;
 
+import java.util.Collection;
+
+import Viviendas.DescripcionVivienda;
+import Viviendas.ExtrasBasicos;
+import Viviendas.ViviendasConnector;
+import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
+import jcolibri.cbrcore.Attribute;
+import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.CaseComponent;
 import jcolibri.cbrcore.Connector;
 import jcolibri.exception.ExecutionException;
+import jcolibri.method.retrieve.RetrievalResult;
+import jcolibri.method.retrieve.NNretrieval.NNConfig;
+import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
+import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
+import jcolibri.method.retrieve.selection.SelectCases;
+import jcolibri.method.reuse.DirectAttributeCopyMethod;
 
 public class RecomendadorCBR implements StandardCBRApplication{
 
 	Connector _connector;
-	CBRCaseBase _casebase;
-	CaseComponent result;
+	CBRCaseBase _caseBase;
+	NNConfig simConfig;
 	
 	private static RecomendadorCBR _instance = null;
 	
@@ -22,24 +37,47 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	}
 	
 	public void configure() throws ExecutionException {
-		// TODO 	
+		_connector = new ViviendasConnector();
+		_caseBase = new LinealCaseBase();
+		//TODO funciones de comparacion para todos los atributos de la descripción
+		simConfig = new NNConfig();
+		simConfig.setDescriptionSimFunction(new Average());
+		simConfig.addMapping(new Attribute("id", DescripcionVivienda.class), new Equal());
+		//simConfig.addMapping(new Attribute("puntuacion", DescripcionVivienda.class), new Equal());
 	}
 	
 	public void cycle(CBRQuery query) throws ExecutionException {
-		// TODO 
+		//ejecutamos KNN
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+		Collection<CBRCase> retrievedCases = SelectCases.selectTopK(eval, 1);
+		DirectAttributeCopyMethod.copyAttribute(new Attribute("puntuacion",DescripcionVivienda.class), new Attribute("puntuacion",DescripcionVivienda.class), query, retrievedCases);
+		_caseBase.learnCases(retrievedCases);
+		System.out.println(retrievedCases.size());
 	}
 	
-	public void postCycle() throws ExecutionException {
-		// TODO 
+	public void postCycle() throws ExecutionException { 
+		_caseBase.close();
 	}
 	
 	public CBRCaseBase preCycle() throws ExecutionException {
-		// TODO 
-		return null;
+		_caseBase.init(_connector);	
+		return _caseBase;
 	}
 	
-	public CaseComponent getResult() {
-		return result;
+	public static void main(String[] args){
+		StandardCBRApplication recomendador = RecomendadorCBR.getInstance();
+		try{
+			recomendador.configure();
+			recomendador.preCycle();
+			CBRQuery query = new CBRQuery();
+			DescripcionVivienda dv = new DescripcionVivienda();
+			dv.setId(1);
+			dv.setPuntuacion(0);
+			query.setDescription(dv);
+			recomendador.cycle(query);
+			recomendador.postCycle();	
+		}catch(Exception ex){
+			
+		}
 	}
-	
 }

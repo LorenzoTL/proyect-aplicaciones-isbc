@@ -36,6 +36,12 @@ public class DescripcionVivienda implements CaseComponent{
 	ExtrasBasicos extrasBasicos;
 	ExtrasOtros extrasOtros;
 	
+	Integer puntuacion;
+	
+	public DescripcionVivienda()
+	{
+		
+	}
 	
 	public DescripcionVivienda(int id)
 	{
@@ -71,7 +77,7 @@ public class DescripcionVivienda implements CaseComponent{
 		extrasOtros= new ExtrasOtros(values[17]);
 		
 		descripcion = values[18];
-
+		puntuacion = (values.length == 19) ? 0 : Integer.valueOf(values[19]);
 	}
 	
 	@Override
@@ -94,6 +100,7 @@ public class DescripcionVivienda implements CaseComponent{
 				extrasFinca + "#" + 
 				extrasBasicos + "#" + 
 				extrasOtros + "#" +
+				puntuacion + "#" +
 				descripcion.replace('#', ' '); 
 	}
 	
@@ -213,16 +220,14 @@ public class DescripcionVivienda implements CaseComponent{
 	public void setPrecioZona(Integer precioZona) {
 		this.precioZona = precioZona;
 	}
-
+	public Integer getPuntuacion() {
+		return puntuacion;
+	}
+	public void setPuntuacion(Integer puntuacion) {
+		this.puntuacion = puntuacion;
+	}
 	@Override
 	public Attribute getIdAttribute() {
 		return new Attribute("id", DescripcionVivienda.class);
 	}
-	
-	
-	
-	
-	
-	
-	
 }
