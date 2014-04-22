@@ -3,7 +3,6 @@ package CBR;
 import java.util.Collection;
 
 import Viviendas.DescripcionVivienda;
-import Viviendas.ExtrasBasicos;
 import Viviendas.ViviendasConnector;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
@@ -11,7 +10,6 @@ import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CBRCase;
 import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
-import jcolibri.cbrcore.CaseComponent;
 import jcolibri.cbrcore.Connector;
 import jcolibri.exception.ExecutionException;
 import jcolibri.method.retrieve.RetrievalResult;
@@ -20,7 +18,6 @@ import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
 import jcolibri.method.retrieve.selection.SelectCases;
-import jcolibri.method.reuse.DirectAttributeCopyMethod;
 
 public class RecomendadorCBR implements StandardCBRApplication{
 
@@ -50,9 +47,7 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		//ejecutamos KNN
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		Collection<CBRCase> retrievedCases = SelectCases.selectTopK(eval, 1);
-		DirectAttributeCopyMethod.copyAttribute(new Attribute("puntuacion",DescripcionVivienda.class), new Attribute("puntuacion",DescripcionVivienda.class), query, retrievedCases);
-		_caseBase.learnCases(retrievedCases);
-		System.out.println(retrievedCases.size());
+		//_caseBase.learnCases(retrievedCases);
 	}
 	
 	public void postCycle() throws ExecutionException { 
