@@ -6,7 +6,9 @@ public class Preferencias {
 		private int superficie;
 		
 		public Preferencias(){
-			
+			localizacion = "";
+			habitaciones = 1;
+			superficie = 100;
 		}
 		
 		public int getHabitaciones() {
