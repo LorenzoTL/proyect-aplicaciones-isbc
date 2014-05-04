@@ -1,5 +1,6 @@
 package Viviendas;
 
+import Clases_Auxiliares.Preferencias;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
@@ -78,6 +79,12 @@ public class DescripcionVivienda implements CaseComponent{
 		
 		descripcion = values[18];
 		puntuacion = (values.length == 19) ? 0 : Integer.valueOf(values[19]);
+	}
+	
+	public void setDescripcion(Preferencias p){
+		localizacion = p.getLocalizacion();
+		superficie = p.getSuperficie();
+		habitaciones = p.getHabitaciones();
 	}
 	
 	@Override
