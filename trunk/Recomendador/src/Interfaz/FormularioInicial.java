@@ -6,9 +6,14 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Viviendas.DescripcionVivienda;
+
+import jcolibri.cbrcore.CBRQuery;
+import jcolibri.exception.ExecutionException;
+
+import CBR.RecomendadorCBR;
 import Clases_Auxiliares.Preferencias;
 import Interfaz.ConfigPanel.ChoiceOption;
 import Interfaz.ConfigPanel.ConfigListener;
@@ -19,8 +24,8 @@ public class FormularioInicial extends JFrame {
 	private static final long serialVersionUID = 5393378737313833016L;
 	
 	Preferencias preferencias;
-	JLabel panelResultado;
 	JPanel panelCentral;
+	RecomendadorCBR recomendador = RecomendadorCBR.getInstance();
 	boolean correcto = true;
 	
 	public FormularioInicial(){
@@ -29,7 +34,6 @@ public class FormularioInicial extends JFrame {
 		setLayout(new BorderLayout());
 		panelCentral = new JPanel(new BorderLayout());
 		add(panelCentral, BorderLayout.CENTER);
-		panelResultado = new JLabel("");
 		preferencias = new Preferencias();
 		JPanel form = new JPanel(new BorderLayout());
 		ConfigPanel<Preferencias> cp = creaPanelConfiguracion();
@@ -45,7 +49,19 @@ public class FormularioInicial extends JFrame {
 		boton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (correcto){
-					//TODO CBR
+					try {
+						recomendador.setPreferences(false);
+						recomendador.configure();
+						recomendador.preCycle();
+						CBRQuery query = new CBRQuery();
+						DescripcionVivienda description = new DescripcionVivienda();
+						description.setDescripcion(preferencias);
+						query.setDescription(description);
+						recomendador.cycle(query);
+						recomendador.postCycle();
+					} catch (ExecutionException e1) {
+						e1.printStackTrace();
+					}
 				}
 			}
 		});

@@ -16,14 +16,15 @@ import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.recommenders.InrecaMoreIsBetter;
 import jcolibri.method.retrieve.selection.SelectCases;
 
 public class RecomendadorCBR implements StandardCBRApplication{
 
 	Connector _connector;
 	CBRCaseBase _caseBase;
-	NNConfig simConfig;
+	Collection<CBRCase> casesFormInitial;
+	boolean preferences;
 	
 	private static RecomendadorCBR _instance = null;
 	
@@ -36,18 +37,11 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	public void configure() throws ExecutionException {
 		_connector = new ViviendasConnector();
 		_caseBase = new LinealCaseBase();
-		//TODO funciones de comparacion para todos los atributos de la descripción
-		simConfig = new NNConfig();
-		simConfig.setDescriptionSimFunction(new Average());
-		simConfig.addMapping(new Attribute("id", DescripcionVivienda.class), new Equal());
-		//simConfig.addMapping(new Attribute("puntuacion", DescripcionVivienda.class), new Equal());
 	}
 	
 	public void cycle(CBRQuery query) throws ExecutionException {
 		//ejecutamos KNN
-		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
-		Collection<CBRCase> retrievedCases = SelectCases.selectTopK(eval, 1);
-		//_caseBase.learnCases(retrievedCases);
+		if (!preferences) sequence1(query);
 	}
 	
 	public void postCycle() throws ExecutionException { 
@@ -59,20 +53,26 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		return _caseBase;
 	}
 	
-	public static void main(String[] args){
-		StandardCBRApplication recomendador = RecomendadorCBR.getInstance();
-		try{
-			recomendador.configure();
-			recomendador.preCycle();
-			CBRQuery query = new CBRQuery();
-			DescripcionVivienda dv = new DescripcionVivienda();
-			dv.setId(1);
-			dv.setPuntuacion(0);
-			query.setDescription(dv);
-			recomendador.cycle(query);
-			recomendador.postCycle();	
-		}catch(Exception ex){
-			
-		}
+	public void setPreferences(boolean value){
+		preferences = value;
+	}
+	
+	public DescripcionVivienda[] getResults(){
+		Object[] array = casesFormInitial.toArray();
+		int size = array.length;
+		DescripcionVivienda[] results = new DescripcionVivienda[size];
+		for(int i=0;i<size;i++)
+			results[i] = (DescripcionVivienda)((CBRCase)array[i]).getDescription();
+		return results;
+	}
+	
+	private void sequence1(CBRQuery query){
+		NNConfig simConfig = new NNConfig();
+		simConfig.setDescriptionSimFunction(new Average());
+		simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocation());
+		simConfig.addMapping(new Attribute("superficie", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
+		simConfig.addMapping(new Attribute("habitaciones", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+		casesFormInitial = SelectCases.selectAll(eval);
 	}
 }
