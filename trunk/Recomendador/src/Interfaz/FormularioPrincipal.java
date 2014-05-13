@@ -16,6 +16,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
+import Viviendas.DescripcionVivienda;
+import Viviendas.DescripcionVivienda.EstadoVivienda;
+import Viviendas.DescripcionVivienda.TipoVivienda;
+import Viviendas.ExtrasBasicos;
+import Viviendas.ExtrasFinca;
+import Viviendas.ExtrasOtros;
+
 public class FormularioPrincipal extends JFrame {
 
 	private JPanel contentPane;
@@ -1128,5 +1135,165 @@ public class FormularioPrincipal extends JFrame {
 	
 	public void pintaNoArea() {
 		comboArea.setEnabled(false);
+	}
+	
+	public DescripcionVivienda getMapeoDescripcionVivienda(){
+		String value = "";
+		int v = 0;
+		DescripcionVivienda dv = new DescripcionVivienda();
+		value = comboLocalizacion.getSelectedItem().toString();
+		if (comboArea != null){
+			value = value + "/" + comboArea.getSelectedItem().toString();
+		}
+		dv.setLocalizacion(value);
+		v = getPrecioMedio();
+		if (v != 0) dv.setPrecioMedio(v);
+		v = getTamMedio();
+		if (v != 0) dv.setSuperficie(v);
+		TipoVivienda tipo = getTipoVivienda();
+		if (tipo != null) dv.setTipo(tipo);
+		v = getNumHabitaciones();
+		if (v != 0) dv.setHabitaciones(v);
+		v = getNumBanios();
+		if (v != 0) dv.setBanios(v);
+		EstadoVivienda estado = getEstadoVivienda();
+		if (estado != null) dv.setEstado(estado);
+		ExtrasBasicos extrasBasicos = getExtrasBasicos();
+		if (extrasBasicos != null) dv.setExtrasBasicos(extrasBasicos);
+		ExtrasOtros extrasOtros = getExtrasOtros();
+		if (extrasOtros != null) dv.setExtrasOtros(extrasOtros);
+		ExtrasFinca extrasFinca = getExtrasFinca();
+		if (extrasFinca != null) dv.setExtrasFinca(extrasFinca);
+		return dv;
+	}
+
+	private TipoVivienda getTipoVivienda() {
+		String value = comboTipoPiso.getSelectedItem().toString();
+		switch(value){
+			case "Atico": return TipoVivienda.Atico;
+			case "Plantabaja": return TipoVivienda.Plantabaja; 
+			case "Piso": return TipoVivienda.Piso;
+			case "Loft": return TipoVivienda.Loft;
+			case "Casaadosada": return TipoVivienda.Casaadosada;
+			case "CasaChalet": return TipoVivienda.CasaChalet;
+			case "Duplex": return TipoVivienda.Duplex;
+			case "Estudio": return TipoVivienda.Estudio;
+			case "Fincarustica": return TipoVivienda.Fincarustica;
+			case "Apartamento": return TipoVivienda.Apartamento;
+			default: return null;
+		}
+	}
+	
+	private int getPrecioMedio(){
+		int v = 0;
+		try{
+			String value = comboMinPrecio.getSelectedItem().toString();
+			v = Integer.parseInt(value);
+			value = comboMaxPrecio.getSelectedItem().toString();
+			v = (v + Integer.parseInt(value))/2;
+		}catch(NumberFormatException ex){
+			v = 0;
+		}
+		return v;
+	}
+	
+	private int getTamMedio(){
+		int v = 0;
+		try{
+			String value = comboMinTam.getSelectedItem().toString();
+			v = Integer.parseInt(value);
+			value = comboMaxTam.getSelectedItem().toString();
+			v = (v + Integer.parseInt(value))/2;
+		}catch(NumberFormatException ex){
+			v = 0;
+		}
+		return v;
+	}
+	
+	private int getNumHabitaciones() {
+		if (checkDorm1.isSelected()) return 1;
+		if (checkDorm2.isSelected()) return 2;
+		if (checkDorm3.isSelected()) return 3;
+		if (checkDorm4.isSelected()) return 4;
+		return 0;
+	}
+	
+	private int getNumBanios() {
+		if (checkBano1.isSelected()) return 1;
+		if (checkBano2.isSelected()) return 2;
+		if (checkBano3.isSelected()) return 3;
+		return 0;
+	}
+
+	private EstadoVivienda getEstadoVivienda(){
+		String value = comboEstado.getSelectedItem().toString();
+		switch(value){
+			case "Muybien": return EstadoVivienda.Muybien; 
+			case "Reformado": return EstadoVivienda.Reformado; 
+			case "Areformar": return EstadoVivienda.Areformar;
+			case "Casinuevo": return EstadoVivienda.Casinuevo;
+			case "Bien": return EstadoVivienda.Bien;
+			default: return null;
+		}
+	}
+	
+	private ExtrasBasicos getExtrasBasicos(){
+		boolean b = char1.isSelected() || char2.isSelected() || char3.isSelected() || char4.isSelected() || char5.isSelected()
+				|| char6.isSelected() || char7.isSelected() || char8.isSelected() || char9.isSelected() || char10.isSelected()
+				|| char11.isSelected() || char12.isSelected() || char13.isSelected() || char14.isSelected() || char15.isSelected()
+				|| char16.isSelected() || char17.isSelected() || char18.isSelected();
+		if(!b) return null;
+		ExtrasBasicos e = new ExtrasBasicos();
+		e.setLavadero(char1.isSelected());
+		e.setInternet(char2.isSelected());
+		e.setMicroondas(char3.isSelected());
+		e.setHorno(char4.isSelected());
+		e.setAmueblado(char5.isSelected());
+		e.setCocinaOffice(char6.isSelected());
+		e.setParquet(char7.isSelected());
+		e.setDomotica(char8.isSelected());
+		e.setArmarios(char9.isSelected());
+		e.setLavadora(char10.isSelected());
+		e.setTv(char11.isSelected());
+		e.setElectrodomesticos(char12.isSelected());
+		e.setSuiteConBanio(char13.isSelected());
+		e.setPuertaBlindada(char14.isSelected());
+		e.setGresCeramica(char15.isSelected());
+		e.setCalefaccion(char16.isSelected());
+		e.setAireAcondicionado(char17.isSelected());
+		e.setNevera(char18.isSelected());
+		return e;
+	}
+	
+	private ExtrasOtros getExtrasOtros(){
+		boolean b = has1.isSelected() || has2.isSelected() || has3.isSelected() || has4.isSelected() || has5.isSelected()
+				|| has6.isSelected() || has7.isSelected() || has8.isSelected() || has9.isSelected();
+		if (!b) return null;
+		ExtrasOtros e = new ExtrasOtros();
+		e.setPatio(has1.isSelected());
+		e.setZonaDeportiva(has2.isSelected()); 
+		e.setBalcon(has3.isSelected());
+		e.setZonaComunitaria(has4.isSelected());
+		e.setTerraza(has5.isSelected());
+		e.setPiscinaComunitaria(has6.isSelected());
+		e.setJardinPrivado(has7.isSelected());
+		e.setPiscina(has8.isSelected());
+		e.setZonaInfantil(has9.isSelected());
+		return e;
+	}
+	
+	private ExtrasFinca getExtrasFinca(){
+		boolean b = has10.isSelected() || has11.isSelected() || has12.isSelected() || has13.isSelected() || has14.isSelected()
+				|| has15.isSelected() || has16.isSelected();
+		if (!b) return null;
+		ExtrasFinca e = new ExtrasFinca();
+		e.setAscensor(has10.isSelected());
+		e.setTrastero(has11.isSelected()); 
+		e.setParkingComunitario(has12.isSelected()); 
+		e.setEnergiaSolar(has13.isSelected()); 
+		e.setGarajePrivado(has14.isSelected()); 
+		e.setServPorteria(has15.isSelected()); 
+		e.setVideoportero(has16.isSelected()); 
+		return e;
 	}
 }

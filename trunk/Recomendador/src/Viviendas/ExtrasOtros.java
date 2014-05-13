@@ -16,7 +16,9 @@ public class ExtrasOtros implements CaseComponent {
 	boolean zonaInfantil;
 	boolean piscina;
 	
-	
+	public ExtrasOtros(){
+		
+	}
 
 	public ExtrasOtros(int id) {
 		super();
