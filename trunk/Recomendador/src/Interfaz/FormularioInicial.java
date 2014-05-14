@@ -24,8 +24,8 @@ public class FormularioInicial extends JFrame {
 	Preferencias preferencias;
 	RecomendadorCBR recomendador = RecomendadorCBR.getInstance();
 	boolean correcto = true;
-	private JTextField textFieldHab;
-	private JTextField textFieldSup;
+	private JComboBox comboHab;
+	private JComboBox comboSup;
 	private JLabel labelHab;
 	private JLabel labelSup;
 	private JLabel labelArea = null;
@@ -72,17 +72,19 @@ public class FormularioInicial extends JFrame {
 		});
 		getContentPane().add(comboBox);
 		
-		textFieldHab = new JTextField();
-		textFieldHab.setBounds(105, 56, 121, 20);
-		textFieldHab.setText("1");
-		getContentPane().add(textFieldHab);
-		textFieldHab.setColumns(10);
+		String[] numHab = new String[] {"1","2","3","4","5","6"};
+		comboHab = new JComboBox(numHab);
+		comboHab.setBounds(105, 56, 121, 20);
+		comboHab.setSelectedItem("1");
+		getContentPane().add(comboHab);
 		
-		textFieldSup = new JTextField();
-		textFieldSup.setBounds(105, 87, 121, 20);
-		textFieldSup.setText("100");
-		getContentPane().add(textFieldSup);
-		textFieldSup.setColumns(10);
+		String[] tMax = new String[] {"20","40","60","80","100","150","200","250","300","350",
+				"400","450","500","600","700","800","900","1000","1200","1400",
+				"1600","1800","2000"};
+		comboSup = new JComboBox(tMax);
+		comboSup.setBounds(105, 87, 121, 20);
+		comboSup.setSelectedItem("100");
+		getContentPane().add(comboSup);
 		
 		JButton boton = new JButton("BUSCAR");
 		boton.setBounds(116, 228, 89, 23);
@@ -96,18 +98,27 @@ public class FormularioInicial extends JFrame {
 						CBRQuery query = new CBRQuery();
 						DescripcionVivienda description = new DescripcionVivienda();
 						String localizacion;
+						String auxLoc;
+						boolean b = false;
 						if (comboNew != null) {
 							localizacion = comboNew.getSelectedItem().toString();
+							auxLoc = comboBox.getSelectedItem().toString();
 						} else {
 							localizacion = comboBox.getSelectedItem().toString();
+							auxLoc = "---";
+							b = true;
 						}
-						Integer habitaciones = Integer.parseInt(textFieldHab.getText());
-						Integer superficie = Integer.parseInt(textFieldSup.getText());
+						Integer habitaciones = Integer.parseInt(comboHab.getSelectedItem().toString());
+						Integer superficie = Integer.parseInt(comboSup.getSelectedItem().toString());
 						description.setDescripcion(localizacion,habitaciones,superficie);
 						query.setDescription(description);
 						recomendador.cycle(query);
 						recomendador.postCycle();
-						FormularioPrincipal fp = new FormularioPrincipal();
+						if (b) {
+							FormularioPrincipal fp = new FormularioPrincipal(localizacion,auxLoc,habitaciones,superficie,recomendador.getResults());
+						} else {
+							FormularioPrincipal fp = new FormularioPrincipal(auxLoc,localizacion,habitaciones,superficie,recomendador.getResults());
+						}
 						setVisible(false);
 					} catch (ExecutionException e1) {
 						e1.printStackTrace();
@@ -620,8 +631,8 @@ public class FormularioInicial extends JFrame {
 	}
 	
 	public void pintaArea() {
-		textFieldHab.setBounds(textFieldHab.getX(), 106, textFieldHab.getWidth(), textFieldHab.getHeight());
-		textFieldSup.setBounds(textFieldSup.getX(), 137, textFieldSup.getWidth(), textFieldSup.getHeight());
+		comboHab.setBounds(comboHab.getX(), 106, comboHab.getWidth(), comboHab.getHeight());
+		comboSup.setBounds(comboSup.getX(), 137, comboSup.getWidth(), comboSup.getHeight());
 		labelHab.setBounds(labelHab.getX(), 108, labelHab.getWidth(), labelHab.getHeight());
 		labelSup.setBounds(labelSup.getX(), 139, labelSup.getWidth(), labelSup.getHeight());
 		
@@ -631,8 +642,8 @@ public class FormularioInicial extends JFrame {
 	}
 	
 	public void pintaNoArea() {
-		textFieldHab.setBounds(textFieldHab.getX(), 56, textFieldHab.getWidth(), textFieldHab.getHeight());
-		textFieldSup.setBounds(textFieldSup.getX(), 87, textFieldSup.getWidth(), textFieldSup.getHeight());
+		comboHab.setBounds(comboHab.getX(), 56, comboHab.getWidth(), comboHab.getHeight());
+		comboSup.setBounds(comboSup.getX(), 87, comboSup.getWidth(), comboSup.getHeight());
 		labelHab.setBounds(labelHab.getX(), 59, labelHab.getWidth(), labelHab.getHeight());
 		labelSup.setBounds(labelSup.getX(), 90, labelSup.getWidth(), labelSup.getHeight());
 	}
@@ -643,5 +654,4 @@ public class FormularioInicial extends JFrame {
 		fi.setLocation(500, 200);
 		fi.setVisible(true);	
 	}
-	
 }
