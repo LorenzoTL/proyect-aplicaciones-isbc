@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -27,6 +28,7 @@ public class FormularioPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panel;
+	private JPanel panelList;
 	
 	private JComboBox comboLocalizacion;
 	private JComboBox comboArea;
@@ -78,6 +80,11 @@ public class FormularioPrincipal extends JFrame {
 	private JCheckBox has15;
 	private JCheckBox has16;
 	
+	private JButton buttonBuscar;
+	
+	private JButton[] buttonLike;
+	private JTextPane[] textPane;
+	
 	
 	/**
 	 * Launch the application.
@@ -86,7 +93,8 @@ public class FormularioPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FormularioPrincipal frame = new FormularioPrincipal();
+					DescripcionVivienda[] d = new DescripcionVivienda[0];
+					FormularioPrincipal frame = new FormularioPrincipal("---","---",0,0,d);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -98,13 +106,18 @@ public class FormularioPrincipal extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FormularioPrincipal() {
+
+	public FormularioPrincipal(String localizacion,String area,int habitaciones,int superficie,DescripcionVivienda[] resultados) {
+		super("Recomendador de Pisos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(150, 10, 998, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+		buttonLike = new JButton[resultados.length];
+		textPane = new JTextPane[resultados.length];
 		
 		comboArea = new JComboBox();
 		comboArea.setEnabled(false);
@@ -114,9 +127,19 @@ public class FormularioPrincipal extends JFrame {
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		String titulo = resultados.length + " anuncios";
+		
+		if (!localizacion.equals("---")) {
+			titulo = titulo + " en";
+			if (!area.equals("---")) {
+				titulo = titulo + " " + area + ",";
+			}
+			titulo = titulo + " " + localizacion;
+		}
+		
+		JLabel lblNewLabel = new JLabel(titulo);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblNewLabel.setBounds(195, 11, 679, 31);
+		lblNewLabel.setBounds(100, 11, 879, 31);
 		panel_1.add(lblNewLabel);
 		
 		panel = new JPanel();
@@ -149,6 +172,11 @@ public class FormularioPrincipal extends JFrame {
 				"san-sebastian-de-los-reyes","tetuan","torrejon-de-ardoz","torrelodones","tres-cantos","usera","valdemorillo","valdemoro","velilla-de-san-antonio-zona-de",
 				"venturada","vicalvaro","villa-de-vallecas","villalbilla-zona-de","villanueva-de-la-canada-zona-de","villanueva-del-pardillo","villaverde","villaviciosa-de-odon"};
 		comboLocalizacion = new JComboBox(comboList);
+		boolean crearArea = false;
+		if (!localizacion.equals("---")) {
+			comboLocalizacion.setSelectedItem(localizacion);
+			crearArea = true;
+		}
 		comboLocalizacion.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -160,7 +188,7 @@ public class FormularioPrincipal extends JFrame {
 				areas();
 				c.gridx = 0;
 				c.gridy = 3;
-				c.weightx = 0.5;
+				c.weightx = 1;
 				panel.add(comboArea,c);
 				panel.revalidate();
 				panel.repaint();
@@ -175,12 +203,27 @@ public class FormularioPrincipal extends JFrame {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(new JLabel("Area"),c);
 		
-		c.gridx = 0;
-		c.gridy = 3;
-		c.weightx = 1;
-		c.gridwidth = 4;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		panel.add(comboArea,c);
+		if (crearArea) {
+			c.fill = GridBagConstraints.HORIZONTAL;
+			//panel.remove(comboArea);
+			areas();
+			c.gridx = 0;
+			c.gridy = 3;
+			c.weightx = 1;
+			if (!area.equals("---")) {
+				comboArea.setSelectedItem(area);
+			}
+			panel.add(comboArea,c);
+			panel.revalidate();
+			panel.repaint();
+		} else {
+			c.gridx = 0;
+			c.gridy = 3;
+			c.weightx = 1;
+			c.gridwidth = 4;
+			c.fill = GridBagConstraints.HORIZONTAL;
+			panel.add(comboArea,c);
+		}
 		
 		c.gridx = 0;
 		c.gridy = 4;
@@ -193,7 +236,8 @@ public class FormularioPrincipal extends JFrame {
 		c.gridy = 5;
 		c.weightx = 1;
 		c.gridwidth = 2;
-		String[] pMin = new String[] {"Min"};
+		String[] pMin = new String[] {"Min","50000","100000","150000","200000","250000","300000","350000","400000","450000","500000",
+				"600000","700000","800000","900000","1000000","2000000","3000000","4000000","5000000"};
 		comboMinPrecio = new JComboBox(pMin);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMinPrecio,c);
@@ -202,7 +246,8 @@ public class FormularioPrincipal extends JFrame {
 		c.gridy = 5;
 		c.weightx = 1;
 		c.gridwidth = 2;
-		String[] pMax = new String[] {"Max"};
+		String[] pMax = new String[] {"Max","50000","100000","150000","200000","250000","300000","350000","400000","450000","500000",
+				"600000","700000","800000","900000","1000000","2000000","3000000","4000000","5000000"};
 		comboMaxPrecio = new JComboBox(pMax);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMaxPrecio,c);
@@ -218,7 +263,9 @@ public class FormularioPrincipal extends JFrame {
 		c.gridy = 7;
 		c.weightx = 1;
 		c.gridwidth = 2;
-		String[] tMin = new String[] {"Min"};
+		String[] tMin = new String[] {"Min","20","40","60","80","100","150","200","250","300","350",
+				"400","450","500","600","700","800","900","1000","1200","1400",
+				"1600","1800","2000"};
 		comboMinTam = new JComboBox(tMin);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMinTam,c);
@@ -227,8 +274,11 @@ public class FormularioPrincipal extends JFrame {
 		c.gridy = 7;
 		c.weightx = 1;
 		c.gridwidth = 2;
-		String[] tMax = new String[] {"Max"};
+		String[] tMax = new String[] {"Max","20","40","60","80","100","150","200","250","300","350",
+				"400","450","500","600","700","800","900","1000","1200","1400",
+				"1600","1800","2000"};
 		comboMaxTam = new JComboBox(tMax);
+		comboMaxTam.setSelectedItem(String.valueOf(superficie));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMaxTam,c);
 		
@@ -261,6 +311,9 @@ public class FormularioPrincipal extends JFrame {
 		c.gridwidth = 1;
 		checkDorm1 = new JCheckBox("1");
 		c.fill = GridBagConstraints.HORIZONTAL;
+		if (habitaciones == 1) {
+			checkDorm1.setSelected(true);
+		}
 		panel.add(checkDorm1,c);
 		
 		c.gridx = 1;
@@ -269,6 +322,9 @@ public class FormularioPrincipal extends JFrame {
 		c.gridwidth = 1;
 		checkDorm2 = new JCheckBox("2");
 		c.fill = GridBagConstraints.HORIZONTAL;
+		if (habitaciones == 2) {
+			checkDorm2.setSelected(true);
+		}
 		panel.add(checkDorm2,c);
 		
 		c.gridx = 2;
@@ -277,6 +333,9 @@ public class FormularioPrincipal extends JFrame {
 		c.gridwidth = 1;
 		checkDorm3 = new JCheckBox("3");
 		c.fill = GridBagConstraints.HORIZONTAL;
+		if (habitaciones == 3) {
+			checkDorm3.setSelected(true);
+		}
 		panel.add(checkDorm3,c);
 		
 		c.gridx = 3;
@@ -285,6 +344,9 @@ public class FormularioPrincipal extends JFrame {
 		c.gridwidth = 1;
 		checkDorm4 = new JCheckBox("4 o +");
 		c.fill = GridBagConstraints.HORIZONTAL;
+		if (habitaciones == 4 || habitaciones == 5 || habitaciones == 6) {
+			checkDorm4.setSelected(true);
+		}
 		panel.add(checkDorm4,c);
 		
 		c.gridx = 0;
@@ -620,6 +682,14 @@ public class FormularioPrincipal extends JFrame {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(has16,c);
 		
+		c.gridx = 1;
+		c.gridy = 36;
+		c.weightx = 1;
+		c.gridwidth = 2;
+		buttonBuscar = new JButton("Buscar");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(buttonBuscar,c);
+		
 		// Fin formulario
 		JScrollPane scrollPane_2 = new JScrollPane(panel);
 		scrollPane_2.setBounds(10, 75, 268, 626);
@@ -627,13 +697,35 @@ public class FormularioPrincipal extends JFrame {
 		scrollPane_2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		contentPane.add(scrollPane_2);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		panelList = new JPanel();
+		panelList.setBounds(289, 75, 683, 626);
+		panelList.setLayout(new GridBagLayout());
+		GridBagConstraints cPanel = new GridBagConstraints();
+		int num = resultados.length;
+		
+		for (int i = 0; i < num;i++) {
+			cPanel.gridx = 0;
+			cPanel.gridy = i;
+			cPanel.weightx = 1;
+			//cPanel.gridheight = 2;
+			textPane[i] = new JTextPane();
+			textPane[i].setText(resultados[i].getTitulo());
+			textPane[i].setEditable(false);
+			cPanel.fill = GridBagConstraints.HORIZONTAL;
+			panelList.add(textPane[i],cPanel);
+			
+			cPanel.gridx = 1;
+			cPanel.gridy = i;
+			cPanel.weightx = 0;
+			//cPanel.gridheight = 2;
+			buttonLike[i] = new JButton("Me Gusta");
+			cPanel.fill = GridBagConstraints.HORIZONTAL;
+			panelList.add(buttonLike[i],cPanel);
+		}
+		
+		JScrollPane scrollPane = new JScrollPane(panelList);
 		scrollPane.setBounds(289, 75, 683, 626);
 		contentPane.add(scrollPane);
-		
-		JTextPane textPane = new JTextPane();
-		scrollPane.setViewportView(textPane);
-		
 		
 		//contentPane.add(panel);
 		setVisible(true);
