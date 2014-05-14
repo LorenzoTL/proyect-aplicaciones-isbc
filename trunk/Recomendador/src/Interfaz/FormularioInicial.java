@@ -115,9 +115,9 @@ public class FormularioInicial extends JFrame {
 						recomendador.cycle(query);
 						recomendador.postCycle();
 						if (b) {
-							FormularioPrincipal fp = new FormularioPrincipal(localizacion,auxLoc,habitaciones,superficie,recomendador.getResults());
+							FormularioPrincipal fp = new FormularioPrincipal(localizacion,auxLoc,habitaciones,superficie,recomendador);
 						} else {
-							FormularioPrincipal fp = new FormularioPrincipal(auxLoc,localizacion,habitaciones,superficie,recomendador.getResults());
+							FormularioPrincipal fp = new FormularioPrincipal(auxLoc,localizacion,habitaciones,superficie,recomendador);
 						}
 						setVisible(false);
 					} catch (ExecutionException e1) {

@@ -17,6 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
+import jcolibri.cbrcore.CBRQuery;
+
+import CBR.RecomendadorCBR;
 import Viviendas.DescripcionVivienda;
 import Viviendas.DescripcionVivienda.EstadoVivienda;
 import Viviendas.DescripcionVivienda.TipoVivienda;
@@ -26,6 +29,8 @@ import Viviendas.ExtrasOtros;
 
 public class FormularioPrincipal extends JFrame {
 
+	private RecomendadorCBR recomendador;
+	
 	private JPanel contentPane;
 	private JPanel panel;
 	private JPanel panelList;
@@ -93,8 +98,8 @@ public class FormularioPrincipal extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DescripcionVivienda[] d = new DescripcionVivienda[0];
-					FormularioPrincipal frame = new FormularioPrincipal("---","---",0,0,d);
+					//DescripcionVivienda[] d = new DescripcionVivienda[0];
+					FormularioPrincipal frame = new FormularioPrincipal("---","---",0,0,null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -107,8 +112,9 @@ public class FormularioPrincipal extends JFrame {
 	 * Create the frame.
 	 */
 
-	public FormularioPrincipal(String localizacion,String area,int habitaciones,int superficie,DescripcionVivienda[] resultados) {
+	public FormularioPrincipal(String localizacion,String area,int habitaciones,int superficie,RecomendadorCBR recomendador) {
 		super("Recomendador de Pisos");
+		this.recomendador = recomendador;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(150, 10, 998, 750);
 		contentPane = new JPanel();
@@ -116,6 +122,7 @@ public class FormularioPrincipal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		DescripcionVivienda[] resultados = this.recomendador.getResults(true); 
 		buttonLike = new JButton[resultados.length];
 		textPane = new JTextPane[resultados.length];
 		
@@ -690,6 +697,12 @@ public class FormularioPrincipal extends JFrame {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(buttonBuscar,c);
 		
+		buttonBuscar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				buscarFormularioPrincipal();
+			}
+		});
+		
 		// Fin formulario
 		JScrollPane scrollPane_2 = new JScrollPane(panel);
 		scrollPane_2.setBounds(10, 75, 268, 626);
@@ -1234,7 +1247,8 @@ public class FormularioPrincipal extends JFrame {
 		int v = 0;
 		DescripcionVivienda dv = new DescripcionVivienda();
 		value = comboLocalizacion.getSelectedItem().toString();
-		if (comboArea != null){
+		value = (value != null && !value.equals("---")) ? value : null;
+		if (value != null && comboArea != null){
 			value = value + "/" + comboArea.getSelectedItem().toString();
 		}
 		dv.setLocalizacion(value);
@@ -1259,6 +1273,21 @@ public class FormularioPrincipal extends JFrame {
 		return dv;
 	}
 
+	private void buscarFormularioPrincipal(){
+		DescripcionVivienda dv = getMapeoDescripcionVivienda(); 
+		try{
+			recomendador.setPreferences(true);
+			recomendador.configure();
+			recomendador.preCycle();
+			CBRQuery query = new CBRQuery();
+			query.setDescription(dv);
+			recomendador.cycle(query);
+			recomendador.postCycle();
+		}catch(Exception e){
+			
+		}
+	}
+	
 	private TipoVivienda getTipoVivienda() {
 		String value = comboTipoPiso.getSelectedItem().toString();
 		switch(value){

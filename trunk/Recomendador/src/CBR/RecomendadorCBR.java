@@ -16,6 +16,8 @@ import jcolibri.method.retrieve.RetrievalResult;
 import jcolibri.method.retrieve.NNretrieval.NNConfig;
 import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
 import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
+import jcolibri.method.retrieve.NNretrieval.similarity.local.recommenders.InrecaLessIsBetter;
 import jcolibri.method.retrieve.NNretrieval.similarity.local.recommenders.InrecaMoreIsBetter;
 import jcolibri.method.retrieve.selection.SelectCases;
 
@@ -24,6 +26,7 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	Connector _connector;
 	CBRCaseBase _caseBase;
 	Collection<CBRCase> casesFormInitial;
+	Collection<CBRCase> casesFormPrincipal;
 	boolean preferences;
 	
 	private static RecomendadorCBR _instance = null;
@@ -41,7 +44,11 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	
 	public void cycle(CBRQuery query) throws ExecutionException {
 		//ejecutamos KNN
-		if (!preferences) sequence1(query);
+		if (!preferences){
+			sequence1(query);
+		}else{
+			sequence2(query);
+		}
 	}
 	
 	public void postCycle() throws ExecutionException { 
@@ -57,8 +64,10 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		preferences = value;
 	}
 	
-	public DescripcionVivienda[] getResults(){
-		Object[] array = casesFormInitial.toArray();
+	public DescripcionVivienda[] getResults(boolean ini){
+		Object[] array = null;
+		if (ini) array = casesFormInitial.toArray();
+		else array = casesFormPrincipal.toArray();
 		int size = array.length;
 		DescripcionVivienda[] results = new DescripcionVivienda[size];
 		for(int i=0;i<size;i++)
@@ -74,5 +83,31 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		simConfig.addMapping(new Attribute("habitaciones", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
 		casesFormInitial = SelectCases.selectAll(eval);
+	}
+	
+	//TODO: filtrado para Extras basicos, finca y otros
+	private void sequence2(CBRQuery query){
+		Collection<CBRCase> cases = casesFormInitial;
+		DescripcionVivienda dv =  (DescripcionVivienda)query.getDescription();
+		NNConfig simConfig = new NNConfig();
+		simConfig.setDescriptionSimFunction(new Average());
+		if(dv.getLocalizacion() != null){ 
+			cases = _caseBase.getCases();
+			simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocation());
+		}
+		if(dv.getPrecioMedio() != 0)
+			simConfig.addMapping(new Attribute("precioMedio", DescripcionVivienda.class),new InrecaLessIsBetter(2000,0.5));
+		if(dv.getSuperficie() != 0)
+			simConfig.addMapping(new Attribute("superficie", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
+		if(dv.getTipo() != null)
+			simConfig.addMapping(new Attribute("tipo", DescripcionVivienda.class),new Equal());
+		if(dv.getHabitaciones() != 0)
+			simConfig.addMapping(new Attribute("habitaciones", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
+		if(dv.getBanios() != 0)
+			simConfig.addMapping(new Attribute("banios", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
+		if(dv.getEstado() != null)
+			simConfig.addMapping(new Attribute("estado", DescripcionVivienda.class),new Equal());
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(cases, query, simConfig);
+		casesFormPrincipal = SelectCases.selectAll(eval);
 	}
 }
