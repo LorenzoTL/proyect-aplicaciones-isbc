@@ -25,6 +25,7 @@ public class RecomendadorCBR implements StandardCBRApplication{
 
 	Connector _connector;
 	CBRCaseBase _caseBase;
+	Collection<CBRCase> cases;
 	Collection<CBRCase> casesFormInitial;
 	Collection<CBRCase> casesFormPrincipal;
 	boolean preferences;
@@ -79,13 +80,16 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		NNConfig simConfig = new NNConfig();
 		simConfig.setDescriptionSimFunction(new Average());
 		simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocation());
+		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+		cases = SelectCases.selectAll(eval);
+		simConfig = new NNConfig();
+		simConfig.setDescriptionSimFunction(new Average());
 		simConfig.addMapping(new Attribute("superficie", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
 		simConfig.addMapping(new Attribute("habitaciones", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
-		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
+		eval = NNScoringMethod.evaluateSimilarity(cases, query, simConfig);
 		casesFormInitial = SelectCases.selectAll(eval);
 	}
 	
-	//TODO: filtrado para Extras basicos, finca y otros
 	private void sequence2(CBRQuery query){
 		Collection<CBRCase> cases = casesFormInitial;
 		DescripcionVivienda dv =  (DescripcionVivienda)query.getDescription();
@@ -107,6 +111,12 @@ public class RecomendadorCBR implements StandardCBRApplication{
 			simConfig.addMapping(new Attribute("banios", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
 		if(dv.getEstado() != null)
 			simConfig.addMapping(new Attribute("estado", DescripcionVivienda.class),new Equal());
+		if(dv.getExtrasBasicos() != null)
+			simConfig.addMapping(new Attribute("extrasBasicos", DescripcionVivienda.class),new Equal());
+		if(dv.getExtrasFinca() != null)
+			simConfig.addMapping(new Attribute("extrasFinca", DescripcionVivienda.class),new Equal());
+		if(dv.getExtrasOtros() != null)
+			simConfig.addMapping(new Attribute("extrasOtros", DescripcionVivienda.class),new Equal());
 		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(cases, query, simConfig);
 		casesFormPrincipal = SelectCases.selectAll(eval);
 	}

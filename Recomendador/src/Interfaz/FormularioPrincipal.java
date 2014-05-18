@@ -1249,7 +1249,8 @@ public class FormularioPrincipal extends JFrame {
 		value = comboLocalizacion.getSelectedItem().toString();
 		value = (value != null && !value.equals("---")) ? value : null;
 		if (value != null && comboArea != null){
-			value = value + "/" + comboArea.getSelectedItem().toString();
+			String selected = comboArea.getSelectedItem().toString();
+			value = !selected.equals("---") ? selected : value;
 		}
 		dv.setLocalizacion(value);
 		v = getPrecioMedio();
