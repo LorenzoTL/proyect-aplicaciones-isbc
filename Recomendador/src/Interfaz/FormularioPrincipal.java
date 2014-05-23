@@ -123,8 +123,6 @@ public class FormularioPrincipal extends JFrame {
 		contentPane.setLayout(null);
 		
 		DescripcionVivienda[] resultados = this.recomendador.getResults(true); 
-		buttonLike = new JButton[resultados.length];
-		textPane = new JTextPane[resultados.length];
 		
 		comboArea = new JComboBox();
 		comboArea.setEnabled(false);
@@ -710,6 +708,16 @@ public class FormularioPrincipal extends JFrame {
 		scrollPane_2.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		contentPane.add(scrollPane_2);
 		
+		creaPanelCentral(resultados);
+		
+		//contentPane.add(panel);
+		setVisible(true);
+	}
+	
+	public void creaPanelCentral(DescripcionVivienda[] resultados) {
+		buttonLike = new JButton[resultados.length];
+		textPane = new JTextPane[resultados.length];
+		
 		panelList = new JPanel();
 		panelList.setBounds(289, 75, 683, 626);
 		panelList.setLayout(new GridBagLayout());
@@ -739,9 +747,6 @@ public class FormularioPrincipal extends JFrame {
 		JScrollPane scrollPane = new JScrollPane(panelList);
 		scrollPane.setBounds(289, 75, 683, 626);
 		contentPane.add(scrollPane);
-		
-		//contentPane.add(panel);
-		setVisible(true);
 	}
 	
 	public void areas() {
