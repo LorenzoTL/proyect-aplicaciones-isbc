@@ -94,7 +94,7 @@ public class FormularioPrincipal extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -106,15 +106,15 @@ public class FormularioPrincipal extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
 
-	public FormularioPrincipal(String localizacion,String area,int habitaciones,int superficie,RecomendadorCBR recomendador) {
+	public FormularioPrincipal(String localizacion,String area,int habitaciones,int superficie,RecomendadorCBR r) {
 		super("Recomendador de Pisos");
-		this.recomendador = recomendador;
+		this.recomendador = r;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(150, 10, 998, 750);
 		contentPane = new JPanel();
@@ -241,7 +241,7 @@ public class FormularioPrincipal extends JFrame {
 		c.gridy = 5;
 		c.weightx = 1;
 		c.gridwidth = 2;
-		String[] pMin = new String[] {"Min","50000","100000","150000","200000","250000","300000","350000","400000","450000","500000",
+		String[] pMin = new String[] {"0","50000","100000","150000","200000","250000","300000","350000","400000","450000","500000",
 				"600000","700000","800000","900000","1000000","2000000","3000000","4000000","5000000"};
 		comboMinPrecio = new JComboBox(pMin);
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -251,7 +251,7 @@ public class FormularioPrincipal extends JFrame {
 		c.gridy = 5;
 		c.weightx = 1;
 		c.gridwidth = 2;
-		String[] pMax = new String[] {"Max","50000","100000","150000","200000","250000","300000","350000","400000","450000","500000",
+		String[] pMax = new String[] {"0","50000","100000","150000","200000","250000","300000","350000","400000","450000","500000",
 				"600000","700000","800000","900000","1000000","2000000","3000000","4000000","5000000"};
 		comboMaxPrecio = new JComboBox(pMax);
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -268,7 +268,7 @@ public class FormularioPrincipal extends JFrame {
 		c.gridy = 7;
 		c.weightx = 1;
 		c.gridwidth = 2;
-		String[] tMin = new String[] {"Min","20","40","60","80","100","150","200","250","300","350",
+		String[] tMin = new String[] {"0","20","40","60","80","100","150","200","250","300","350",
 				"400","450","500","600","700","800","900","1000","1200","1400",
 				"1600","1800","2000"};
 		comboMinTam = new JComboBox(tMin);
@@ -279,7 +279,7 @@ public class FormularioPrincipal extends JFrame {
 		c.gridy = 7;
 		c.weightx = 1;
 		c.gridwidth = 2;
-		String[] tMax = new String[] {"Max","20","40","60","80","100","150","200","250","300","350",
+		String[] tMax = new String[] {"0","20","40","60","80","100","150","200","250","300","350",
 				"400","450","500","600","700","800","900","1000","1200","1400",
 				"1600","1800","2000"};
 		comboMaxTam = new JComboBox(tMax);
@@ -698,6 +698,7 @@ public class FormularioPrincipal extends JFrame {
 		buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				buscarFormularioPrincipal();
+				creaPanelCentral(recomendador.getResults(false));
 			}
 		});
 		
@@ -1253,21 +1254,21 @@ public class FormularioPrincipal extends JFrame {
 		DescripcionVivienda dv = new DescripcionVivienda();
 		value = comboLocalizacion.getSelectedItem().toString();
 		value = (value != null && !value.equals("---")) ? value : null;
-		if (value != null && comboArea != null){
+		if (value != null && comboArea != null && comboArea.getSelectedItem() != null){
 			String selected = comboArea.getSelectedItem().toString();
 			value = !selected.equals("---") ? selected : value;
 		}
 		dv.setLocalizacion(value);
 		v = getPrecioMedio();
-		if (v != 0) dv.setPrecioMedio(v);
+		dv.setPrecioMedio(v);
 		v = getTamMedio();
-		if (v != 0) dv.setSuperficie(v);
+		dv.setSuperficie(v);
 		TipoVivienda tipo = getTipoVivienda();
 		if (tipo != null) dv.setTipo(tipo);
 		v = getNumHabitaciones();
-		if (v != 0) dv.setHabitaciones(v);
+		dv.setHabitaciones(v);
 		v = getNumBanios();
-		if (v != 0) dv.setBanios(v);
+		dv.setBanios(v);
 		EstadoVivienda estado = getEstadoVivienda();
 		if (estado != null) dv.setEstado(estado);
 		ExtrasBasicos extrasBasicos = getExtrasBasicos();
@@ -1318,7 +1319,7 @@ public class FormularioPrincipal extends JFrame {
 			v = Integer.parseInt(value);
 			value = comboMaxPrecio.getSelectedItem().toString();
 			v = (v + Integer.parseInt(value))/2;
-		}catch(NumberFormatException ex){
+		}catch(Exception ex){
 			v = 0;
 		}
 		return v;

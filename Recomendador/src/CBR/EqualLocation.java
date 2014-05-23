@@ -19,7 +19,8 @@ public class EqualLocation implements LocalSimilarityFunction{
 	    caseValue  = (String) caseObject;
 	    queryValue = (String) queryObject;
 	    
-	    if(caseValue.contains(queryValue)) return 1;
+	    if(caseValue.contains(queryValue)) 
+	    	return 1;
 	    return 0;
 		
 	}
