@@ -1,7 +1,5 @@
 package CBR;
 
-import javax.management.Query;
-
 import jcolibri.exception.NoApplicableSimilarityFunctionException;
 import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
 

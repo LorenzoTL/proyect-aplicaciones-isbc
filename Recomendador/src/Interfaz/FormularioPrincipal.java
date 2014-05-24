@@ -1,6 +1,5 @@
 package Interfaz;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -29,19 +28,21 @@ import Viviendas.ExtrasOtros;
 
 public class FormularioPrincipal extends JFrame {
 
+	private static final long serialVersionUID = 5393378737313833016L;
+	
 	private RecomendadorCBR recomendador;
 	
 	private JPanel contentPane;
 	private JPanel panel;
 	private JPanel panelList;
 	
-	private JComboBox comboLocalizacion;
-	private JComboBox comboArea;
-	private JComboBox comboMinPrecio;
-	private JComboBox comboMaxPrecio;
-	private JComboBox comboMinTam;
-	private JComboBox comboMaxTam;
-	private JComboBox comboTipoPiso;
+	private JComboBox<String> comboLocalizacion;
+	private JComboBox<String> comboArea;
+	private JComboBox<String> comboMinPrecio;
+	private JComboBox<String> comboMaxPrecio;
+	private JComboBox<String> comboMinTam;
+	private JComboBox<String> comboMaxTam;
+	private JComboBox<String> comboTipoPiso;
 	private JCheckBox checkDorm1;
 	private JCheckBox checkDorm2;
 	private JCheckBox checkDorm3;
@@ -49,7 +50,7 @@ public class FormularioPrincipal extends JFrame {
 	private JCheckBox checkBano1;
 	private JCheckBox checkBano2;
 	private JCheckBox checkBano3;
-	private JComboBox comboEstado;
+	private JComboBox<String> comboEstado;
 	private JCheckBox char1;
 	private JCheckBox char2;
 	private JCheckBox char3;
@@ -90,28 +91,7 @@ public class FormularioPrincipal extends JFrame {
 	private JButton[] buttonLike;
 	private JTextPane[] textPane;
 	
-	
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					//DescripcionVivienda[] d = new DescripcionVivienda[0];
-					FormularioPrincipal frame = new FormularioPrincipal("---","---",0,0,null);
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
-	 * Create the frame.
-	 */
-
+	//region Contructora del Formulario Principal
 	public FormularioPrincipal(String localizacion,String area,int habitaciones,int superficie,RecomendadorCBR r) {
 		super("Recomendador de Pisos");
 		this.recomendador = r;
@@ -124,7 +104,7 @@ public class FormularioPrincipal extends JFrame {
 		
 		DescripcionVivienda[] resultados = this.recomendador.getResults(true); 
 		
-		comboArea = new JComboBox();
+		comboArea = new JComboBox<String>();
 		comboArea.setEnabled(false);
 		
 		JPanel panel_1 = new JPanel();
@@ -176,17 +156,14 @@ public class FormularioPrincipal extends JFrame {
 				"rivas-vaciamadrid","salamanca","san-agustin-de-guadalix-zona-de","san-blas","san-fernando-de-henares","san-lorenzo-de-el-escorial","san-martin-de-la-vega-zona-de",
 				"san-sebastian-de-los-reyes","tetuan","torrejon-de-ardoz","torrelodones","tres-cantos","usera","valdemorillo","valdemoro","velilla-de-san-antonio-zona-de",
 				"venturada","vicalvaro","villa-de-vallecas","villalbilla-zona-de","villanueva-de-la-canada-zona-de","villanueva-del-pardillo","villaverde","villaviciosa-de-odon"};
-		comboLocalizacion = new JComboBox(comboList);
+		comboLocalizacion = new JComboBox<String>(comboList);
 		boolean crearArea = false;
 		if (!localizacion.equals("---")) {
 			comboLocalizacion.setSelectedItem(localizacion);
 			crearArea = true;
 		}
 		comboLocalizacion.addActionListener(new ActionListener(){
-			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				//System.out.println(comboBox.getSelectedItem().toString());
 				GridBagConstraints c = new GridBagConstraints();
 				c.fill = GridBagConstraints.HORIZONTAL;
 				panel.remove(comboArea);
@@ -243,7 +220,7 @@ public class FormularioPrincipal extends JFrame {
 		c.gridwidth = 2;
 		String[] pMin = new String[] {"0","50000","100000","150000","200000","250000","300000","350000","400000","450000","500000",
 				"600000","700000","800000","900000","1000000","2000000","3000000","4000000","5000000"};
-		comboMinPrecio = new JComboBox(pMin);
+		comboMinPrecio = new JComboBox<String>(pMin);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMinPrecio,c);
 		
@@ -253,7 +230,7 @@ public class FormularioPrincipal extends JFrame {
 		c.gridwidth = 2;
 		String[] pMax = new String[] {"0","50000","100000","150000","200000","250000","300000","350000","400000","450000","500000",
 				"600000","700000","800000","900000","1000000","2000000","3000000","4000000","5000000"};
-		comboMaxPrecio = new JComboBox(pMax);
+		comboMaxPrecio = new JComboBox<String>(pMax);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMaxPrecio,c);
 		
@@ -271,7 +248,7 @@ public class FormularioPrincipal extends JFrame {
 		String[] tMin = new String[] {"0","20","40","60","80","100","150","200","250","300","350",
 				"400","450","500","600","700","800","900","1000","1200","1400",
 				"1600","1800","2000"};
-		comboMinTam = new JComboBox(tMin);
+		comboMinTam = new JComboBox<String>(tMin);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMinTam,c);
 		
@@ -282,7 +259,7 @@ public class FormularioPrincipal extends JFrame {
 		String[] tMax = new String[] {"0","20","40","60","80","100","150","200","250","300","350",
 				"400","450","500","600","700","800","900","1000","1200","1400",
 				"1600","1800","2000"};
-		comboMaxTam = new JComboBox(tMax);
+		comboMaxTam = new JComboBox<String>(tMax);
 		comboMaxTam.setSelectedItem(String.valueOf(superficie));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMaxTam,c);
@@ -299,7 +276,7 @@ public class FormularioPrincipal extends JFrame {
 		c.weightx = 1;
 		c.gridwidth = 4;
 		String[] buscaList = new String[] {"---","Atico", "Plantabaja", "Piso", "Loft", "Casaadosada", "CasaChalet", "Duplex", "Estudio", "Fincarustica", "Apartamento"};
-		comboTipoPiso = new JComboBox(buscaList);
+		comboTipoPiso = new JComboBox<String>(buscaList);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboTipoPiso,c);
 		
@@ -397,7 +374,7 @@ public class FormularioPrincipal extends JFrame {
 		c.weightx = 1;
 		c.gridwidth = 4;
 		String[] estadoList = new String[] {"---","Muybien","Reformado","Areformar","Casinuevo","Bien"};
-		comboEstado = new JComboBox(estadoList);
+		comboEstado = new JComboBox<String>(estadoList);
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboEstado,c);
 		
@@ -710,11 +687,10 @@ public class FormularioPrincipal extends JFrame {
 		contentPane.add(scrollPane_2);
 		
 		creaPanelCentral(resultados);
-		
-		//contentPane.add(panel);
-		setVisible(true);
 	}
+	//endregion
 	
+	//region Creación del Panel de resultados
 	public void creaPanelCentral(DescripcionVivienda[] resultados) {
 		buttonLike = new JButton[resultados.length];
 		textPane = new JTextPane[resultados.length];
@@ -749,12 +725,14 @@ public class FormularioPrincipal extends JFrame {
 		scrollPane.setBounds(289, 75, 683, 626);
 		contentPane.add(scrollPane);
 	}
+	//endregion
 	
+	//region Areas
 	public void areas() {
 		
 		if (comboLocalizacion.getSelectedItem().toString().equals("arroyomolinos-madrid")) {
 			String[] newList = new String[] {"---","centro-y-la-rinconada","coto-redondo-monte-de-batres","zona-bulevar-y-europa","zona-las-castaneras","zona-zarzalejos"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -767,28 +745,28 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("alcala-de-henares")) {
 			
 			String[] newList = new String[] {"---","val","ensanche","casco-historico-de-alcala-de-henares","pryconsa-juan-de-austria","estacion-parque-o-donnell","	reyes-catolicos	chorrillo","la-garena","espartales"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("alcobendas")) {
 			
 			String[] newList = new String[] {"---","norte-de-alcobendas","el-soto-de-la-moraleja","	arroyo-de-la-vega","la-moraleja-distrito","	centro-de-alcobendas","	ensanche","	encinar-de-los-reyes"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("alcorcon")) {
 			
 			String[] newList = new String[] {"---","prado-santo-domingo-ensanche","parque-lisboa-la-paz","parque-oeste-fuente-cisneros","torresbellas","casco-antiguo","campodon-ventorro-del-cano"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("algete")) {
 			
 			String[] newList = new String[] {"---","algete-pueblo"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -798,35 +776,35 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("aranjuez")) {
 			
 			String[] newList = new String[] {"---","nuevo-aranjuez","foso-moreras","la-montana-el-cortijo"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("arganda-del-rey")) {
 			
 			String[] newList = new String[] {"---","los-villares","centro-de-arganda-del-rey"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("arganzuela")) {
 			
 			String[] newList = new String[] {"---","delicias","acacias","legazpi","	chopera","palos-de-moguer","imperial"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("barajas")) {
 			
 			String[] newList = new String[] {"---","alameda-de-osuna","	timon","barajas-pueblo"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("boadilla-del-monte")) {
 			
 			String[] newList = new String[] {"---","las-lomas","sector-s","parque-boadilla","sector-b","urb-este-monteprincipe","vinas-viejas"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -836,63 +814,63 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("carabanchel")) {
 			
 			String[] newList = new String[] {"---","comillas","vista-alegre	opanel","san-isidro	puerta-bonita","pau-de-carabanchel"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("centro-de-madrid-capital")) {
 			
 			String[] newList = new String[] {"---","embajadores","universidad","cortes","palacio","justicia","sol"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("chamartin")) {
 			
 			String[] newList = new String[] {"---","el-viso	nueva-espana","	castilla","	hispanoamerica","ciudad-jardin","prosperidad"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("chamberi")) {
 			
 			String[] newList = new String[] {"---","trafalgar","gaztambide","almagro","	rios-rosas","arapiles","vallehermoso"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("ciempozuelos")) {
 			
 			String[] newList = new String[] {"---","cuevas-ilustracion"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("ciudad-lineal")) {
 			
 			String[] newList = new String[] {"---","pueblo-nuevo","	ventas","quintana","costillares","san-pascual","concepcion","colina"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("collado-villalba")) {
 			
 			String[] newList = new String[] {"---","los-valles","villalba-estacion"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("colmenar-viejo")) {
 			
 			String[] newList = new String[] {"---","las-vegas-el-pozanco","el-olivar-la-magdalena","centro-de-colmenar-viejo","	san-andres","el-cerrillo","	el-mirador"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("coslada")) {
 			
 			String[] newList = new String[] {"---","barrio-de-la-estacion-de-coslada","	valleaguado-la-canada","coslada-pueblo"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -902,7 +880,7 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("el-boalo-cerceda-mataelpino")) {
 			
 			String[] newList = new String[] {"---","el-boalo","	cerceda"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -912,14 +890,14 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("fuencarral")) {
 			
 			String[] newList = new String[] {"---","montecarmelo","	penagrande","tres-olivos-valverde"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("fuenlabrada")) {
 			
 			String[] newList = new String[] {"---","la-serna","	el-naranjo","la-avanzada-la-cueva","centro-de-fuenlabrada","sudeste-industrial-de-fuenlabrada","fuenlabrada-ii-el-molino"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -929,14 +907,14 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("galapagar")) {
 			
 			String[] newList = new String[] {"---","el-guijo-colonia-espana"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("getafe")) {
 			
 			String[] newList = new String[] {"---","centro-de-getafe","	norte-de-getafe	juan-de-la-cierva","zona-universidad-en-getafe","la-alhondiga","perales-del-rio	el-roson-kelvinator"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -949,7 +927,7 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("hortaleza")) {
 			
 			String[] newList = new String[] {"---","sanchinarro","virgen-del-cortijo-manoteras","pinar-del-rey","conde-orgaz","valdebebas-valdefuentes","el-encinar-de-los-reyes","canillas","apostol-santiago"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -959,21 +937,21 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("las-rozas-de-madrid")) {
 			
 			String[] newList = new String[] {"---","el-pinar-punta-galea","europolis","dehesa-navalcarbon-montecillo","casco-antiguo","marazuela-el-torreon","	club-de-golf","	el-cantizal","las-matas-penascales","parque-empresarial","zona-auditorio","	dehesa-navalcarbon-montecillo","molino-de-la-hoz","	el-burgo"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("latina")) {
 			
 			String[] newList = new String[] {"---","lucero","puerta-del-angel","aguilas	aluche"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("leganes")) {
 			
 			String[] newList = new String[] {"---","zarzaquemada","centro-de-leganes","san-nicasio-campo-de-tiro-solagua","la-fortuna","norte-de-leganes","valdepelayo-montepinos-arroyo-culebro","el-carrascal","las-dehesillas-vereda-de-los-estudiantes"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -983,7 +961,7 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("majadahonda")) {
 			
 			String[] newList = new String[] {"---","casco-antiguo-de-majadahonda","zona-monte-el-pilar","zona-carretera-del-plantio","golf-el-carralero","zona-norte-de-majadahonda"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -996,14 +974,14 @@ public class FormularioPrincipal extends JFrame {
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("moncloa")) {
 			
 			String[] newList = new String[] {"---","la-florida-el-plantio","arguelles","valdemarin","aravaca","casa-de-campo","ciudad-universitaria"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		}else if (comboLocalizacion.getSelectedItem().toString().equals("moralzarzal")) {
 			
 			String[] newList = new String[] {"---","zona-centro-de-moralzarzal","zona-los-lagos","zona-colegios"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -1011,7 +989,7 @@ public class FormularioPrincipal extends JFrame {
 		else if (comboLocalizacion.getSelectedItem().toString().equals("moratalaz")) {
 			
 			String[] newList = new String[] {"---","media-legua","vinateros","pavones","marroquina"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -1019,28 +997,28 @@ public class FormularioPrincipal extends JFrame {
 		else if (comboLocalizacion.getSelectedItem().toString().equals("mostoles")) {
 			
 			String[] newList = new String[] {"---","centro-de-mostoles","mariblanca-villafontana","sur-pau-4","coimbra-guadarrama","zona-norte-universidad-en-mostoles","el-soto-coveta","suroeste-zona-hospital-en-mostoles"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("navalcarnero")) {
 			
 			String[] newList = new String[] {"---","el-pijorro","zona-casco-antiguo-de-navalcarnero","urb-calipo"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("paracuellos-de-jarama")) {
 			
 			String[] newList = new String[] {"---","miramadrid"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("parla")) {
 			
 			String[] newList = new String[] {"---","villa-juventus","las-americas-parla-este","fuentebella-el-nido","centro-de-parla"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -1053,21 +1031,21 @@ public class FormularioPrincipal extends JFrame {
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("pinto")) {
 			
 			String[] newList = new String[] {"---","san-jose-buenos-aires","teneria-los-olivos","parque-europa-los-pitufos","zona-centro-ayuntamiento-de-pinto"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("pozuelo-de-alarcon")) {
 			
 			String[] newList = new String[] {"---","zona-pueblo","zona-norte-de-pozuelo-de-alarcon","zona-avenida-europa","zona-prado-de-somosaguas-la-finca","zona-estacion-de-pozuelo-de-alarcon","somosaguas","urbanizaciones"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("puente-de-vallecas")) {
 			
 			String[] newList = new String[] {"---","palomeras-sureste","numancia","san-diego","portazgo","palomeras-bajas	entrevias"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -1086,21 +1064,21 @@ public class FormularioPrincipal extends JFrame {
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("retiro")) {
 			
 			String[] newList = new String[] {"---","ibiza","estrella","jeronimos","nino-jesus","pacifico","adelfas"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("rivas-vaciamadrid")) {
 			
 			String[] newList = new String[] {"---","centro-de-rivas-vaciamadrid","rivas-futura","covibar-pablo-iglesias","casco-historico-de-rivas-vaciamadrid","rivas-urbanizaciones"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("salamanca")) {
 			
 			String[] newList = new String[] {"---","recoletos","goya","guindalera","lista","castellana"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -1110,21 +1088,21 @@ public class FormularioPrincipal extends JFrame {
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("san-blas")) {
 			
 			String[] newList = new String[] {"---","arcos-de-jalon","simancas","canillejas","rosas-musas","salvador"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("san-fernando-de-henares")) {
 			
 			String[] newList = new String[] {"---","parque-roma-coronas","centro-de-san-fernando-de-henares","montserrat-parque-empresarial"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("san-lorenzo-de-el-escorial")) {
 			
 			String[] newList = new String[] {"---","centro-casco-historico-de-san-lorenzo-de-el-escorial"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -1134,56 +1112,56 @@ public class FormularioPrincipal extends JFrame {
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("san-sebastian-de-los-reyes")) {
 			
 			String[] newList = new String[] {"---","ciudalcampo","centro-urbano-de-san-sebastian-de-los-reyes","rosa-luxemburgo"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("tetuan")) {
 			
 			String[] newList = new String[] {"---","bellas-vistas","berruguete","cuatro-caminos-azca","valdeacederas","la-ventilla","castillejos"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("torrejon-de-ardoz")) {
 			
 			String[] newList = new String[] {"---","parque-cataluna-canada-soto","centro-de-torrejon-de-ardoz","fresnos","veredillas-juncal-zarzuela"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("torrelodones")) {
 			
 			String[] newList = new String[] {"---","casco-antiguo-de-torrelodones","zona-hospital-en-torrelodones","las-marias","los-robles"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("tres-cantos")) {
 			
 			String[] newList = new String[] {"---","primera-fase","zona-estacion-centro-de-tres-cantos","segunda-fase"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("usera")) {
 			
 			String[] newList = new String[] {"---","pradolongo","almendrales","orcasitas","moscardo","zofio"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("valdemorillo")) {
 			
 			String[] newList = new String[] {"---","pueblo-urb-norte","cerro-de-alarcon-puente-la-sierra-mirador-del-romero"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("valdemoro")) {
 			
 			String[] newList = new String[] {"---","centro-de-valdemoro","reston-i-reston-ii","zona-estacion-en-valdemoro","altos-del-olivar-el-caracol"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -1193,21 +1171,21 @@ public class FormularioPrincipal extends JFrame {
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("venturada")) {
 			
 			String[] newList = new String[] {"---","los-cotos-de-monterrey","venturada-pueblo"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("vicalvaro")) {
 			
 			String[] newList = new String[] {"---","san-juan","valdebernardo-valderribas","casco-historico-de-vicalvaro"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("villa-de-vallecas")) {
 			
 			String[] newList = new String[] {"---","vallecas-pueblo","ensanche-de-vallecas-valdecarros"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -1220,21 +1198,21 @@ public class FormularioPrincipal extends JFrame {
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("villanueva-del-pardillo")) {
 			
 			String[] newList = new String[] {"---","centro-de-villanueva-del-pardillo","ibiza-san-pedro"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("villaverde")) {
 			
 			String[] newList = new String[] {"---","los-rosales","san-andres","butarque"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
 		} else if (comboLocalizacion.getSelectedItem().toString().equals("villaviciosa-de-odon")) {
 			
 			String[] newList = new String[] {"---","casco-urbano-de-villaviciosa-de-odon","el-castillo-campodon","el-bosque"};
-			comboArea = new JComboBox(newList);
+			comboArea = new JComboBox<String>(newList);
 			comboArea.setEnabled(true);
 			
 			repaint();
@@ -1247,7 +1225,9 @@ public class FormularioPrincipal extends JFrame {
 	public void pintaNoArea() {
 		comboArea.setEnabled(false);
 	}
+	//endregion
 	
+	//region Obtencion de datos para el CBR
 	public DescripcionVivienda getMapeoDescripcionVivienda(){
 		String value = "";
 		int v = 0;
@@ -1346,17 +1326,17 @@ public class FormularioPrincipal extends JFrame {
 	}
 	
 	private int getNumHabitaciones() {
-		if (checkDorm1.isSelected()) return 1;
-		if (checkDorm2.isSelected()) return 2;
-		if (checkDorm3.isSelected()) return 3;
 		if (checkDorm4.isSelected()) return 4;
+		if (checkDorm3.isSelected()) return 3;
+		if (checkDorm2.isSelected()) return 2;
+		if (checkDorm1.isSelected()) return 1;
 		return 0;
 	}
 	
 	private int getNumBanios() {
-		if (checkBano1.isSelected()) return 1;
-		if (checkBano2.isSelected()) return 2;
 		if (checkBano3.isSelected()) return 3;
+		if (checkBano2.isSelected()) return 2;
+		if (checkBano1.isSelected()) return 1;
 		return 0;
 	}
 
@@ -1431,4 +1411,5 @@ public class FormularioPrincipal extends JFrame {
 		e.setVideoportero(has16.isSelected()); 
 		return e;
 	}
+	//endregion
 }

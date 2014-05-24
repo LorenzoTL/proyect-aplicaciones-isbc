@@ -18,27 +18,22 @@ public class ViviendasConnector implements Connector {
 
 	@Override
 	public void initFromXMLfile(URL file) throws InitializingException {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void close() {
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void storeCases(Collection<CBRCase> cases) {
-		// TODO Auto-generated method stub
 		try{
 			ArrayList<String> lines = new ArrayList<String>();
 			BufferedReader reader = new BufferedReader(new FileReader("src/Viviendas/viviendas2"));
-			if (reader == null) return;
 			String line = null;
 			Iterator<CBRCase> it = cases.iterator();
 			int id = (it.hasNext()) ? ((DescripcionVivienda)it.next().getDescription()).getId() : -1; 
-			if (id == -1) return;
 			while ((line=reader.readLine())!=null){
 				String[] s = line.split("#");
 				if(Integer.valueOf(s[0]) == id){
@@ -55,7 +50,6 @@ public class ViviendasConnector implements Connector {
 			reader.close();
 			
 			BufferedWriter writer = new BufferedWriter(new FileWriter("src/Viviendas/viviendas2"));
-			if (writer == null) return;
 			for(Iterator<String> ite=lines.iterator();ite.hasNext();){
 				String s = ite.next();
 				writer.write(s);
@@ -70,8 +64,7 @@ public class ViviendasConnector implements Connector {
 
 	@Override
 	public void deleteCases(Collection<CBRCase> cases) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -105,7 +98,6 @@ public class ViviendasConnector implements Connector {
 
 	@Override
 	public Collection<CBRCase> retrieveSomeCases(CaseBaseFilter filter) {
-		// TODO Auto-generated method stub
 		return null;
 	}	
 	/**
