@@ -1,6 +1,5 @@
 package Viviendas;
 
-import Clases_Auxiliares.Preferencias;
 import jcolibri.cbrcore.Attribute;
 import jcolibri.cbrcore.CaseComponent;
 
