@@ -7,14 +7,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.exception.ExecutionException;
 import CBR.RecomendadorCBR;
 import Clases_Auxiliares.Preferencias;
-import Interfaz.ConfigPanel.ChoiceOption;
-import Interfaz.ConfigPanel.IntegerOption;
 import Viviendas.DescripcionVivienda;
 
 public class FormularioInicial extends JFrame {
@@ -83,7 +80,7 @@ public class FormularioInicial extends JFrame {
 				"1600","1800","2000"};
 		comboSup = new JComboBox(tMax);
 		comboSup.setBounds(105, 87, 121, 20);
-		comboSup.setSelectedItem("100");
+		comboSup.setSelectedItem("20");
 		getContentPane().add(comboSup);
 		
 		JButton boton = new JButton("BUSCAR");
@@ -99,18 +96,21 @@ public class FormularioInicial extends JFrame {
 						DescripcionVivienda description = new DescripcionVivienda();
 						String localizacion;
 						String auxLoc;
+						String l = "";
 						boolean b = false;
 						if (comboNew != null) {
 							localizacion = comboNew.getSelectedItem().toString();
+							l = comboBox.getSelectedItem().toString() + "#" + localizacion;
 							auxLoc = comboBox.getSelectedItem().toString();
 						} else {
 							localizacion = comboBox.getSelectedItem().toString();
+							l = localizacion;
 							auxLoc = "---";
 							b = true;
 						}
 						Integer habitaciones = Integer.parseInt(comboHab.getSelectedItem().toString());
 						Integer superficie = Integer.parseInt(comboSup.getSelectedItem().toString());
-						description.setDescripcion(localizacion,habitaciones,superficie);
+						description.setDescripcion(l,habitaciones,superficie);
 						query.setDescription(description);
 						recomendador.cycle(query);
 						recomendador.postCycle();

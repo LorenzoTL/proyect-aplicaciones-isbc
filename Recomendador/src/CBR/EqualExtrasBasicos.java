@@ -1,58 +1,44 @@
 package CBR;
 
 import Viviendas.ExtrasBasicos;
-import jcolibri.exception.NoApplicableSimilarityFunctionException;
-import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
+import jcolibri.exception.NoApplicableFilterPredicateException;
+import jcolibri.method.retrieve.FilterBasedRetrieval.predicates.FilterPredicate;
 
-public class EqualExtrasBasicos implements LocalSimilarityFunction{
+public class EqualExtrasBasicos implements FilterPredicate{
 	
-	public double compute(Object caseObject, Object queryObject) throws NoApplicableSimilarityFunctionException{
+	public boolean compute(Object caseObject, Object queryObject) throws NoApplicableFilterPredicateException{
 		if ((caseObject == null) || (queryObject == null))
-			return 0;
+			return true;
 		if (! ((caseObject instanceof ExtrasBasicos)))
-			throw new jcolibri.exception.NoApplicableSimilarityFunctionException(this.getClass(), caseObject.getClass());
+			throw new jcolibri.exception.NoApplicableFilterPredicateException(this.getClass(), caseObject.getClass());
 		if (! ((queryObject instanceof ExtrasBasicos)))
-			throw new jcolibri.exception.NoApplicableSimilarityFunctionException(this.getClass(), queryObject.getClass());
+			throw new jcolibri.exception.NoApplicableFilterPredicateException(this.getClass(), queryObject.getClass());
 		
 		ExtrasBasicos caseValue  = (ExtrasBasicos) caseObject;
 		ExtrasBasicos queryValue = (ExtrasBasicos) queryObject;
 	    
-	    int numAt = 18;
-	    int atEquals = 0;
+	    boolean b = false;
 	    
-    	 if (caseValue.isLavadero() == queryValue.isLavadero()) atEquals ++;
-    	 if (caseValue.isInternet() == queryValue.isInternet()) atEquals ++;
-    	 if (caseValue.isMicroondas() == queryValue.isMicroondas()) atEquals ++;
-    	 if (caseValue.isHorno() == queryValue.isHorno()) atEquals ++;
-    	 if (caseValue.isAmueblado() == queryValue.isAmueblado()) atEquals ++;
-    	 if (caseValue.isCocinaOffice() == queryValue.isCocinaOffice()) atEquals ++;
-    	 if (caseValue.isParquet() == queryValue.isParquet()) atEquals ++;
-    	 if (caseValue.isDomotica() == queryValue.isDomotica()) atEquals ++;
-    	 if (caseValue.isArmarios() == queryValue.isArmarios()) atEquals ++;
-    	 if (caseValue.isTv() == queryValue.isTv()) atEquals ++;
-    	 if (caseValue.isLavadora() == queryValue.isLavadora()) atEquals ++;
-    	 if (caseValue.isElectrodomesticos() == queryValue.isElectrodomesticos()) atEquals ++;
-    	 if (caseValue.isSuiteConBanio() == queryValue.isSuiteConBanio()) atEquals ++;
-    	 if (caseValue.isPuertaBlindada() == queryValue.isPuertaBlindada()) atEquals ++;
-    	 if (caseValue.isGresCeramica() == queryValue.isGresCeramica()) atEquals ++;
-    	 if (caseValue.isCalefaccion() == queryValue.isCalefaccion()) atEquals ++;
-    	 if (caseValue.isAireAcondicionado() == queryValue.isAireAcondicionado()) atEquals ++;
-    	 if (caseValue.isNevera() == queryValue.isNevera()) atEquals ++;
+    	 b = (caseValue.isLavadero() == queryValue.isLavadero())
+    	 && (caseValue.isInternet() == queryValue.isInternet())
+    	 && (caseValue.isMicroondas() == queryValue.isMicroondas())
+    	 && (caseValue.isHorno() == queryValue.isHorno())
+    	 && (caseValue.isAmueblado() == queryValue.isAmueblado())
+    	 && (caseValue.isCocinaOffice() == queryValue.isCocinaOffice())
+    	 && (caseValue.isParquet() == queryValue.isParquet())
+    	 && (caseValue.isDomotica() == queryValue.isDomotica())
+    	 && (caseValue.isArmarios() == queryValue.isArmarios())
+    	 && (caseValue.isTv() == queryValue.isTv()) 
+    	 && (caseValue.isLavadora() == queryValue.isLavadora())
+    	 && (caseValue.isElectrodomesticos() == queryValue.isElectrodomesticos())
+    	 && (caseValue.isSuiteConBanio() == queryValue.isSuiteConBanio()) 
+    	 && (caseValue.isPuertaBlindada() == queryValue.isPuertaBlindada()) 
+    	 && (caseValue.isGresCeramica() == queryValue.isGresCeramica()) 
+    	 && (caseValue.isCalefaccion() == queryValue.isCalefaccion())
+    	 && (caseValue.isAireAcondicionado() == queryValue.isAireAcondicionado())
+    	 && (caseValue.isNevera() == queryValue.isNevera());
     	 
-    	 if(atEquals == numAt) return 1;
-    	 
-	    return atEquals/numAt;
-	}
-	
-	public boolean isApplicable(Object o1, Object o2){
-		if((o1==null)&&(o2==null))
-			return true;
-		else if(o1==null)
-			return (o2 instanceof ExtrasBasicos);
-		else if(o2==null)
-			return (o1 instanceof ExtrasBasicos);
-		else
-			return ((o1 instanceof ExtrasBasicos)&&(o2 instanceof ExtrasBasicos));
+    	 return b;
 	}
 	
 }

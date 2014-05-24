@@ -1,5 +1,7 @@
 package CBR;
 
+import javax.management.Query;
+
 import jcolibri.exception.NoApplicableSimilarityFunctionException;
 import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
 
@@ -19,10 +21,16 @@ public class EqualLocation implements LocalSimilarityFunction{
 	    caseValue  = (String) caseObject;
 	    queryValue = (String) queryObject;
 	    
-	    if(caseValue.contains(queryValue)) 
-	    	return 1;
-	    return 0;
-		
+	    int value = 0;
+	    
+	    if (queryValue.contains("#")){
+	    	String[] split = queryValue.split("#");
+	    	if (caseValue.contains(split[0]) || caseValue.contains(split[1])) value = 1;
+	    }else{
+	    	if(caseValue.contains(queryValue)) value = 1;
+	    }
+	    
+	    return value;
 	}
 
 	public boolean isApplicable(Object o1, Object o2){

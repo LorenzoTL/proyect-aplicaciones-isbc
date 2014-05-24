@@ -1,48 +1,32 @@
 package CBR;
 
 import Viviendas.ExtrasOtros;
-import jcolibri.exception.NoApplicableSimilarityFunctionException;
-import jcolibri.method.retrieve.NNretrieval.similarity.LocalSimilarityFunction;
+import jcolibri.exception.NoApplicableFilterPredicateException;
+import jcolibri.method.retrieve.FilterBasedRetrieval.predicates.FilterPredicate;
 
-public class EqualExtrasOtros implements LocalSimilarityFunction{
+public class EqualExtrasOtros implements FilterPredicate{
 	
-	public double compute(Object caseObject, Object queryObject) throws NoApplicableSimilarityFunctionException{
+	public boolean compute(Object caseObject, Object queryObject) throws NoApplicableFilterPredicateException{
 		if ((caseObject == null) || (queryObject == null))
-			return 0;
+			return true;
 		if (! ((caseObject instanceof ExtrasOtros)))
-			throw new jcolibri.exception.NoApplicableSimilarityFunctionException(this.getClass(), caseObject.getClass());
+			throw new jcolibri.exception.NoApplicableFilterPredicateException(this.getClass(), caseObject.getClass());
 		if (! ((queryObject instanceof ExtrasOtros)))
-			throw new jcolibri.exception.NoApplicableSimilarityFunctionException(this.getClass(), queryObject.getClass());
+			throw new jcolibri.exception.NoApplicableFilterPredicateException(this.getClass(), queryObject.getClass());
 		
 		ExtrasOtros caseValue  = (ExtrasOtros) caseObject;
 		ExtrasOtros queryValue = (ExtrasOtros) queryObject;
 	    
-	    int numAt = 9;
-	    int atEquals = 0;
-	    
-    	 if (caseValue.isBalcon() == queryValue.isBalcon()) atEquals ++;
-    	 if (caseValue.isJardinPrivado() == queryValue.isJardinPrivado()) atEquals ++;
-    	 if (caseValue.isPatio() == queryValue.isPatio()) atEquals ++;
-    	 if (caseValue.isPiscina() == queryValue.isPiscina()) atEquals ++;
-    	 if (caseValue.isPiscinaComunitaria() == queryValue.isPiscinaComunitaria()) atEquals ++;
-    	 if (caseValue.isTerraza() == queryValue.isTerraza()) atEquals ++;
-    	 if (caseValue.isZonaComunitaria()== queryValue.isZonaComunitaria()) atEquals ++;
-    	 if (caseValue.isZonaDeportiva()== queryValue.isZonaDeportiva()) atEquals ++;
-    	 if (caseValue.isZonaInfantil()== queryValue.isZonaInfantil()) atEquals ++;
+	    boolean b =  (caseValue.isBalcon() == queryValue.isBalcon())
+    	 && (caseValue.isJardinPrivado() == queryValue.isJardinPrivado()) 
+    	 && (caseValue.isPatio() == queryValue.isPatio())
+    	 && (caseValue.isPiscina() == queryValue.isPiscina())
+    	 && (caseValue.isPiscinaComunitaria() == queryValue.isPiscinaComunitaria())
+    	 && (caseValue.isTerraza() == queryValue.isTerraza()) 
+    	 && (caseValue.isZonaComunitaria()== queryValue.isZonaComunitaria()) 
+    	 && (caseValue.isZonaDeportiva()== queryValue.isZonaDeportiva())
+    	 && (caseValue.isZonaInfantil()== queryValue.isZonaInfantil());
     	 
-    	 if(atEquals == numAt) return 1;
-    	 
-	    return atEquals/numAt;
-	}
-	
-	public boolean isApplicable(Object o1, Object o2){
-		if((o1==null)&&(o2==null))
-			return true;
-		else if(o1==null)
-			return (o2 instanceof ExtrasOtros);
-		else if(o2==null)
-			return (o1 instanceof ExtrasOtros);
-		else
-			return ((o1 instanceof ExtrasOtros)&&(o2 instanceof ExtrasOtros));
+    	 return b;
 	}
 }
