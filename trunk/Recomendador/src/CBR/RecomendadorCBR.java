@@ -12,14 +12,10 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.exception.ExecutionException;
-import jcolibri.method.retrieve.RetrievalResult;
-import jcolibri.method.retrieve.NNretrieval.NNConfig;
-import jcolibri.method.retrieve.NNretrieval.NNScoringMethod;
-import jcolibri.method.retrieve.NNretrieval.similarity.global.Average;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.Equal;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.recommenders.InrecaLessIsBetter;
-import jcolibri.method.retrieve.NNretrieval.similarity.local.recommenders.InrecaMoreIsBetter;
-import jcolibri.method.retrieve.selection.SelectCases;
+import jcolibri.method.retrieve.FilterBasedRetrieval.FilterBasedRetrievalMethod;
+import jcolibri.method.retrieve.FilterBasedRetrieval.FilterConfig;
+import jcolibri.method.retrieve.FilterBasedRetrieval.predicates.QueryLessOrEqual;
+import jcolibri.method.retrieve.FilterBasedRetrieval.predicates.QueryMoreOrEqual;
 
 public class RecomendadorCBR implements StandardCBRApplication{
 
@@ -77,47 +73,46 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	}
 	
 	private void sequence1(CBRQuery query){
-		NNConfig simConfig = new NNConfig();
-		simConfig.setDescriptionSimFunction(new Average());
-		simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocation());
-		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(_caseBase.getCases(), query, simConfig);
-		cases = SelectCases.selectAll(eval);
-		simConfig = new NNConfig();
-		simConfig.setDescriptionSimFunction(new Average());
-		simConfig.addMapping(new Attribute("superficie", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
-		simConfig.addMapping(new Attribute("habitaciones", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
-		eval = NNScoringMethod.evaluateSimilarity(cases, query, simConfig);
-		casesFormInitial = SelectCases.selectAll(eval);
+		FilterConfig preferences = new FilterConfig();
+		preferences.addPredicate(new Attribute("localizacion", DescripcionVivienda.class), new EqualLocationPreferences());
+		
+		cases = FilterBasedRetrievalMethod.filterCases(_caseBase.getCases(), query, preferences);
+		
+		FilterConfig preferences2 = new FilterConfig();
+		preferences.addPredicate(new Attribute("superficie", DescripcionVivienda.class), new QueryMoreOrEqual());
+		preferences.addPredicate(new Attribute("habitaciones", DescripcionVivienda.class), new QueryMoreOrEqual());
+		casesFormInitial = FilterBasedRetrievalMethod.filterCases(cases, query, preferences2);
 	}
 	
 	private void sequence2(CBRQuery query){
-		Collection<CBRCase> cases = casesFormInitial;
+		Collection<CBRCase> casesBase = cases;
 		DescripcionVivienda dv =  (DescripcionVivienda)query.getDescription();
-		NNConfig simConfig = new NNConfig();
-		simConfig.setDescriptionSimFunction(new Average());
+		
+		FilterConfig preferences = new FilterConfig();
+		
 		if(dv.getLocalizacion() != null){ 
-			cases = _caseBase.getCases();
-			simConfig.addMapping(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocation());
+			casesBase = _caseBase.getCases();
+			preferences.addPredicate(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocationPreferences());
 		}
 		if(dv.getPrecioMedio() != 0)
-			simConfig.addMapping(new Attribute("precioMedio", DescripcionVivienda.class),new InrecaLessIsBetter(2000,0.5));
+			preferences.addPredicate(new Attribute("precioMedio", DescripcionVivienda.class),new QueryLessOrEqual());
 		if(dv.getSuperficie() != 0)
-			simConfig.addMapping(new Attribute("superficie", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
+			preferences.addPredicate(new Attribute("superficie", DescripcionVivienda.class),new QueryLessOrEqual());
 		if(dv.getTipo() != null)
-			simConfig.addMapping(new Attribute("tipo", DescripcionVivienda.class),new Equal());
+			preferences.addPredicate(new Attribute("tipo", DescripcionVivienda.class),new jcolibri.method.retrieve.FilterBasedRetrieval.predicates.Equal());
 		if(dv.getHabitaciones() != 0)
-			simConfig.addMapping(new Attribute("habitaciones", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
+			preferences.addPredicate(new Attribute("habitaciones", DescripcionVivienda.class),new QueryMoreOrEqual());
 		if(dv.getBanios() != 0)
-			simConfig.addMapping(new Attribute("banios", DescripcionVivienda.class),new InrecaMoreIsBetter(0.5));
+			preferences.addPredicate(new Attribute("banios", DescripcionVivienda.class),new QueryMoreOrEqual());
 		if(dv.getEstado() != null)
-			simConfig.addMapping(new Attribute("estado", DescripcionVivienda.class),new Equal());
+			preferences.addPredicate(new Attribute("estado", DescripcionVivienda.class),new jcolibri.method.retrieve.FilterBasedRetrieval.predicates.Equal());
 		if(dv.getExtrasBasicos() != null)
-			simConfig.addMapping(new Attribute("extrasBasicos", DescripcionVivienda.class),new Equal());
+			preferences.addPredicate(new Attribute("extrasBasicos", DescripcionVivienda.class),new EqualExtrasBasicos());
 		if(dv.getExtrasFinca() != null)
-			simConfig.addMapping(new Attribute("extrasFinca", DescripcionVivienda.class),new Equal());
+			preferences.addPredicate(new Attribute("extrasFinca", DescripcionVivienda.class),new EqualExtrasFinca());
 		if(dv.getExtrasOtros() != null)
-			simConfig.addMapping(new Attribute("extrasOtros", DescripcionVivienda.class),new Equal());
-		Collection<RetrievalResult> eval = NNScoringMethod.evaluateSimilarity(cases, query, simConfig);
-		casesFormPrincipal = SelectCases.selectAll(eval);
+			preferences.addPredicate(new Attribute("extrasOtros", DescripcionVivienda.class),new EqualExtrasOtros());
+		
+		casesFormPrincipal = FilterBasedRetrievalMethod.filterCases(casesBase, query, preferences);
 	}
 }
