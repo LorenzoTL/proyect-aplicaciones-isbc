@@ -17,16 +17,46 @@ public class EqualExtrasFinca implements FilterPredicate{
 		ExtrasFinca caseValue  = (ExtrasFinca) caseObject;
 		ExtrasFinca queryValue = (ExtrasFinca) queryObject;
 	    
-	    boolean b = false;
+	    boolean b = true;
+	    int cont = 0;
+	    int c = 0;
 	    
-    	 b =  (caseValue.isAscensor() == queryValue.isAscensor()) 
-    	 && (caseValue.isEnergiaSolar() == queryValue.isEnergiaSolar()) 
-    	 && (caseValue.isGarajePrivado() == queryValue.isGarajePrivado()) 
-    	 && (caseValue.isParkingComunitario() == queryValue.isParkingComunitario())
-    	 && (caseValue.isServPorteria() == queryValue.isServPorteria()) 
-    	 && (caseValue.isTrastero() == queryValue.isTrastero())
-    	 && (caseValue.isVideoportero()== queryValue.isVideoportero());
+    	 if (queryValue.isAscensor()){
+    		 b = caseValue.isAscensor();
+    		 cont ++;
+    		 if (b) c++;
+    	 }
+    	 if (queryValue.isEnergiaSolar()){
+    		 b = b && caseValue.isEnergiaSolar(); 
+    		 cont ++;
+    		 if (b) c++;
+    	 }
+    	 if (queryValue.isGarajePrivado()){
+    		 b = b && caseValue.isGarajePrivado(); 
+    		 cont ++;
+    		 if (b) c++;
+    	 }
+    	 if (queryValue.isParkingComunitario()){
+    		 b = b && caseValue.isParkingComunitario();
+    		 cont ++;
+    		 if (b) c++;
+    	 }
+    	 if (queryValue.isServPorteria()){
+    		 b = b && caseValue.isServPorteria();
+    		 cont ++;
+    		 if (b) c++;
+    	 }
+    	 if (queryValue.isTrastero()){
+    		 b = b && caseValue.isTrastero();
+    		 cont ++;
+    		 if (b) c++;
+    	 }
+    	 if (queryValue.isVideoportero()){
+    		 b = b && caseValue.isVideoportero();
+    		 cont ++;
+    		 if (b) c++;
+    	 }
 
-	    return b;
+	    return b || (cont/2 < c);
 	}
 }
