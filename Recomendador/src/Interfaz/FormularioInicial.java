@@ -108,6 +108,7 @@ public class FormularioInicial extends JFrame {
 							auxLoc = "---";
 							b = true;
 						}
+						recomendador.setFiltroLocalizacion(l);
 						Integer habitaciones = Integer.parseInt(comboHab.getSelectedItem().toString());
 						Integer superficie = Integer.parseInt(comboSup.getSelectedItem().toString());
 						description.setDescripcion(l,habitaciones,superficie);

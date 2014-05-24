@@ -24,6 +24,7 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	Collection<CBRCase> cases;
 	Collection<CBRCase> casesFormInitial;
 	Collection<CBRCase> casesFormPrincipal;
+	String filtroLocalizacion;
 	boolean preferences;
 	
 	private static RecomendadorCBR _instance = null;
@@ -61,6 +62,10 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		preferences = value;
 	}
 	
+	public void setFiltroLocalizacion(String filtroLocalizacion) {
+		this.filtroLocalizacion = filtroLocalizacion;
+	}
+	
 	public DescripcionVivienda[] getResults(boolean ini){
 		Object[] array = null;
 		if (ini) array = casesFormInitial.toArray();
@@ -89,8 +94,8 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		DescripcionVivienda dv =  (DescripcionVivienda)query.getDescription();
 		
 		FilterConfig preferences = new FilterConfig();
-		
-		if(dv.getLocalizacion() != null){ 
+		String localizacion = dv.getLocalizacion();
+		if(localizacion != null && !localizacion.equals(filtroLocalizacion)){ 
 			casesBase = _caseBase.getCases();
 			preferences.addPredicate(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocationPreferences());
 		}

@@ -1252,12 +1252,7 @@ public class FormularioPrincipal extends JFrame {
 		String value = "";
 		int v = 0;
 		DescripcionVivienda dv = new DescripcionVivienda();
-		value = comboLocalizacion.getSelectedItem().toString();
-		value = (value != null && !value.equals("---")) ? value : null;
-		if (value != null && comboArea != null && comboArea.getSelectedItem() != null){
-			String selected = comboArea.getSelectedItem().toString();
-			value = !selected.equals("---") ? selected : value;
-		}
+		value = getLocalizacion();
 		dv.setLocalizacion(value);
 		v = getPrecioMedio();
 		dv.setPrecioMedio(v);
@@ -1279,7 +1274,7 @@ public class FormularioPrincipal extends JFrame {
 		if (extrasFinca != null) dv.setExtrasFinca(extrasFinca);
 		return dv;
 	}
-
+	
 	private void buscarFormularioPrincipal(){
 		DescripcionVivienda dv = getMapeoDescripcionVivienda(); 
 		try{
@@ -1293,6 +1288,18 @@ public class FormularioPrincipal extends JFrame {
 		}catch(Exception e){
 			
 		}
+	}
+	
+	private String getLocalizacion(){
+		String value = comboLocalizacion.getSelectedItem().toString();
+		if (value != null && !value.equals("---")){
+			if (comboArea != null && comboArea.getSelectedItem() != null && !comboArea.getSelectedItem().toString().equals("---")){
+				value = value + "#" + comboArea.getSelectedItem().toString();
+				return value;
+			}
+			return null;
+		}
+		return null;
 	}
 	
 	private TipoVivienda getTipoVivienda() {
