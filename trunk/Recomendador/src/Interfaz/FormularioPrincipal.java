@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 import jcolibri.cbrcore.CBRQuery;
 
 import CBR.RecomendadorCBR;
+import Clases_Auxiliares.LikeListener;
 import Viviendas.DescripcionVivienda;
 import Viviendas.DescripcionVivienda.EstadoVivienda;
 import Viviendas.DescripcionVivienda.TipoVivienda;
@@ -717,6 +718,7 @@ public class FormularioPrincipal extends JFrame {
 			cPanel.weightx = 0;
 			//cPanel.gridheight = 2;
 			buttonLike[i] = new JButton("Me Gusta");
+			buttonLike[i].addActionListener(new LikeListener(resultados[i].getId()));
 			cPanel.fill = GridBagConstraints.HORIZONTAL;
 			panelList.add(buttonLike[i],cPanel);
 		}
