@@ -37,6 +37,8 @@ public class FormularioPrincipal extends JFrame {
 	private JPanel panel;
 	private JPanel panelList;
 	
+	private JScrollPane scrollPane;
+	
 	private JComboBox<String> comboLocalizacion;
 	private JComboBox<String> comboArea;
 	private JComboBox<String> comboMinPrecio;
@@ -95,6 +97,7 @@ public class FormularioPrincipal extends JFrame {
 	//region Contructora del Formulario Principal
 	public FormularioPrincipal(String localizacion,String area,int habitaciones,int superficie,RecomendadorCBR r) {
 		super("Recomendador de Pisos");
+		scrollPane = null;
 		this.recomendador = r;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(150, 10, 998, 750);
@@ -172,6 +175,7 @@ public class FormularioPrincipal extends JFrame {
 				c.gridx = 0;
 				c.gridy = 3;
 				c.weightx = 1;
+				c.gridwidth = 4;
 				panel.add(comboArea,c);
 				panel.revalidate();
 				panel.repaint();
@@ -675,8 +679,15 @@ public class FormularioPrincipal extends JFrame {
 		
 		buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (scrollPane != null) {
+					contentPane.remove(scrollPane);
+					//scrollPane = null;
+					scrollPane.remove(panelList);
+					panelList = null;
+				}
 				buscarFormularioPrincipal();
 				creaPanelCentral(recomendador.getResults(false));
+				repaint();
 			}
 		});
 		
@@ -692,7 +703,7 @@ public class FormularioPrincipal extends JFrame {
 	//endregion
 	
 	//region Creación del Panel de resultados
-	public void creaPanelCentral(DescripcionVivienda[] resultados) {
+	public void creaPanelCentral(DescripcionVivienda[] resultados) {	
 		buttonLike = new JButton[resultados.length];
 		textPane = new JTextPane[resultados.length];
 		
@@ -723,9 +734,11 @@ public class FormularioPrincipal extends JFrame {
 			panelList.add(buttonLike[i],cPanel);
 		}
 		
-		JScrollPane scrollPane = new JScrollPane(panelList);
+		scrollPane = new JScrollPane(panelList);
 		scrollPane.setBounds(289, 75, 683, 626);
 		contentPane.add(scrollPane);
+		revalidate();
+		repaint();
 	}
 	//endregion
 	
@@ -1279,7 +1292,7 @@ public class FormularioPrincipal extends JFrame {
 				value = value + "#" + comboArea.getSelectedItem().toString();
 				return value;
 			}
-			return null;
+			return value;
 		}
 		return null;
 	}
