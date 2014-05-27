@@ -25,7 +25,13 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	Collection<CBRCase> casesFormInitial;
 	Collection<CBRCase> casesFormPrincipal;
 	String filtroLocalizacion;
+	boolean like;
 	boolean preferences;
+	
+	public RecomendadorCBR(){
+		like = false;
+		preferences = false;
+	}
 	
 	private static RecomendadorCBR _instance = null;
 	
@@ -60,6 +66,10 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	
 	public void setPreferences(boolean value){
 		preferences = value;
+	}
+	
+	public void setLike(boolean value){
+		like = value;
 	}
 	
 	public void setFiltroLocalizacion(String filtroLocalizacion) {
@@ -117,6 +127,8 @@ public class RecomendadorCBR implements StandardCBRApplication{
 			preferences.addPredicate(new Attribute("extrasFinca", DescripcionVivienda.class),new EqualExtrasFinca());
 		if(dv.getExtrasOtros() != null)
 			preferences.addPredicate(new Attribute("extrasOtros", DescripcionVivienda.class),new EqualExtrasOtros());
+		if(like)
+			preferences.addPredicate(new Attribute("puntuacion",DescripcionVivienda.class),new PuntuacionPreferences());
 		
 		casesFormPrincipal = FilterBasedRetrievalMethod.filterCases(casesBase, query, preferences);
 	}
