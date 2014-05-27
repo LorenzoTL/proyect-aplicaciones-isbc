@@ -13,11 +13,11 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 
 import jcolibri.cbrcore.CBRQuery;
-
 import CBR.RecomendadorCBR;
 import Clases_Auxiliares.LikeListener;
 import Viviendas.DescripcionVivienda;
@@ -88,7 +88,7 @@ public class FormularioPrincipal extends JFrame {
 	private JCheckBox has14;
 	private JCheckBox has15;
 	private JCheckBox has16;
-	//TODO: private JCheckBox checkLike;
+	private JCheckBox checkLike;
 	
 	private JLabel lblNewLabel;
 	
@@ -96,6 +96,7 @@ public class FormularioPrincipal extends JFrame {
 	
 	private JButton[] buttonLike;
 	private JTextPane[] textPane;
+	private JScrollPane[] scrollPanes;
 	
 	//region Contructora del Formulario Principal
 	public FormularioPrincipal(String localizacion,String area,int habitaciones,int superficie,RecomendadorCBR r) {
@@ -541,11 +542,19 @@ public class FormularioPrincipal extends JFrame {
 		c.gridy = 26;
 		c.weightx = 1;
 		c.gridwidth = 4;
+		JSeparator sep2 = new JSeparator();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(sep2,c);
+		
+		c.gridx = 0;
+		c.gridy = 27;
+		c.weightx = 1;
+		c.gridwidth = 4;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(new JLabel("Que tengan"),c);
 		
 		c.gridx = 0;
-		c.gridy = 27;
+		c.gridy = 28;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has1 = new JCheckBox("patio");
@@ -553,7 +562,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has1,c);
 		
 		c.gridx = 2;
-		c.gridy = 27;
+		c.gridy = 28;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has2 = new JCheckBox("zonaDeportiva");
@@ -561,7 +570,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has2,c);
 		
 		c.gridx = 0;
-		c.gridy = 28;
+		c.gridy = 29;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has3 = new JCheckBox("balcon");
@@ -569,7 +578,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has3,c);
 		
 		c.gridx = 2;
-		c.gridy = 28;
+		c.gridy = 29;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has4 = new JCheckBox("zonaComunitaria");
@@ -577,7 +586,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has4,c);
 		
 		c.gridx = 0;
-		c.gridy = 29;
+		c.gridy = 30;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has5 = new JCheckBox("terraza");
@@ -585,7 +594,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has5,c);
 		
 		c.gridx = 2;
-		c.gridy = 29;
+		c.gridy = 30;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has6 = new JCheckBox("piscinaComunitaria");
@@ -593,7 +602,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has6,c);
 		
 		c.gridx = 0;
-		c.gridy = 30;
+		c.gridy = 31;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has7 = new JCheckBox("jardinPrivado");
@@ -601,7 +610,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has7,c);
 		
 		c.gridx = 2;
-		c.gridy = 30;
+		c.gridy = 31;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has8 = new JCheckBox("piscina");
@@ -609,7 +618,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has8,c);
 		
 		c.gridx = 0;
-		c.gridy = 31;
+		c.gridy = 32;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has9 = new JCheckBox("zonaInfantil");
@@ -617,7 +626,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has9,c);
 		
 		c.gridx = 2;
-		c.gridy = 31;
+		c.gridy = 32;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has10 = new JCheckBox("ascensor");
@@ -625,7 +634,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has10,c);
 		
 		c.gridx = 0;
-		c.gridy = 32;
+		c.gridy = 33;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has11 = new JCheckBox("trastero");
@@ -633,7 +642,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has11,c);
 		
 		c.gridx = 2;
-		c.gridy = 32;
+		c.gridy = 33;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has12 = new JCheckBox("parkingComunitario");
@@ -641,7 +650,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has12,c);
 		
 		c.gridx = 0;
-		c.gridy = 33;
+		c.gridy = 34;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has13 = new JCheckBox("energiaSolar");
@@ -649,7 +658,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has13,c);
 		
 		c.gridx = 2;
-		c.gridy = 33;
+		c.gridy = 34;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has14 = new JCheckBox("garajePrivado");
@@ -657,7 +666,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has14,c);
 		
 		c.gridx = 0;
-		c.gridy = 34;
+		c.gridy = 35;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has15 = new JCheckBox("servPorteria");
@@ -665,7 +674,7 @@ public class FormularioPrincipal extends JFrame {
 		panel.add(has15,c);
 		
 		c.gridx = 2;
-		c.gridy = 34;
+		c.gridy = 35;
 		c.weightx = 1;
 		c.gridwidth = 2;
 		has16 = new JCheckBox("videoportero");
@@ -679,6 +688,14 @@ public class FormularioPrincipal extends JFrame {
 		buttonBuscar = new JButton("Buscar");
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(buttonBuscar,c);
+		
+		c.gridx = 0;
+		c.gridy = 37;
+		c.weightx = 1;
+		c.gridwidth = 4;
+		checkLike = new JCheckBox("Mostrar solo resultados que han gustado");
+		c.fill = GridBagConstraints.HORIZONTAL;
+		panel.add(checkLike,c);
 		
 		buttonBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -709,6 +726,7 @@ public class FormularioPrincipal extends JFrame {
 	public void creaPanelCentral(DescripcionVivienda[] resultados) {	
 		buttonLike = new JButton[resultados.length];
 		textPane = new JTextPane[resultados.length];
+		scrollPanes = new JScrollPane[resultados.length];
 		
 		panelList = new JPanel();
 		panelList.setBounds(289, 75, 683, 626);
@@ -726,26 +744,33 @@ public class FormularioPrincipal extends JFrame {
 			}
 		}
 		lblNewLabel.setText(titulo);
+		int j = 0;
 		
-		for (int i = 0; i < num;i++) {
+		for (int i = 0; i < num*4;i = i+4) {
 			cPanel.gridx = 0;
 			cPanel.gridy = i;
-			cPanel.weightx = 1;
-			//cPanel.gridheight = 2;
-			textPane[i] = new JTextPane();
-			textPane[i].setText(resultados[i].getTitulo());
-			textPane[i].setEditable(false);
+			cPanel.weightx = 0;
+			buttonLike[j] = new JButton("Me Gusta");
+			buttonLike[j].addActionListener(new LikeListener(resultados[j].getId()));
 			cPanel.fill = GridBagConstraints.HORIZONTAL;
-			panelList.add(textPane[i],cPanel);
+			panelList.add(buttonLike[j],cPanel);
 			
 			cPanel.gridx = 1;
 			cPanel.gridy = i;
-			cPanel.weightx = 0;
-			//cPanel.gridheight = 2;
-			buttonLike[i] = new JButton("Me Gusta");
-			buttonLike[i].addActionListener(new LikeListener(resultados[i].getId()));
-			cPanel.fill = GridBagConstraints.HORIZONTAL;
-			panelList.add(buttonLike[i],cPanel);
+			cPanel.weightx = 1;
+			cPanel.gridheight = 4;
+			String texto = "";
+			texto = texto + resultados[j].getTitulo() + " - Precio: " + resultados[j].getPrecio().toString() + " €\n";
+			texto = texto + "Localización: " + resultados[j].getLocalizacion() + '\n';
+			texto = texto + '\n';
+			texto = texto + "Descripción: "+ resultados[j].getDescripcion();
+			textPane[j] = new JTextPane();
+ 			textPane[j].setText(texto);
+			textPane[j].setEditable(false);
+			cPanel.fill = GridBagConstraints.BOTH;
+			scrollPanes[j] = new JScrollPane(textPane[j]);
+			panelList.add(scrollPanes[j],cPanel);
+			j++;
 		}
 		
 		scrollPane = new JScrollPane(panelList);
