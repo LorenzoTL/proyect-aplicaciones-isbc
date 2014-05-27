@@ -88,6 +88,9 @@ public class FormularioPrincipal extends JFrame {
 	private JCheckBox has14;
 	private JCheckBox has15;
 	private JCheckBox has16;
+	//TODO: private JCheckBox checkLike;
+	
+	private JLabel lblNewLabel;
 	
 	private JButton buttonBuscar;
 	
@@ -126,7 +129,7 @@ public class FormularioPrincipal extends JFrame {
 			titulo = titulo + " " + localizacion;
 		}
 		
-		JLabel lblNewLabel = new JLabel(titulo);
+		lblNewLabel = new JLabel(titulo);
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblNewLabel.setBounds(100, 11, 879, 31);
 		panel_1.add(lblNewLabel);
@@ -713,6 +716,17 @@ public class FormularioPrincipal extends JFrame {
 		GridBagConstraints cPanel = new GridBagConstraints();
 		int num = resultados.length;
 		
+		String titulo = num + " anuncios";
+		if(comboLocalizacion != null && comboLocalizacion.getSelectedItem()!= null){
+			String l = comboLocalizacion.getSelectedItem().toString();
+			if (!l.equals("---")) titulo = titulo + " en " + l;
+			if (comboArea != null && comboArea.getSelectedItem() != null){
+				String area =  comboArea.getSelectedItem().toString();
+				if (!area.equals("---")) titulo = titulo + " - " + area;
+			}
+		}
+		lblNewLabel.setText(titulo);
+		
 		for (int i = 0; i < num;i++) {
 			cPanel.gridx = 0;
 			cPanel.gridy = i;
@@ -1274,6 +1288,7 @@ public class FormularioPrincipal extends JFrame {
 		DescripcionVivienda dv = getMapeoDescripcionVivienda(); 
 		try{
 			recomendador.setPreferences(true);
+			//TODO: recomendador.setLike(checkLike.isSelected());
 			recomendador.configure();
 			recomendador.preCycle();
 			CBRQuery query = new CBRQuery();
