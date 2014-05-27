@@ -77,7 +77,7 @@ public class DescripcionVivienda implements CaseComponent{
 		extrasOtros= new ExtrasOtros(values[17]);
 		
 		descripcion = values[18];
-		puntuacion = (values.length == 19) ? 0 : Integer.valueOf(values[19]);
+		puntuacion = Integer.valueOf(values[19]);
 	}
 	
 	public void setDescripcion(String loc, Integer hab, Integer sup){

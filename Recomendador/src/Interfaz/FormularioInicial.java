@@ -96,7 +96,8 @@ public class FormularioInicial extends JFrame {
 						String auxLoc;
 						String l = "";
 						boolean b = false;
-						if (comboNew != null) {
+						if (comboNew != null && comboNew.getSelectedItem()!=null && 
+								!comboNew.getSelectedItem().toString().equals("---")) {
 							localizacion = comboNew.getSelectedItem().toString();
 							l = comboBox.getSelectedItem().toString() + "#" + localizacion;
 							auxLoc = comboBox.getSelectedItem().toString();
