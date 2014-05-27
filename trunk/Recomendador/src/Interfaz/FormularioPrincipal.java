@@ -711,7 +711,7 @@ public class FormularioPrincipal extends JFrame {
 			}
 		});
 		
-		// Fin formulario
+		// Fin formulariopuntuacion
 		JScrollPane scrollPane_2 = new JScrollPane(panel);
 		scrollPane_2.setBounds(10, 75, 268, 626);
 		scrollPane_2.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -1313,7 +1313,7 @@ public class FormularioPrincipal extends JFrame {
 		DescripcionVivienda dv = getMapeoDescripcionVivienda(); 
 		try{
 			recomendador.setPreferences(true);
-			//TODO: recomendador.setLike(checkLike.isSelected());
+			recomendador.setLike(checkLike.isSelected());
 			recomendador.configure();
 			recomendador.preCycle();
 			CBRQuery query = new CBRQuery();
