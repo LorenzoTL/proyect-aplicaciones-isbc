@@ -24,7 +24,7 @@ public class EqualLocationPreferences implements FilterPredicate {
 				String queryValue = (String) queryObject;
 				if (queryValue.contains("#")){
 					String[] split = queryValue.split("#");
-					b = caseValue.contains(split[0]) || caseValue.contains(split[1]);
+					b = caseValue.contains(split[0]) && caseValue.contains(split[1]);
 				}else{
 					b = caseValue.contains(queryValue);
 				}

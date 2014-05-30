@@ -87,7 +87,7 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	
 	private void sequence1(CBRQuery query){
 		FilterConfig preferences = new FilterConfig();
-		if (!filtroLocalizacion.equals("---") && !filtroLocalizacion.equals("---")){
+		if (!filtroLocalizacion.equals("---")){
 			preferences.addPredicate(new Attribute("localizacion", DescripcionVivienda.class), new EqualLocationPreferences());
 			cases = FilterBasedRetrievalMethod.filterCases(_caseBase.getCases(), query, preferences);
 		}else{
