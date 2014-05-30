@@ -38,6 +38,8 @@ public class DescripcionVivienda implements CaseComponent{
 	
 	Integer puntuacion;
 	
+	private Integer superficieMax;
+	
 	public DescripcionVivienda()
 	{
 		
@@ -231,6 +233,12 @@ public class DescripcionVivienda implements CaseComponent{
 	}
 	public void setPuntuacion(Integer puntuacion) {
 		this.puntuacion = puntuacion;
+	}
+	public Integer getSuperficieMax() {
+		return superficieMax;
+	}
+	public void setSuperficieMax(Integer superficieMax) {
+		this.superficieMax = superficieMax;
 	}
 	@Override
 	public Attribute getIdAttribute() {
