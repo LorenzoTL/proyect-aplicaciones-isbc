@@ -57,6 +57,6 @@ public class EqualExtrasFinca implements FilterPredicate{
     		 if (b) c++;
     	 }
 
-	    return b;
+	    return b || cont/2 < c;
 	}
 }

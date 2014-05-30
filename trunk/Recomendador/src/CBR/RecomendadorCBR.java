@@ -3,7 +3,6 @@ package CBR;
 import java.util.Collection;
 
 import Viviendas.DescripcionVivienda;
-import Viviendas.ExtrasBasicos;
 import Viviendas.ViviendasConnector;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;

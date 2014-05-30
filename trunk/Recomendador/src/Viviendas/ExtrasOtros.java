@@ -1,9 +1,6 @@
 package Viviendas;
 
-import jcolibri.cbrcore.Attribute;
-import jcolibri.cbrcore.CaseComponent;
-
-public class ExtrasOtros implements CaseComponent {
+public class ExtrasOtros{
 	
 	Integer id;
 	boolean patio;
@@ -21,7 +18,6 @@ public class ExtrasOtros implements CaseComponent {
 	}
 
 	public ExtrasOtros(int id) {
-		super();
 		this.id = id;
 	}
 
@@ -45,11 +41,6 @@ public class ExtrasOtros implements CaseComponent {
 		return id+","+ patio + "," + balcon + "," + zonaDeportiva + ","
 				+ zonaComunitaria + "," + terraza + "," + piscinaComunitaria
 				+ "," + jardinPrivado + "," + zonaInfantil + "," + piscina;
-	}
-	
-	@Override
-	public Attribute getIdAttribute() {
-		return new Attribute("id", DescripcionVivienda.class);
 	}
 	
 	public Integer getId() {
