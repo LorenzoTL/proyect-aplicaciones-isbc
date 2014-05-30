@@ -1,9 +1,6 @@
 package Viviendas;
 
-import jcolibri.cbrcore.Attribute;
-import jcolibri.cbrcore.CaseComponent;
-
-public class ExtrasBasicos implements CaseComponent{
+public class ExtrasBasicos{
 	
 	Integer id;
 	boolean lavadero;
@@ -30,7 +27,7 @@ public class ExtrasBasicos implements CaseComponent{
 	}
 	
 	public ExtrasBasicos(int id){
-		super();
+		//super();
 		this.id = id;
 	}
 	
@@ -57,7 +54,7 @@ public class ExtrasBasicos implements CaseComponent{
 		this.aireAcondicionado = Boolean.valueOf(values[17]);
 		this.nevera = Boolean.valueOf(values[18]);
 	}
-	@Override
+	
 	public String toString() {
 		return id + ","+ lavadero + "," + internet + "," + microondas + "," + horno + ","
 				+ amueblado + "," + cocinaOffice + "," + parquet + ","
@@ -66,11 +63,9 @@ public class ExtrasBasicos implements CaseComponent{
 				+ puertaBlindada + "," + gresCeramica + "," + calefaccion + ","
 				+ aireAcondicionado + "," + nevera;
 	}
-	
-	@Override
-	public Attribute getIdAttribute() {
+	/*public Attribute getIdAttribute() {
 		return new Attribute("id", DescripcionVivienda.class);
-	}
+	}*/
 	
 	public Integer getId() {
 		return id;
