@@ -67,6 +67,6 @@ public class EqualExtrasOtros implements FilterPredicate{
 	    	if (b) c++;
     	}
     	 
-    	 return b || (cont/2 < c);
+    	 return b;
 	}
 }

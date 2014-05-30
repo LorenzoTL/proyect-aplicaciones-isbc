@@ -746,7 +746,7 @@ public class FormularioPrincipal extends JFrame {
 		lblNewLabel.setText(titulo);
 		int j = 0;
 		
-		for (int i = 0; i < num*4;i = i+4) {
+		for (int i = 0; i < num*5;i = i+5) {
 			cPanel.gridx = 0;
 			cPanel.gridy = i;
 			cPanel.weightx = 0;
@@ -758,10 +758,11 @@ public class FormularioPrincipal extends JFrame {
 			cPanel.gridx = 1;
 			cPanel.gridy = i;
 			cPanel.weightx = 1;
-			cPanel.gridheight = 4;
+			cPanel.gridheight = 5;
 			String texto = "";
 			texto = texto + resultados[j].getTitulo() + " - Precio: " + resultados[j].getPrecio().toString() + " €\n";
 			texto = texto + "Localización: " + resultados[j].getLocalizacion() + '\n';
+			texto = texto + "Superficie: " + resultados[j].getSuperficie() + " m2\n";
 			texto = texto + '\n';
 			texto = texto + "Descripción: "+ resultados[j].getDescripcion();
 			textPane[j] = new JTextPane();
@@ -1289,9 +1290,10 @@ public class FormularioPrincipal extends JFrame {
 		value = getLocalizacion();
 		dv.setLocalizacion(value);
 		v = getPrecioMedio();
-		dv.setPrecioMedio(v);
-		v = getTamMedio();
-		dv.setSuperficie(v);
+		dv.setPrecio(v);
+		int[] w = getTamMedio();
+		dv.setSuperficie(w[0]);
+		dv.setPrecioZona(w[1]);//guardamos la superficie máxima
 		TipoVivienda tipo = getTipoVivienda();
 		if (tipo != null) dv.setTipo(tipo);
 		v = getNumHabitaciones();
@@ -1367,15 +1369,15 @@ public class FormularioPrincipal extends JFrame {
 		return v;
 	}
 	
-	private int getTamMedio(){
-		int v = 0;
+	private int[] getTamMedio(){
+		int[] v = new int[2];
 		try{
 			String value = comboMinTam.getSelectedItem().toString();
-			v = Integer.parseInt(value);
+			v[0] = Integer.parseInt(value);
 			value = comboMaxTam.getSelectedItem().toString();
-			v = (v + Integer.parseInt(value))/2;
+			v[1] = Integer.parseInt(value);
 		}catch(NumberFormatException ex){
-			v = 0;
+			v[0] = v[1] = -1;
 		}
 		return v;
 	}
