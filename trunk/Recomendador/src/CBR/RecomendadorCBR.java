@@ -3,6 +3,7 @@ package CBR;
 import java.util.Collection;
 
 import Viviendas.DescripcionVivienda;
+import Viviendas.ExtrasBasicos;
 import Viviendas.ViviendasConnector;
 import jcolibri.casebase.LinealCaseBase;
 import jcolibri.cbraplications.StandardCBRApplication;
@@ -95,8 +96,8 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		}
 		
 		FilterConfig preferences2 = new FilterConfig();
-		preferences.addPredicate(new Attribute("superficie", DescripcionVivienda.class), new MoreOrEqual());
-		preferences.addPredicate(new Attribute("habitaciones", DescripcionVivienda.class), new MoreOrEqual());
+		preferences2.addPredicate(new Attribute("superficie", DescripcionVivienda.class), new MoreOrEqual());
+		preferences2.addPredicate(new Attribute("habitaciones", DescripcionVivienda.class), new MoreOrEqual());
 		casesFormInitial = FilterBasedRetrievalMethod.filterCases(cases, query, preferences2);
 	}
 	
@@ -110,10 +111,10 @@ public class RecomendadorCBR implements StandardCBRApplication{
 			casesBase = _caseBase.getCases();
 			preferences.addPredicate(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocationPreferences());
 		}
-		if(dv.getPrecioMedio() != 0)
-			preferences.addPredicate(new Attribute("precioMedio", DescripcionVivienda.class),new LessOrEqual());
-		if(dv.getSuperficie() != 0)
-			preferences.addPredicate(new Attribute("superficie", DescripcionVivienda.class),new MoreOrEqual());
+		if(dv.getPrecio() != 0)
+			preferences.addPredicate(new Attribute("precio", DescripcionVivienda.class),new LessOrEqual());
+		if(dv.getSuperficie() != -1 && dv.getPrecioZona() != -1)
+			preferences.addPredicate(new Attribute("superficie", DescripcionVivienda.class),new Interval(dv.getSuperficie(), dv.getPrecioZona()));
 		if(dv.getTipo() != null)
 			preferences.addPredicate(new Attribute("tipo", DescripcionVivienda.class),new jcolibri.method.retrieve.FilterBasedRetrieval.predicates.Equal());
 		if(dv.getHabitaciones() != 0)
