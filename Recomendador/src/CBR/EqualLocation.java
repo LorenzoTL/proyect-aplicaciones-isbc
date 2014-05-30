@@ -23,7 +23,7 @@ public class EqualLocation implements LocalSimilarityFunction{
 	    
 	    if (queryValue.contains("#")){
 	    	String[] split = queryValue.split("#");
-	    	if (caseValue.contains(split[0]) || caseValue.contains(split[1])) value = 1;
+	    	if (caseValue.contains(split[0]) && caseValue.contains(split[1])) value = 1;
 	    }else{
 	    	if(caseValue.contains(queryValue)) value = 1;
 	    }
