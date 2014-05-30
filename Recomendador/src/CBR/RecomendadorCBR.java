@@ -45,7 +45,6 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	}
 	
 	public void cycle(CBRQuery query) throws ExecutionException {
-		//ejecutamos KNN
 		if (!preferences){
 			sequence1(query);
 		}else{
@@ -87,7 +86,7 @@ public class RecomendadorCBR implements StandardCBRApplication{
 	
 	private void sequence1(CBRQuery query){
 		FilterConfig preferences = new FilterConfig();
-		if (!filtroLocalizacion.equals("---")){
+		if (filtroLocalizacion != null && !filtroLocalizacion.equals("") && !filtroLocalizacion.equals("---")){
 			preferences.addPredicate(new Attribute("localizacion", DescripcionVivienda.class), new EqualLocationPreferences());
 			cases = FilterBasedRetrievalMethod.filterCases(_caseBase.getCases(), query, preferences);
 		}else{
@@ -106,14 +105,14 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		
 		FilterConfig preferences = new FilterConfig();
 		String localizacion = dv.getLocalizacion();
-		if(localizacion != null && !localizacion.equals(filtroLocalizacion)){ 
+		if(localizacion != null && !localizacion.equals("") && !localizacion.equals("---") && !localizacion.equals(filtroLocalizacion)){ 
 			casesBase = _caseBase.getCases();
 			preferences.addPredicate(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocationPreferences());
 		}
 		if(dv.getPrecio() != 0)
 			preferences.addPredicate(new Attribute("precio", DescripcionVivienda.class),new LessOrEqual());
-		if(dv.getSuperficie() != -1 && dv.getPrecioZona() != -1)
-			preferences.addPredicate(new Attribute("superficie", DescripcionVivienda.class),new Interval(dv.getSuperficie(), dv.getPrecioZona()));
+		if(dv.getSuperficie() != -1 && dv.getSuperficieMax() != -1)
+			preferences.addPredicate(new Attribute("superficie", DescripcionVivienda.class),new Interval(dv.getSuperficie(), dv.getSuperficieMax()));
 		if(dv.getTipo() != null)
 			preferences.addPredicate(new Attribute("tipo", DescripcionVivienda.class),new jcolibri.method.retrieve.FilterBasedRetrieval.predicates.Equal());
 		if(dv.getHabitaciones() != 0)

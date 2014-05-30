@@ -258,6 +258,7 @@ public class FormularioPrincipal extends JFrame {
 				"400","450","500","600","700","800","900","1000","1200","1400",
 				"1600","1800","2000"};
 		comboMinTam = new JComboBox<String>(tMin);
+		comboMinTam.setSelectedItem(String.valueOf(superficie));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMinTam,c);
 		
@@ -269,7 +270,7 @@ public class FormularioPrincipal extends JFrame {
 				"400","450","500","600","700","800","900","1000","1200","1400",
 				"1600","1800","2000"};
 		comboMaxTam = new JComboBox<String>(tMax);
-		comboMaxTam.setSelectedItem(String.valueOf(superficie));
+		comboMaxTam.setSelectedItem(String.valueOf(2000));
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(comboMaxTam,c);
 		
@@ -1293,7 +1294,7 @@ public class FormularioPrincipal extends JFrame {
 		dv.setPrecio(v);
 		int[] w = getTamMedio();
 		dv.setSuperficie(w[0]);
-		dv.setPrecioZona(w[1]);//guardamos la superficie máxima
+		dv.setSuperficieMax(w[1]);//guardamos la superficie máxima
 		TipoVivienda tipo = getTipoVivienda();
 		if (tipo != null) dv.setTipo(tipo);
 		v = getNumHabitaciones();
