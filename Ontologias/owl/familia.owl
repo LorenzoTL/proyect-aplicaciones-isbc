@@ -1,0 +1,701 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY FamiliaReal "http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#" >
+]>
+
+
+<rdf:RDF xmlns="http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#"
+     xml:base="http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:FamiliaReal="http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#aparece -->
+
+    <owl:ObjectProperty rdf:about="&FamiliaReal;aparece">
+        <rdfs:domain rdf:resource="&FamiliaReal;Foto"/>
+        <rdfs:range rdf:resource="&FamiliaReal;Persona"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#es_hermano -->
+
+    <owl:ObjectProperty rdf:about="&FamiliaReal;es_hermano">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:range rdf:resource="&FamiliaReal;Persona"/>
+        <rdfs:domain rdf:resource="&FamiliaReal;Persona"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#es_hijo -->
+
+    <owl:ObjectProperty rdf:about="&FamiliaReal;es_hijo">
+        <rdfs:range rdf:resource="&FamiliaReal;Persona"/>
+        <rdfs:domain rdf:resource="&FamiliaReal;Persona"/>
+        <owl:inverseOf rdf:resource="&FamiliaReal;es_progenitor"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#es_progenitor -->
+
+    <owl:ObjectProperty rdf:about="&FamiliaReal;es_progenitor">
+        <rdfs:domain rdf:resource="&FamiliaReal;Persona"/>
+        <rdfs:range rdf:resource="&FamiliaReal;Persona"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#esta_casado_con -->
+
+    <owl:ObjectProperty rdf:about="&FamiliaReal;esta_casado_con">
+        <rdf:type rdf:resource="&owl;SymmetricProperty"/>
+        <rdfs:domain rdf:resource="&FamiliaReal;Persona"/>
+        <rdfs:range rdf:resource="&FamiliaReal;Persona"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#esta_divorciado_con -->
+
+    <owl:ObjectProperty rdf:about="&FamiliaReal;esta_divorciado_con">
+        <rdfs:range rdf:resource="&FamiliaReal;Persona"/>
+        <rdfs:domain rdf:resource="&FamiliaReal;Persona"/>
+        <owl:inverseOf rdf:resource="&FamiliaReal;esta_casado_con"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#es_Rey -->
+
+    <owl:DatatypeProperty rdf:about="&FamiliaReal;es_Rey">
+        <rdfs:domain rdf:resource="&FamiliaReal;Persona"/>
+        <rdfs:range rdf:resource="&xsd;boolean"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#url_Foto -->
+
+    <owl:DatatypeProperty rdf:about="&FamiliaReal;url_Foto">
+        <rdfs:domain rdf:resource="&FamiliaReal;Foto"/>
+        <rdfs:range rdf:resource="&xsd;string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Abuela -->
+
+    <owl:Class rdf:about="&FamiliaReal;Abuela">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_progenitor"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_progenitor"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Abuelo -->
+
+    <owl:Class rdf:about="&FamiliaReal;Abuelo">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_progenitor"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_progenitor"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Cuñada -->
+
+    <owl:Class rdf:about="&FamiliaReal;Cuñada">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;esta_casado_con"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Cuñado -->
+
+    <owl:Class rdf:about="&FamiliaReal;Cuñado">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;esta_casado_con"/>
+                        <owl:someValuesFrom>
+                            <owl:Class>
+                                <owl:intersectionOf rdf:parseType="Collection">
+                                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                                    </owl:Restriction>
+                                </owl:intersectionOf>
+                            </owl:Class>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Foto -->
+
+    <owl:Class rdf:about="&FamiliaReal;Foto"/>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Hermana -->
+
+    <owl:Class rdf:about="&FamiliaReal;Hermana">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Hermano -->
+
+    <owl:Class rdf:about="&FamiliaReal;Hermano">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Hija -->
+
+    <owl:Class rdf:about="&FamiliaReal;Hija">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_progenitor"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Hijo -->
+
+    <owl:Class rdf:about="&FamiliaReal;Hijo">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_progenitor"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Hombre -->
+
+    <owl:Class rdf:about="&FamiliaReal;Hombre">
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Persona"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Madre -->
+
+    <owl:Class rdf:about="&FamiliaReal;Madre">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_progenitor"/>
+                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Mujer -->
+
+    <owl:Class rdf:about="&FamiliaReal;Mujer">
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Persona"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Nieta -->
+
+    <owl:Class rdf:about="&FamiliaReal;Nieta">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Nieto -->
+
+    <owl:Class rdf:about="&FamiliaReal;Nieto">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Nietos_del_Rey -->
+
+    <owl:Class rdf:about="&FamiliaReal;Nietos_del_Rey">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Persona"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Rey"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Persona"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Nuera -->
+
+    <owl:Class rdf:about="&FamiliaReal;Nuera">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;esta_casado_con"/>
+                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Hijo"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Padre -->
+
+    <owl:Class rdf:about="&FamiliaReal;Padre">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_progenitor"/>
+                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Persona"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Persona -->
+
+    <owl:Class rdf:about="&FamiliaReal;Persona"/>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Prima -->
+
+    <owl:Class rdf:about="&FamiliaReal;Prima">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                <owl:someValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Madre"/>
+                                    </owl:Restriction>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                <owl:someValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Padre"/>
+                                    </owl:Restriction>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Primo -->
+
+    <owl:Class rdf:about="&FamiliaReal;Primo">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                <owl:someValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Madre"/>
+                                    </owl:Restriction>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                <owl:someValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Padre"/>
+                                    </owl:Restriction>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Principe -->
+
+    <owl:Class rdf:about="&FamiliaReal;Principe">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Rey"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Rey -->
+
+    <owl:Class rdf:about="&FamiliaReal;Rey">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_Rey"/>
+                        <owl:hasValue rdf:datatype="&xsd;boolean">true</owl:hasValue>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Sobrinos_del_principe -->
+
+    <owl:Class rdf:about="&FamiliaReal;Sobrinos_del_principe">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Persona"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Principe"/>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Persona"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Tia -->
+
+    <owl:Class rdf:about="&FamiliaReal;Tia">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Mujer"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Madre"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Padre"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;esta_casado_con"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Tio"/>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Mujer"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Tio -->
+
+    <owl:Class rdf:about="&FamiliaReal;Tio">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Class>
+                        <owl:unionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Madre"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Padre"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;esta_casado_con"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Tia"/>
+                            </owl:Restriction>
+                        </owl:unionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Yerno -->
+
+    <owl:Class rdf:about="&FamiliaReal;Yerno">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Hombre"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;esta_casado_con"/>
+                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Hija"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
+    </owl:Class>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.4.2) http://owlapi.sourceforge.net -->
+
