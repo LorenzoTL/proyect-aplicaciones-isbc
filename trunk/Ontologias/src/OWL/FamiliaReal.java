@@ -68,17 +68,6 @@ public class FamiliaReal {
 		System.out.println("\n CREACION DE LAS PROPIEDADES DE LA FAMILIA");
 		
 		/** Propiedades **/
-		/*ob.createOntProperty("Infanta_Leonor", "es_hermano", "Infanta_Sofia");
-		
-		ob.createOntProperty("Irene", "es_hermano", "Miguel");
-		ob.createOntProperty("Irene", "es_hermano", "Pablo");
-		ob.createOntProperty("Irene", "es_hermano", "Juan");
-		ob.createOntProperty("Miguel", "es_hermano", "Pablo");
-		ob.createOntProperty("Miguel", "es_hermano", "Juan");
-		ob.createOntProperty("Pablo", "es_hermano", "Juan");
-		
-		ob.createOntProperty("Froilan", "es_hermano", "Victoria");*/
-		
 		ob.createDataTypeProperty("Juan_Carlos", "es_Rey", true);
 		ob.createOntProperty("Juan_Carlos", "esta_casado_con", "Sofia");
 		ob.createOntProperty("Juan_Carlos", "es_progenitor", "Felipe");
@@ -113,6 +102,17 @@ public class FamiliaReal {
 		ob.createOntProperty("Felipe", "es_hermano", "Elena");
 		ob.createOntProperty("Felipe", "es_hermano", "Cristina");
 		ob.createOntProperty("Cristina", "es_hermano", "Elena");
+		
+		ob.createOntProperty("Infanta_Leonor", "es_hermano", "Infanta_Sofia");
+		
+		ob.createOntProperty("Irene", "es_hermano", "Miguel");
+		ob.createOntProperty("Irene", "es_hermano", "Pablo");
+		ob.createOntProperty("Irene", "es_hermano", "Juan");
+		ob.createOntProperty("Miguel", "es_hermano", "Pablo");
+		ob.createOntProperty("Miguel", "es_hermano", "Juan");
+		ob.createOntProperty("Pablo", "es_hermano", "Juan");
+		
+		ob.createOntProperty("Froilan", "es_hermano", "Victoria");
 	}
 	
 	public void createInstanceFoto(){
