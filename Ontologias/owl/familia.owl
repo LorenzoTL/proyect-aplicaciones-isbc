@@ -242,6 +242,64 @@
     
 
 
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Fotos_Nietos_del_Rey -->
+
+    <owl:Class rdf:about="&FamiliaReal;Fotos_Nietos_del_Rey">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Foto"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;aparece"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                <owl:someValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Rey"/>
+                                    </owl:Restriction>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Foto"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Fotos_Sobrinos_del_principe -->
+
+    <owl:Class rdf:about="&FamiliaReal;Fotos_Sobrinos_del_principe">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Foto"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;aparece"/>
+                        <owl:someValuesFrom>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                <owl:someValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Principe"/>
+                                    </owl:Restriction>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                        </owl:someValuesFrom>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Foto"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Hermana -->
 
     <owl:Class rdf:about="&FamiliaReal;Hermana">
@@ -411,30 +469,6 @@
     
 
 
-    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Nietos_del_Rey -->
-
-    <owl:Class rdf:about="&FamiliaReal;Nietos_del_Rey">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&FamiliaReal;Persona"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
-                        <owl:someValuesFrom>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
-                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Rey"/>
-                            </owl:Restriction>
-                        </owl:someValuesFrom>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&FamiliaReal;Persona"/>
-    </owl:Class>
-    
-
-
     <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Nuera -->
 
     <owl:Class rdf:about="&FamiliaReal;Nuera">
@@ -587,30 +621,6 @@
             </owl:Class>
         </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="&FamiliaReal;Hombre"/>
-    </owl:Class>
-    
-
-
-    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Sobrinos_del_principe -->
-
-    <owl:Class rdf:about="&FamiliaReal;Sobrinos_del_principe">
-        <owl:equivalentClass>
-            <owl:Class>
-                <owl:intersectionOf rdf:parseType="Collection">
-                    <rdf:Description rdf:about="&FamiliaReal;Persona"/>
-                    <owl:Restriction>
-                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
-                        <owl:someValuesFrom>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&FamiliaReal;es_hermano"/>
-                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Principe"/>
-                            </owl:Restriction>
-                        </owl:someValuesFrom>
-                    </owl:Restriction>
-                </owl:intersectionOf>
-            </owl:Class>
-        </owl:equivalentClass>
-        <rdfs:subClassOf rdf:resource="&FamiliaReal;Persona"/>
     </owl:Class>
     
 
