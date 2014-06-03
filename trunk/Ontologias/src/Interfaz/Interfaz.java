@@ -4,10 +4,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -16,12 +16,14 @@ import OWL.FamiliaReal;
 
 public class Interfaz extends JFrame{
 	private FamiliaReal fr;
+	private ArrayList<String> results;
 	
 	private JPanel contentPane;
 	private JPanel panelFoto;
 	
 	private JButton buttonNietos;
 	private JButton buttonSobrinos;
+	private JButton buttonAssert;
 	private JScrollPane scrollPaneCentral;
 
 	private static final long serialVersionUID = 5393378737313833016L;
@@ -29,9 +31,13 @@ public class Interfaz extends JFrame{
 	public Interfaz(){
 		super("Familia Real");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		fr = FamiliaReal.getInstance();
 		fr.createInstanceFamiliaReal();
 		fr.createInstanceFoto();
+		
+		results = new ArrayList<String>();
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -46,10 +52,22 @@ public class Interfaz extends JFrame{
 		c.gridx = 0;
 		c.gridy = 0;
 		c.weightx = 1;
+		buttonAssert = new JButton("ASSERT");
+		buttonAssert.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fr.createPropertiesFotos();
+				fr.createPropertiesFamilia();
+			}
+		});
+		panel.add(buttonAssert,c);
+		
+		c.gridx = 0;
+		c.gridy = 1;
+		c.weightx = 1;
 		buttonNietos = new JButton("Nietos del rey");
 		buttonNietos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (scrollPaneCentral != null) {
+				/*if (scrollPaneCentral != null) {
 					contentPane.remove(scrollPaneCentral);
 					//scrollPane = null;
 					scrollPaneCentral.remove(panelFoto);
@@ -58,16 +76,22 @@ public class Interfaz extends JFrame{
 				//buscarFormularioPrincipal();
 				//Método al que pasar la lista de URL de las fotos
 				creaPanelCentral();
-				repaint();
+				repaint();*/
+				results = fr.instanceInfered("Fotos_Nietos_del_Rey");
 			}
 		});
-		
 		panel.add(buttonNietos,c);
 		
 		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy = 2;
 		c.weightx = 1;
 		buttonSobrinos = new JButton("Sobrinos del principe");
+		buttonSobrinos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				results = fr.instanceInfered("Fotos_Sobrinos_del_principe");
+				System.out.println("\n" + results.size());
+			}
+		});
 		panel.add(buttonSobrinos,c);
 		
 		JScrollPane scrollPane = new JScrollPane(panel);
