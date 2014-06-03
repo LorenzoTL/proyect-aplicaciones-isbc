@@ -305,9 +305,4 @@ public class FamiliaReal {
 		}
 	}
 	
-	public static void main(String[] args){
-		FamiliaReal fr = FamiliaReal.getInstance();
-		fr.createInstanceFamiliaReal();
-		fr.createInstanceFoto();
-	}
 }
