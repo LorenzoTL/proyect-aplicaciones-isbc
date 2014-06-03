@@ -11,14 +11,12 @@ import javax.swing.JLabel;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.exception.ExecutionException;
 import CBR.RecomendadorCBR;
-import Clases_Auxiliares.Preferencias;
 import Viviendas.DescripcionVivienda;
 
 public class FormularioInicial extends JFrame {
 
 	private static final long serialVersionUID = 5393378737313833016L;
 	
-	Preferencias preferencias;
 	RecomendadorCBR recomendador = RecomendadorCBR.getInstance();
 	boolean correcto = true;
 	private JComboBox<String> comboHab;
