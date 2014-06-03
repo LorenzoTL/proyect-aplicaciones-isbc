@@ -89,7 +89,6 @@ public class Interfaz extends JFrame{
 		buttonSobrinos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				results = fr.instanceInfered("Fotos_Sobrinos_del_principe");
-				System.out.println("\n" + results.size());
 			}
 		});
 		panel.add(buttonSobrinos,c);
