@@ -12,6 +12,7 @@ import jcolibri.cbrcore.CBRCaseBase;
 import jcolibri.cbrcore.CBRQuery;
 import jcolibri.cbrcore.Connector;
 import jcolibri.exception.ExecutionException;
+import jcolibri.exception.InitializingException;
 import jcolibri.method.retrieve.FilterBasedRetrieval.FilterBasedRetrievalMethod;
 import jcolibri.method.retrieve.FilterBasedRetrieval.FilterConfig;
 
@@ -99,13 +100,17 @@ public class RecomendadorCBR implements StandardCBRApplication{
 		casesFormInitial = FilterBasedRetrievalMethod.filterCases(cases, query, preferences2);
 	}
 	
-	private void sequence2(CBRQuery query){
+	private void sequence2(CBRQuery query) throws InitializingException{
+		if (like){
+			_caseBase.init(_connector);	
+		}
+		
 		Collection<CBRCase> casesBase = cases;
 		DescripcionVivienda dv =  (DescripcionVivienda)query.getDescription();
 		
 		FilterConfig preferences = new FilterConfig();
 		String localizacion = dv.getLocalizacion();
-		if(localizacion != null && !localizacion.equals("") && !localizacion.equals("---") && !localizacion.equals(filtroLocalizacion)){ 
+		if(like || (localizacion != null && !localizacion.equals("") && !localizacion.equals("---") && !localizacion.equals(filtroLocalizacion))){ 
 			casesBase = _caseBase.getCases();
 			preferences.addPredicate(new Attribute("localizacion", DescripcionVivienda.class),new EqualLocationPreferences());
 		}
