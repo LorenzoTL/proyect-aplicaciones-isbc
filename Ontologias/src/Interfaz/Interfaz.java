@@ -4,10 +4,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -25,6 +28,8 @@ public class Interfaz extends JFrame{
 	private JButton buttonSobrinos;
 	private JButton buttonAssert;
 	private JScrollPane scrollPaneCentral;
+	
+	private JLabel[] labelFotos;
 
 	private static final long serialVersionUID = 5393378737313833016L;
 	
@@ -67,17 +72,20 @@ public class Interfaz extends JFrame{
 		buttonNietos = new JButton("Nietos del rey");
 		buttonNietos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				/*if (scrollPaneCentral != null) {
+				if (scrollPaneCentral != null) {
 					contentPane.remove(scrollPaneCentral);
-					//scrollPane = null;
 					scrollPaneCentral.remove(panelFoto);
 					panelFoto = null;
 				}
-				//buscarFormularioPrincipal();
 				//Método al que pasar la lista de URL de las fotos
-				creaPanelCentral();
-				repaint();*/
-				results = fr.instanceInfered("Fotos_Nietos_del_Rey");
+//				results = fr.instanceInfered("Fotos_Nietos_del_Rey");
+				ArrayList<String> listFotos = new ArrayList<String>();
+				listFotos.add("file:Fotos/foto1.png");
+				listFotos.add("file:Fotos/foto2.png");
+				listFotos.add("file:Fotos/foto3.jpg");
+				creaPanelCentral(listFotos);
+				revalidate();
+				repaint();
 			}
 		});
 		panel.add(buttonNietos,c);
@@ -88,7 +96,7 @@ public class Interfaz extends JFrame{
 		buttonSobrinos = new JButton("Sobrinos del principe");
 		buttonSobrinos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				results = fr.instanceInfered("Fotos_Sobrinos_del_principe");
+//				results = fr.instanceInfered("Fotos_Sobrinos_del_principe");
 			}
 		});
 		panel.add(buttonSobrinos,c);
@@ -109,12 +117,65 @@ public class Interfaz extends JFrame{
 		
 		scrollPaneCentral = new JScrollPane(panelFoto);
 		scrollPaneCentral.setBounds(177, 11, 437, 437);
+		scrollPaneCentral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneCentral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		getContentPane().add(scrollPaneCentral);
 		//TODO Panel de potones y panel central
 	}
 	
-	public void creaPanelCentral() {
+	public void creaPanelCentral(ArrayList<String> listFotos) {
+		//Iterator<String>listFotos.iterator();
 		
+		labelFotos = new JLabel[listFotos.size()];
+		
+		panelFoto = new JPanel();
+		panelFoto.setBounds(177, 11, 437, 437);
+		panelFoto.setLayout(new GridBagLayout());
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.HORIZONTAL;
+		int i = 0;
+		int j = 0;
+		
+		c.gridx = 0;
+		c.gridy = i + j;
+		c.weightx = 1;
+		JLabel label = new JLabel(" ");
+		//labelFotos[i] = new JLabel(icon);
+		//labelFotos[i].setIcon(icon);
+		
+		panelFoto.add(label,c);
+		j++;
+		
+		for (String foto : listFotos) {
+			
+			String[] path = foto.split("file:");
+			ImageIcon icon = new ImageIcon(path[1]); 
+			
+			c.gridx = 0;
+			c.gridy = i + j;
+			c.weightx = 1;
+			labelFotos[i] = new JLabel(icon);
+			//labelFotos[i].setIcon(icon);
+			
+			panelFoto.add(labelFotos[i],c);
+			i++;
+			
+			c.gridx = 0;
+			c.gridy = i + j;
+			c.weightx = 1;
+			label = new JLabel(" ");
+			//labelFotos[i] = new JLabel(icon);
+			//labelFotos[i].setIcon(icon);
+			
+			panelFoto.add(label,c);
+			j++;
+		}
+		scrollPaneCentral = new JScrollPane(panelFoto);
+		scrollPaneCentral.setBounds(177, 11, 437, 437);
+		scrollPaneCentral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPaneCentral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		getContentPane().add(scrollPaneCentral);
 	}
 	
 	public static void main(String[] args){
