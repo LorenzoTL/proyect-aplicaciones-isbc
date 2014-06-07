@@ -19,6 +19,7 @@ import javax.swing.border.EmptyBorder;
 
 import jcolibri.cbrcore.CBRQuery;
 import CBR.RecomendadorCBR;
+import Clases_Auxiliares.CompraListener;
 import Clases_Auxiliares.LikeListener;
 import Viviendas.DescripcionVivienda;
 import Viviendas.DescripcionVivienda.EstadoVivienda;
@@ -95,8 +96,10 @@ public class FormularioPrincipal extends JFrame {
 	private JButton buttonBuscar;
 	
 	private JButton[] buttonLike;
+	private JButton[] buttonComprar;
 	private JTextPane[] textPane;
 	private JScrollPane[] scrollPanes;
+	
 	
 	//region Contructora del Formulario Principal
 	public FormularioPrincipal(String localizacion,String area,int habitaciones,int superficie,RecomendadorCBR r) {
@@ -726,6 +729,7 @@ public class FormularioPrincipal extends JFrame {
 	//region Creación del Panel de resultados
 	public void creaPanelCentral(DescripcionVivienda[] resultados) {	
 		buttonLike = new JButton[resultados.length];
+		buttonComprar = new JButton[resultados.length];
 		textPane = new JTextPane[resultados.length];
 		scrollPanes = new JScrollPane[resultados.length];
 		
@@ -757,6 +761,14 @@ public class FormularioPrincipal extends JFrame {
 			panelList.add(buttonLike[j],cPanel);
 			
 			cPanel.gridx = 1;
+			cPanel.gridy = i;
+			cPanel.weightx = 0;
+			buttonComprar[j] = new JButton("Comprar");
+			buttonComprar[j].addActionListener(new CompraListener(resultados[j].getTitulo(),String.valueOf(resultados[j].getPrecio())));
+			cPanel.fill = GridBagConstraints.HORIZONTAL;
+			panelList.add(buttonComprar[j],cPanel);
+			
+			cPanel.gridx = 2;
 			cPanel.gridy = i;
 			cPanel.weightx = 1;
 			cPanel.gridheight = 5;
