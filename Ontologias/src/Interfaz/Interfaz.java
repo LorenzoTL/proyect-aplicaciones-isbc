@@ -24,9 +24,14 @@ public class Interfaz extends JFrame{
 	private JPanel contentPane;
 	private JPanel panelFoto;
 	
+	private JButton buttonAssert;
 	private JButton buttonNietos;
 	private JButton buttonSobrinos;
-	private JButton buttonAssert;
+	private JButton buttonRey;
+	private JButton buttonFamiliares;
+	private JButton buttonHermanos;
+	
+	
 	private JScrollPane scrollPaneCentral;
 	
 	private JLabel[] labelFotos;
@@ -49,7 +54,7 @@ public class Interfaz extends JFrame{
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 157, 437);
+		panel.setBounds(10, 11, 180, 600);
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -78,12 +83,8 @@ public class Interfaz extends JFrame{
 					panelFoto = null;
 				}
 				//Método al que pasar la lista de URL de las fotos
-//				results = fr.instanceInfered("Fotos_Nietos_del_Rey");
-				ArrayList<String> listFotos = new ArrayList<String>();
-				listFotos.add("file:Fotos/foto1.png");
-				listFotos.add("file:Fotos/foto2.png");
-				listFotos.add("file:Fotos/foto3.jpg");
-				creaPanelCentral(listFotos);
+				results = fr.instanceInfered("Fotos_Nietos_del_Rey");
+				creaPanelCentral(results);
 				revalidate();
 				repaint();
 			}
@@ -96,19 +97,84 @@ public class Interfaz extends JFrame{
 		buttonSobrinos = new JButton("Sobrinos del principe");
 		buttonSobrinos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				results = fr.instanceInfered("Fotos_Sobrinos_del_principe");
+				if (scrollPaneCentral != null) {
+					contentPane.remove(scrollPaneCentral);
+					scrollPaneCentral.remove(panelFoto);
+					panelFoto = null;
+				}
+				results = fr.instanceInfered("Fotos_Sobrinos_del_principe");
+				creaPanelCentral(results);
+				revalidate();
+				repaint();
 			}
 		});
 		panel.add(buttonSobrinos,c);
 		
+		c.gridx = 0;
+		c.gridy = 3;
+		c.weightx = 1;
+		buttonRey = new JButton("Fotos donde salga el Rey");
+		buttonRey.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (scrollPaneCentral != null) {
+					contentPane.remove(scrollPaneCentral);
+					scrollPaneCentral.remove(panelFoto);
+					panelFoto = null;
+				}
+				results = fr.instanceInfered("Fotos_Rey");
+				creaPanelCentral(results);
+				revalidate();
+				repaint();
+			}
+		});
+		panel.add(buttonRey,c);
+		
+		c.gridx = 0;
+		c.gridy = 4;
+		c.weightx = 1;
+		buttonFamiliares = new JButton("Fotos Familiares");
+		buttonFamiliares.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (scrollPaneCentral != null) {
+					contentPane.remove(scrollPaneCentral);
+					scrollPaneCentral.remove(panelFoto);
+					panelFoto = null;
+				}
+				results = fr.instanceInfered("Fotos_familiares");
+				creaPanelCentral(results);
+				revalidate();
+				repaint();
+			}
+		});
+		panel.add(buttonFamiliares,c);
+		
+		c.gridx = 0;
+		c.gridy = 5;
+		c.weightx = 1;
+		buttonHermanos = new JButton("Fotos de Hermanos");
+		buttonHermanos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (scrollPaneCentral != null) {
+					contentPane.remove(scrollPaneCentral);
+					scrollPaneCentral.remove(panelFoto);
+					panelFoto = null;
+				}
+				results = fr.instanceInfered("Fotos_hermanos");
+				creaPanelCentral(results);
+				revalidate();
+				repaint();
+			}
+		});
+		panel.add(buttonHermanos,c);
+		
 		JScrollPane scrollPane = new JScrollPane(panel);
-		scrollPane.setBounds(10, 11, 157, 437);
+		scrollPane.setBounds(10, 11, 180, 600);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		getContentPane().add(scrollPane);
 		
 		panelFoto = new JPanel();
-		panelFoto.setBounds(177, 11, 437, 437);
+		panelFoto.setBounds(177, 11, 600, 600);
 		panelFoto.setLayout(new GridBagLayout());
 		
 		//Aquí irian las fotos
@@ -116,7 +182,7 @@ public class Interfaz extends JFrame{
 		//lab.setIcon(arg0);
 		
 		scrollPaneCentral = new JScrollPane(panelFoto);
-		scrollPaneCentral.setBounds(177, 11, 437, 437);
+		scrollPaneCentral.setBounds(177, 11, 600, 600);
 		scrollPaneCentral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCentral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		getContentPane().add(scrollPaneCentral);
@@ -129,7 +195,7 @@ public class Interfaz extends JFrame{
 		labelFotos = new JLabel[listFotos.size()];
 		
 		panelFoto = new JPanel();
-		panelFoto.setBounds(177, 11, 437, 437);
+		panelFoto.setBounds(177, 11, 600, 600);
 		panelFoto.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -172,7 +238,7 @@ public class Interfaz extends JFrame{
 			j++;
 		}
 		scrollPaneCentral = new JScrollPane(panelFoto);
-		scrollPaneCentral.setBounds(177, 11, 437, 437);
+		scrollPaneCentral.setBounds(177, 11, 600, 600);
 		scrollPaneCentral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCentral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		getContentPane().add(scrollPaneCentral);
@@ -180,7 +246,7 @@ public class Interfaz extends JFrame{
 	
 	public static void main(String[] args){
 		Interfaz interfaz = new Interfaz();
-		interfaz.setSize(640,495);
+		interfaz.setSize(800,800);
 		interfaz.setLocation(500, 200);
 		interfaz.setVisible(true);
 	}
