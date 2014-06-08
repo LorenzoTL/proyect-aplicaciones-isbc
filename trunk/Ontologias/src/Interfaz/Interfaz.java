@@ -4,7 +4,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -30,7 +29,7 @@ public class Interfaz extends JFrame{
 	private JButton buttonRey;
 	private JButton buttonFamiliares;
 	private JButton buttonHermanos;
-	
+	private JButton buttonTrabajo;
 	
 	private JScrollPane scrollPaneCentral;
 	
@@ -45,6 +44,7 @@ public class Interfaz extends JFrame{
 		fr = FamiliaReal.getInstance();
 		fr.createInstanceFamiliaReal();
 		fr.createInstanceFoto();
+		fr.createInstanceObjetos();
 		
 		results = new ArrayList<String>();
 		
@@ -54,7 +54,7 @@ public class Interfaz extends JFrame{
 		contentPane.setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 180, 600);
+		panel.setBounds(10, 11, 157, 437);
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -66,7 +66,16 @@ public class Interfaz extends JFrame{
 		buttonAssert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fr.createPropertiesFotos();
+				fr.createPropertiesFotosObjetos();
 				fr.createPropertiesFamilia();
+				buttonNietos.setEnabled(true);
+				buttonSobrinos.setEnabled(true);
+				buttonRey.setEnabled(true);
+				buttonFamiliares.setEnabled(true);
+				buttonHermanos.setEnabled(true);
+				buttonTrabajo.setEnabled(true);
+				buttonAssert.setEnabled(false);
+					
 			}
 		});
 		panel.add(buttonAssert,c);
@@ -89,6 +98,7 @@ public class Interfaz extends JFrame{
 				repaint();
 			}
 		});
+		buttonNietos.setEnabled(false);
 		panel.add(buttonNietos,c);
 		
 		c.gridx = 0;
@@ -108,12 +118,13 @@ public class Interfaz extends JFrame{
 				repaint();
 			}
 		});
+		buttonSobrinos.setEnabled(false);
 		panel.add(buttonSobrinos,c);
 		
 		c.gridx = 0;
 		c.gridy = 3;
 		c.weightx = 1;
-		buttonRey = new JButton("Fotos donde salga el Rey");
+		buttonRey = new JButton("El Rey");
 		buttonRey.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (scrollPaneCentral != null) {
@@ -127,6 +138,7 @@ public class Interfaz extends JFrame{
 				repaint();
 			}
 		});
+		buttonRey.setEnabled(false);
 		panel.add(buttonRey,c);
 		
 		c.gridx = 0;
@@ -146,6 +158,7 @@ public class Interfaz extends JFrame{
 				repaint();
 			}
 		});
+		buttonFamiliares.setEnabled(false);
 		panel.add(buttonFamiliares,c);
 		
 		c.gridx = 0;
@@ -165,16 +178,37 @@ public class Interfaz extends JFrame{
 				repaint();
 			}
 		});
+		buttonHermanos.setEnabled(false);
 		panel.add(buttonHermanos,c);
 		
+		c.gridx = 0;
+		c.gridy = 6;
+		c.weightx = 1;
+		buttonTrabajo = new JButton("Fotos de trabajo");
+		buttonTrabajo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (scrollPaneCentral != null) {
+					contentPane.remove(scrollPaneCentral);
+					scrollPaneCentral.remove(panelFoto);
+					panelFoto = null;
+				}
+				results = fr.instanceInfered("Fotos_de_trabajo");
+				creaPanelCentral(results);
+				revalidate();
+				repaint();
+			}
+		});
+		buttonTrabajo.setEnabled(false);
+		panel.add(buttonTrabajo,c);
+		
 		JScrollPane scrollPane = new JScrollPane(panel);
-		scrollPane.setBounds(10, 11, 180, 600);
+		scrollPane.setBounds(10, 11, 157, 437);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		getContentPane().add(scrollPane);
 		
 		panelFoto = new JPanel();
-		panelFoto.setBounds(177, 11, 600, 600);
+		panelFoto.setBounds(177, 11, 437, 437);
 		panelFoto.setLayout(new GridBagLayout());
 		
 		//Aquí irian las fotos
@@ -182,7 +216,7 @@ public class Interfaz extends JFrame{
 		//lab.setIcon(arg0);
 		
 		scrollPaneCentral = new JScrollPane(panelFoto);
-		scrollPaneCentral.setBounds(177, 11, 600, 600);
+		scrollPaneCentral.setBounds(177, 11, 437, 437);
 		scrollPaneCentral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCentral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		getContentPane().add(scrollPaneCentral);
@@ -195,7 +229,7 @@ public class Interfaz extends JFrame{
 		labelFotos = new JLabel[listFotos.size()];
 		
 		panelFoto = new JPanel();
-		panelFoto.setBounds(177, 11, 600, 600);
+		panelFoto.setBounds(177, 11, 437, 437);
 		panelFoto.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
@@ -238,7 +272,7 @@ public class Interfaz extends JFrame{
 			j++;
 		}
 		scrollPaneCentral = new JScrollPane(panelFoto);
-		scrollPaneCentral.setBounds(177, 11, 600, 600);
+		scrollPaneCentral.setBounds(177, 11, 437, 437);
 		scrollPaneCentral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCentral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		getContentPane().add(scrollPaneCentral);
@@ -246,7 +280,7 @@ public class Interfaz extends JFrame{
 	
 	public static void main(String[] args){
 		Interfaz interfaz = new Interfaz();
-		interfaz.setSize(800,800);
+		interfaz.setSize(640,495);
 		interfaz.setLocation(500, 200);
 		interfaz.setVisible(true);
 	}
