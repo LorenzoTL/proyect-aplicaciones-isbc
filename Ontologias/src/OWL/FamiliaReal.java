@@ -293,6 +293,36 @@ public class FamiliaReal {
 		ob.createOntProperty("foto23", "aparece", "Leticia");
 	}
 	
+	public void createInstanceObjetos(){
+		System.out.println("\n CREACION DE INSTANCIAS DE OBJETOS");
+		
+		ob.createInstance("Objetos_Trabajo", "escritorio");
+		ob.createInstance("Objetos_Trabajo", "uniforme_oficial");
+		ob.createInstance("Objetos_Boda", "uniforme_boda");
+		ob.createInstance("Objetos_Caza", "escopeta");
+	}
+	
+	public void createPropertiesFotosObjetos(){
+		System.out.println("\n CREACION DE PROPIEDADES DE OBJETOS QUE APARECEN EN FOTOS");
+		
+		ob.createOntProperty("foto16", "aparece", "uniforme_oficial");
+		ob.createOntProperty("foto14", "aparece", "uniforme_oficial");
+		ob.createOntProperty("foto12", "aparece", "escritorio");
+		ob.createOntProperty("foto10", "aparece", "escritorio");
+		ob.createOntProperty("foto11", "aparece", "escritorio");
+		ob.createOntProperty("foto7", "aparece", "escritorio");
+		ob.createOntProperty("foto23", "aparece", "uniforme_boda");
+		ob.createOntProperty("foto21", "aparece", "escopeta");
+		ob.createOntProperty("foto17", "aparece", "escritorio");
+	}
+	
+	public void assertPropertieAparece(String foto, ArrayList<String> personas){
+		for(Iterator<String> it = personas.iterator();it.hasNext();){
+			String persona = it.next();
+			ob.createOntProperty(foto, "aparece", persona);
+		}
+	}
+	
 	public ArrayList<String> instanceInfered(String s){
 		System.out.println("\n INSTANCIAS INFERIDAS PARA " + s.toUpperCase());
 		ArrayList<String> list = new ArrayList<String>();

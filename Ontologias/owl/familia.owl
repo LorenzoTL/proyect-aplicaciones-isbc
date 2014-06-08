@@ -36,7 +36,7 @@
 
     <owl:ObjectProperty rdf:about="&FamiliaReal;aparece">
         <rdfs:domain rdf:resource="&FamiliaReal;Foto"/>
-        <rdfs:range rdf:resource="&FamiliaReal;Persona"/>
+        <rdfs:range rdf:resource="&FamiliaReal;Instancias"/>
     </owl:ObjectProperty>
     
 
@@ -319,6 +319,25 @@
     
 
 
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Fotos_de_trabajo -->
+
+    <owl:Class rdf:about="&FamiliaReal;Fotos_de_trabajo">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Foto"/>
+                    <owl:Restriction>
+                        <owl:onProperty rdf:resource="&FamiliaReal;aparece"/>
+                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Objetos_Trabajo"/>
+                    </owl:Restriction>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Foto"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Fotos_familiares -->
 
     <owl:Class rdf:about="&FamiliaReal;Fotos_familiares">
@@ -492,6 +511,12 @@
     
 
 
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Instancias -->
+
+    <owl:Class rdf:about="&FamiliaReal;Instancias"/>
+    
+
+
     <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Madre -->
 
     <owl:Class rdf:about="&FamiliaReal;Madre">
@@ -586,6 +611,38 @@
     
 
 
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Objetos -->
+
+    <owl:Class rdf:about="&FamiliaReal;Objetos">
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Instancias"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Objetos_Boda -->
+
+    <owl:Class rdf:about="&FamiliaReal;Objetos_Boda">
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Objetos"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Objetos_Caza -->
+
+    <owl:Class rdf:about="&FamiliaReal;Objetos_Caza">
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Objetos"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Objetos_Trabajo -->
+
+    <owl:Class rdf:about="&FamiliaReal;Objetos_Trabajo">
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Objetos"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Padre -->
 
     <owl:Class rdf:about="&FamiliaReal;Padre">
@@ -607,7 +664,9 @@
 
     <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Persona -->
 
-    <owl:Class rdf:about="&FamiliaReal;Persona"/>
+    <owl:Class rdf:about="&FamiliaReal;Persona">
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Instancias"/>
+    </owl:Class>
     
 
 
