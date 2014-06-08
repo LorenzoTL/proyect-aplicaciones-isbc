@@ -28,9 +28,8 @@ public class Interfaz extends JFrame{
 	private JButton buttonSobrinos;
 	private JButton buttonRey;
 	private JButton buttonFamiliares;
-	private JButton buttonHermanos;
+	private JButton buttonDeportes;
 	private JButton buttonTrabajo;
-	
 	private JScrollPane scrollPaneCentral;
 	
 	private JLabel[] labelFotos;
@@ -72,10 +71,9 @@ public class Interfaz extends JFrame{
 				buttonSobrinos.setEnabled(true);
 				buttonRey.setEnabled(true);
 				buttonFamiliares.setEnabled(true);
-				buttonHermanos.setEnabled(true);
+				buttonDeportes.setEnabled(true);
 				buttonTrabajo.setEnabled(true);
 				buttonAssert.setEnabled(false);
-					
 			}
 		});
 		panel.add(buttonAssert,c);
@@ -164,22 +162,22 @@ public class Interfaz extends JFrame{
 		c.gridx = 0;
 		c.gridy = 5;
 		c.weightx = 1;
-		buttonHermanos = new JButton("Fotos de Hermanos");
-		buttonHermanos.addActionListener(new ActionListener() {
+		buttonDeportes = new JButton("Eventos deportivos");
+		buttonDeportes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (scrollPaneCentral != null) {
 					contentPane.remove(scrollPaneCentral);
 					scrollPaneCentral.remove(panelFoto);
 					panelFoto = null;
 				}
-				results = fr.instanceInfered("Fotos_hermanos");
+				results = fr.instanceInfered("Fotos_eventos_deportivos");
 				creaPanelCentral(results);
 				revalidate();
 				repaint();
 			}
 		});
-		buttonHermanos.setEnabled(false);
-		panel.add(buttonHermanos,c);
+		buttonDeportes.setEnabled(false);
+		panel.add(buttonDeportes,c);
 		
 		c.gridx = 0;
 		c.gridy = 6;
@@ -220,12 +218,9 @@ public class Interfaz extends JFrame{
 		scrollPaneCentral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneCentral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		getContentPane().add(scrollPaneCentral);
-		//TODO Panel de potones y panel central
 	}
 	
 	public void creaPanelCentral(ArrayList<String> listFotos) {
-		//Iterator<String>listFotos.iterator();
-		
 		labelFotos = new JLabel[listFotos.size()];
 		
 		panelFoto = new JPanel();

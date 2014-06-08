@@ -300,6 +300,9 @@ public class FamiliaReal {
 		ob.createInstance("Objetos_Trabajo", "uniforme_oficial");
 		ob.createInstance("Objetos_Boda", "uniforme_boda");
 		ob.createInstance("Objetos_Caza", "escopeta");
+		ob.createInstance("Objetos_deportes", "copa_del_mundo");
+		ob.createInstance("Objetos_deportes", "premio_principe_asturias");
+		ob.createInstance("Objetos_deportes", "palco_estadio");
 	}
 	
 	public void createPropertiesFotosObjetos(){
@@ -314,6 +317,9 @@ public class FamiliaReal {
 		ob.createOntProperty("foto23", "aparece", "uniforme_boda");
 		ob.createOntProperty("foto21", "aparece", "escopeta");
 		ob.createOntProperty("foto17", "aparece", "escritorio");
+		ob.createOntProperty("foto13", "aparece", "copa_del_mundo");
+		ob.createOntProperty("foto20", "aparece", "premio_principe_asturias");
+		ob.createOntProperty("foto22", "aparece", "palco_estadio");
 	}
 	
 	public void assertPropertieAparece(String foto, ArrayList<String> personas){
