@@ -41,6 +41,7 @@ public class Interfaz extends JFrame{
 	private JButton buttonFamiliares;
 	private JButton buttonDeportes;
 	private JButton buttonTrabajo;
+	private JButton buttonPrincipe;
 	private JScrollPane scrollPaneCentral;
 	
 	private JLabel[] labelFotos;
@@ -71,6 +72,7 @@ public class Interfaz extends JFrame{
 		fr = FamiliaReal.getInstance();
 		fr.createInstanceFamiliaReal();
 		fr.createInstanceFoto();
+		fr.createInstanceObjetos();
 		
 		results = new ArrayList<String>();
 		
@@ -94,6 +96,7 @@ public class Interfaz extends JFrame{
 		
 		btnCargarFoto = new JButton("Cargar Foto");
 		btnCargarFoto.setBounds(366, 10, 103, 23);
+		btnCargarFoto.setEnabled(false);
 		btnCargarFoto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String s = comboBox.getSelectedItem().toString();
@@ -193,10 +196,10 @@ public class Interfaz extends JFrame{
         buttonAssert2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 						if (comboBox != null && comboBox.getSelectedItem()!= null && !
-										comboBox.getSelectedItem().toString().equals("---")){
-								String foto = getFotoSelected();
-								ArrayList<String> personas = getPeopleSelected();
-								fr.assertPropertieAparece(foto, personas);
+							comboBox.getSelectedItem().toString().equals("---")){
+							String foto = getFotoSelected();
+							ArrayList<String> personas = getPeopleSelected();
+							fr.assertPropertieAparece(foto, personas);
 						}
 				}
 		});
@@ -229,6 +232,8 @@ public class Interfaz extends JFrame{
 				buttonFamiliares.setEnabled(true);
 				buttonDeportes.setEnabled(true);
 				buttonTrabajo.setEnabled(true);
+				buttonPrincipe.setEnabled(true);
+				btnCargarFoto.setEnabled(true);
 				buttonAssert.setEnabled(false);
 			}
 		});
@@ -355,6 +360,26 @@ public class Interfaz extends JFrame{
 		buttonTrabajo.setEnabled(false);
 		panel.add(buttonTrabajo,c);
 		
+		c.gridx = 0;
+		c.gridy = 7;
+		c.weightx = 1;
+		buttonPrincipe = new JButton("Familia del príncipe");
+		buttonPrincipe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (scrollPaneCentral != null) {
+					contentPane2.remove(scrollPaneCentral);
+					scrollPaneCentral.remove(panelFoto);
+					panelFoto = null;
+				}
+				results = fr.instanceInfered("Foto_Familia_Principe");
+				creaPanelCentralFotos(results);
+				revalidate();
+				repaint();
+			}
+		});
+		buttonPrincipe.setEnabled(false);
+		panel.add(buttonPrincipe,c);
+		
 		JScrollPane scrollPane = new JScrollPane(panel);
 		scrollPane.setBounds(10, 11, 157, 437);
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -398,7 +423,7 @@ public class Interfaz extends JFrame{
 	private String getFotoSelected() {
                 String foto = comboBox.getSelectedItem().toString();
                 String[] f = foto.split("/");
-                foto = f[1].split(".png")[0];
+                foto = f[1].substring(0, f[1].length() - 4);
                 return foto;
     }
 	
