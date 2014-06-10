@@ -89,6 +89,7 @@ public class Interfaz extends JFrame{
 				}
 				revalidate();
                 repaint();
+                buttonAssert.setEnabled(true);
 			}
 		});
 		contentPane.add(btnCargarFoto);
@@ -172,15 +173,46 @@ public class Interfaz extends JFrame{
 		
 		buttonAssert = new JButton("ASSERT");
 		buttonAssert.setBounds(265, 535, 97, 23);
+		buttonAssert.setEnabled(false);
 		buttonAssert.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				fr.createPropertiesFotos();
-				fr.createPropertiesFamilia();
+				if (comboBox != null && comboBox.getSelectedItem()!= null && !
+						comboBox.getSelectedItem().toString().equals("---")){
+					String foto = getFotoSelected();
+					ArrayList<String> personas = getPersonsSelected();
+					fr.assertPropertieAparece(foto, personas);
+				}
 			}
 		});
 		contentPane.add(buttonAssert);
-		
-		
+	}
+	
+	private ArrayList<String> getPersonsSelected(){
+		ArrayList<String> list = new ArrayList<String>();
+		if (checkBox.isSelected()) list.add("Juan_Carlos");
+		if (checkBox_1.isSelected()) list.add("Cristina");
+		if (checkBox_2.isSelected()) list.add("Sofia");
+		if (checkBox_3.isSelected()) list.add("Urdangarin");
+		if (checkBox_4.isSelected()) list.add("Elena");
+		if (checkBox_5.isSelected()) list.add("Felipe");
+		if (checkBox_6.isSelected()) list.add("Irene");
+		if (checkBox_7.isSelected()) list.add("Marichalar");
+		if (checkBox_8.isSelected()) list.add("Leticia");
+		if (checkBox_9.isSelected()) list.add("Miguel");
+		if (checkBox_10.isSelected()) list.add("Froilan");
+		if (checkBox_11.isSelected()) list.add("Infanta_Leonor");
+		if (checkBox_12.isSelected()) list.add("Pablo");
+		if (checkBox_13.isSelected()) list.add("Victoria");
+		if (checkBox_14.isSelected()) list.add("Infanta_Sofia");
+		if (checkBox_15.isSelected()) list.add("Juan");
+		return list;
+	}
+	
+	private String getFotoSelected(){
+		String foto = comboBox.getSelectedItem().toString();
+		String[] f = foto.split("/");
+		foto = f[1].split(".png")[0];
+		return foto;
 	}
 	
 	public void creaPanelCentral(String s) {
