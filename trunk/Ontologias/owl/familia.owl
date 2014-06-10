@@ -242,6 +242,47 @@
     
 
 
+    <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Foto_Familia_Principe -->
+
+    <owl:Class rdf:about="&FamiliaReal;Foto_Familia_Principe">
+        <owl:equivalentClass>
+            <owl:Class>
+                <owl:intersectionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="&FamiliaReal;Foto"/>
+                    <owl:Class>
+                        <owl:intersectionOf rdf:parseType="Collection">
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;aparece"/>
+                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Principe"/>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;aparece"/>
+                                <owl:someValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Principe"/>
+                                    </owl:Restriction>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;aparece"/>
+                                <owl:someValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;esta_casado_con"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Principe"/>
+                                    </owl:Restriction>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                        </owl:intersectionOf>
+                    </owl:Class>
+                </owl:intersectionOf>
+            </owl:Class>
+        </owl:equivalentClass>
+        <rdfs:subClassOf rdf:resource="&FamiliaReal;Foto"/>
+    </owl:Class>
+    
+
+
     <!-- http://www.semanticweb.org/j/ontologies/2014/4/FamiliaReal#Fotos_Nietos_del_Rey -->
 
     <owl:Class rdf:about="&FamiliaReal;Fotos_Nietos_del_Rey">
@@ -375,10 +416,19 @@
                                 <owl:someValuesFrom>
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
+                                        <owl:someValuesFrom rdf:resource="&FamiliaReal;Rey"/>
+                                    </owl:Restriction>
+                                </owl:someValuesFrom>
+                            </owl:Restriction>
+                            <owl:Restriction>
+                                <owl:onProperty rdf:resource="&FamiliaReal;aparece"/>
+                                <owl:someValuesFrom>
+                                    <owl:Restriction>
+                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
                                         <owl:someValuesFrom>
                                             <owl:Restriction>
                                                 <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
-                                                <owl:allValuesFrom rdf:resource="&FamiliaReal;Rey"/>
+                                                <owl:someValuesFrom rdf:resource="&FamiliaReal;Rey"/>
                                             </owl:Restriction>
                                         </owl:someValuesFrom>
                                     </owl:Restriction>
@@ -390,15 +440,6 @@
                                     <owl:Restriction>
                                         <owl:onProperty rdf:resource="&FamiliaReal;esta_casado_con"/>
                                         <owl:someValuesFrom rdf:resource="&FamiliaReal;Rey"/>
-                                    </owl:Restriction>
-                                </owl:someValuesFrom>
-                            </owl:Restriction>
-                            <owl:Restriction>
-                                <owl:onProperty rdf:resource="&FamiliaReal;aparece"/>
-                                <owl:someValuesFrom>
-                                    <owl:Restriction>
-                                        <owl:onProperty rdf:resource="&FamiliaReal;es_hijo"/>
-                                        <owl:allValuesFrom rdf:resource="&FamiliaReal;Rey"/>
                                     </owl:Restriction>
                                 </owl:someValuesFrom>
                             </owl:Restriction>
