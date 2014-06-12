@@ -2,6 +2,9 @@ package OWL;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import javax.swing.JOptionPane;
+
 import es.ucm.fdi.gaia.ontobridge.OntoBridge;
 import es.ucm.fdi.gaia.ontobridge.OntologyDocument;
 
@@ -332,6 +335,9 @@ public class FamiliaReal {
 		System.out.println("\n INSTANCIAS INFERIDAS PARA " + s.toUpperCase());
 		ArrayList<String> list = new ArrayList<String>();
 		Iterator<String> fotos = ob.listInstances(s);
+		if (!fotos.hasNext()){
+			JOptionPane.showMessageDialog(null, "Primero anota a las personas que aparecen en las fotos en el PANEL DE USUARIO");
+		}
 		while(fotos.hasNext())
 		{
 			String instance = fotos.next();
