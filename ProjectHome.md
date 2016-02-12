@@ -1,0 +1,1 @@
+Diferentes aplicaciones , tanto java como web, que basan su funcionamiento en conceptos propios de inteligencia artificial.
